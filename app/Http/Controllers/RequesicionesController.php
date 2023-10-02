@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class SoloPeticionesController extends Controller
+class RequesicionesController extends Controller
 {
-    /**
+     /**
      * Create a new controller instance.
      *
      * @return void
@@ -14,7 +14,7 @@ class SoloPeticionesController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('solopeticiones',['only'=>['index']]);
+        $this->middleware('solopeticiones', ['only' => ['index']]);
     }
 
     /**
@@ -24,7 +24,7 @@ class SoloPeticionesController extends Controller
      */
     public function index()
     {
-        return view('Peticiones');
+        return view('Requesiciones.index');
     }
 
     /**
@@ -32,7 +32,7 @@ class SoloPeticionesController extends Controller
      */
     public function create()
     {
-        
+        //
     }
 
     /**

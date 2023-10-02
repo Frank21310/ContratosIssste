@@ -4,6 +4,7 @@ use App\Http\Controllers\EmpleadosController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RequesicionesController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\SoloAdminController;
 use App\Http\Controllers\SoloPeticionesController;
@@ -38,7 +39,13 @@ Route::group(['middleware'=>['auth']],function(){
     Route::resource('Empleados', EmpleadosController::class);
     Route::resource('Usuarios', UsuariosController::class);
 
-});
+})->namespace('root');
+
+Route::group(['middleware'=>['auth']],function(){
+    Route::get('/Peticiones', [SoloPeticionesController::class, 'index'])->name(' peticiones');
+    Route::resource('Requesiciones', RequesicionesController::class);
+
+})->namespace('root');
 
 
 

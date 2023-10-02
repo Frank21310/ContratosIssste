@@ -7,34 +7,60 @@
                 height="auto">
         </a>
         <hr>
-        <ul class="nav nav-pills flex-column mb-auto">
-            <li class="{{ 'home' == request()->path() ? 'active' : '' }}">
-                <a href="{{ url('/home') }}" class="nav-link link-body-emphasis">
-                    <i class="fas fa-user-tie"></i>
-                    Inicio
-                </a>
-            </li>
-            <li class="{{ 'roles' == Request::is('role*') ? 'active' : '' }}">
-                <a href="{{ route('roles.index') }}" class="nav-link link-body-emphasis">
-                    <i class="fas fa-user-tie"></i>
-                    Roles
-                </a>
-            </li>
+        @if (Auth::user()->rol_id == 1)
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li class="{{ 'home' == request()->path() ? 'active' : '' }}">
+                    <a href="{{ url('/home') }}" class="nav-link link-body-emphasis">
+                        <i class="fas fa-user-tie"></i>
+                        Inicio
+                    </a>
+                </li>
+                <li class="{{ 'roles' == Request::is('role*') ? 'active' : '' }}">
+                    <a href="{{ route('roles.index') }}" class="nav-link link-body-emphasis">
+                        <i class="fas fa-user-tie"></i>
+                        Roles
+                    </a>
+                </li>
 
-            <li class="{{ 'roles' == Request::is('role*') ? 'active' : '' }}">
-                <a href="{{ route('Empleados.index') }}" class="nav-link link-body-emphasis">
-                    <i class="fas fa-user-tie"></i>
-                    Empleados
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('Usuarios.index') }}" class="nav-link link-body-emphasis">
-                    <i class="fas fa-user"></i>
-                    Usuarios
-                </a>
-            </li>
+                <li class="{{ 'roles' == Request::is('role*') ? 'active' : '' }}">
+                    <a href="{{ route('Empleados.index') }}" class="nav-link link-body-emphasis">
+                        <i class="fas fa-user-tie"></i>
+                        Empleados
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('Usuarios.index') }}" class="nav-link link-body-emphasis">
+                        <i class="fas fa-user"></i>
+                        Usuarios
+                    </a>
+                </li>
 
-        </ul>
+            </ul>
+        @endif
+        @if (Auth::user()->rol_id == 2)
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li class="{{ 'home' == request()->path() ? 'active' : '' }}">
+                    <a href="{{ url('/home') }}" class="nav-link link-body-emphasis">
+                        <i class="fas fa-home"></i>
+                        Inicio
+                    </a>
+                </li>
+                <li class="{{ 'Requesiciones' == Request::is('Requesiciones*') ? 'active' : '' }}">
+                    <a href="{{ route('Requesiciones.index') }}" class="nav-link link-body-emphasis">
+                        <i class="fas fa-plus"></i>
+                        Requesiciones
+                    </a>
+                </li>
+
+                <li class="{{ 'roles' == Request::is('role*') ? 'active' : '' }}">
+                    <a href="{{ route('Empleados.index') }}" class="nav-link link-body-emphasis">
+                        <i class="fas fa-file"></i>
+                        Partidas
+                    </a>
+                </li>
+            </ul>
+        @endif
+
         <hr>
         <div class="dropdown">
             <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle"
