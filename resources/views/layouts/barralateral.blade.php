@@ -53,9 +53,9 @@
                 </li>
 
                 <li class="{{ 'roles' == Request::is('role*') ? 'active' : '' }}">
-                    <a href="{{ route('Empleados.index') }}" class="nav-link link-body-emphasis">
+                    <a href="{{ route('CUCop.index') }}" class="nav-link link-body-emphasis">
                         <i class="fas fa-file"></i>
-                        Partidas
+                        CUCop
                     </a>
                 </li>
             </ul>

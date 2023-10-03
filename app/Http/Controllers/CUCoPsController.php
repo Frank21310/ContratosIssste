@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Empleado;
-use App\Models\User;
+use App\Models\Cucops;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
-class RequesicionesController extends Controller
+class CUCoPsController extends Controller
 {
      /**
      * Create a new controller instance.
@@ -24,10 +24,23 @@ class RequesicionesController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
+        $CUCops = Cucops::select('*')->orderBy('tipo', 'ASC');
+        $limit = (isset($request->limit)) ? $request->limit : 10;
 
-        return view('Requesiciones.index');
+        if (isset($request->search)) {
+            $CUCops = $CUCops
+                ->where('tipo', 'like', '%' . $request->search . '%')
+                ->orWhere('clave_cucop', 'like', '%' . $request->search . '%')
+                ->orWhere('partida_especifica', 'like', '%' . $request->search . '%')
+                ->orWhere('descripcion', 'like', '%' . $request->search . '%')
+                ->orWhere('nivel', 'like', '%' . $request->search . '%')
+                ->orWhere('unidad_medida', 'like', '%' . $request->search . '%');
+        }
+        $CUCops = $CUCops->paginate($limit)->appends($request->all());
+        return view('CUCop.index', compact('CUCops'));
+
     }
 
     /**
@@ -35,9 +48,7 @@ class RequesicionesController extends Controller
      */
     public function create()
     {
-        $infos = User::all();
-        return view('Requesiciones.create', compact('infos'));
-
+        //
     }
 
     /**

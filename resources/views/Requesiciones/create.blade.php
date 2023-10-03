@@ -4,10 +4,10 @@
         <div class="card-header">
             <div class="row">
                 <div class="col">
-                    <h2 class="">Empleaodos</h2>
+                    <h2 class="">Nueva requesicion</h2>
                 </div>
                 <div class="col g-col-6 d-flex justify-content-end ">
-                    <a id="BtnAgregar" href="" class="btn btn-primary ml-auto">
+                    <a id="BtnAgregar" href="{{route('Requesiciones.index')}}" class="btn btn-primary ml-auto">
                         <i class="fas fa-arrow-left"></i>
                         Volver
                     </a>
@@ -16,7 +16,9 @@
         </div>
         <hr>
         <div class="card-body">
-            <form action="" method="POST" enctype="multipart/form-data" id="create">
+            <form method="POST" enctype="multipart/form-data" id="create">
+                
+                @include('Requesiciones.formularios.form')
             </form>
         </div>
         <hr>

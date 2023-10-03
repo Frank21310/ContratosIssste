@@ -3,30 +3,30 @@
 @section('content')
     <div class="container">
         <div class="card-header">
-            <div class="row">
-                <div class="col">
-                    <h2 class="">Nueva Requesicion</h2>
-                </div>
-                <div class="col g-col-6 d-flex justify-content-end ">
-                    <a id="BtnAgregar" href="" class="btn btn-primary ml-auto">
-                        <i class="fas fa-plus"></i>
-                        Crear
-                    </a>
-                </div>
-            </div>
+            <!--<div class="row">
+                    <div class="col">
+                        <h2 class="">Nueva Requesicion</h2>
+                    </div>
+                    <div class="col g-col-6 d-flex justify-content-end ">
+                        <a id="BtnAgregar" href="" class="btn btn-primary ml-auto">
+                            <i class="fas fa-plus"></i>
+                            Crear
+                        </a>
+                    </div>
+                </div>-->
         </div>
 
         <hr>
 
         <div class="card-body">
             <div class="row">
-                <h3>Requesiciones elaboradas</h3>
-                <p>Tabla de requesiciones elaboradas</p>
+                <h3>CUCop</h3>
+                <p>Tabla de CUCop</p>
                 <div class="col-4">
                     <div class="form-group">
                         <a class="navbar-brand">Listar</a>
                         <select name="limit" id="limit" class="custom-select">
-                            @foreach ([2, 3, 5, 10] as $limit)
+                            @foreach ([5, 10, 20, 50] as $limit)
                                 <option value="{{ $limit }}"
                                     @if (@isset($_GET['limit'])) {{ $_GET['limit'] == $limit ? 'selected' : '' }} @endif>
                                     {{ $limit }}
@@ -60,24 +60,28 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Numero de Requesicion</th>
-                                <th>Dependencia</th>
-                                <th>Fecha de elaboracion</th>
-                                <th>Solicita</th>
-                                <th>Autoriza</th>
-                                <th>Estatus</th>
-
+                                <th>Tipo</th>
+                                <th>Clave CUPCoP</th>
+                                <th>Partida Especifica</th>
+                                <th>Descripcion</th>
+                                <th>Nivel</th>
+                                <th>Unidad de medida</th>
+                                <th>Tipos de contratacion</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($CUCops as $CUCop)
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>{{ $CUCop->tipo}}</td>
+                                    <td>{{ $CUCop->clave_cucop }}</td>
+                                    <td>{{ $CUCop->partida_especifica }}</td>
+                                    <td>{{ $CUCop->descripcion }}</td>
+                                    <td>{{ $CUCop->nivel }}</td>
+                                    <td>{{ $CUCop->unidad_medida }}</td>
+                                    <td>{{ $CUCop->tipo_contratacion }}</td>
+
                                 </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -90,13 +94,14 @@
 
     <Script type="text/javascript">
         $('#limit').on('change', function() {
-            window.location.href = "{{ route('Requesiciones.index') }}?limit=" + $(this).val() + '&search=' + $(
+            window.location.href = "{{ route('CUCop.index') }}?limit=" + $(this).val() + '&search=' + $(
                 '#search').val()
         })
 
         $('#search').on('keyup', function(e) {
             if (e.keyCode == 13) {
-                window.location.href = "{{ route('Requesiciones.index') }}?limit=" + $('#limit').val() + '&search=' +
+                window.location.href = "{{ route('CUCop.index') }}?limit=" + $('#limit').val() +
+                    '&search=' +
                     $(this).val()
             }
         })

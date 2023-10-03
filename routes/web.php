@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CUCoPsController;
 use App\Http\Controllers\EmpleadosController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -44,8 +45,10 @@ Route::group(['middleware'=>['auth']],function(){
 Route::group(['middleware'=>['auth']],function(){
     Route::get('/Peticiones', [SoloPeticionesController::class, 'index'])->name(' peticiones');
     Route::resource('Requesiciones', RequesicionesController::class);
+    Route::resource('CUCop', CUCoPsController::class);
 
-})->namespace('root');
+
+})->namespace('Peticiones');
 
 
 
@@ -56,6 +59,5 @@ Route::group(['middleware'=>['auth']],function(){
 | Web Routes Peticiones
 |--------------------------------------------------------------------------
 */
-Route::get('/Peticiones', [SoloPeticionesController::class, 'index'])->name(' peticiones');
 
 

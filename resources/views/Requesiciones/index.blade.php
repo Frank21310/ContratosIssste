@@ -8,7 +8,7 @@
                     <h2 class="">Nueva Requesicion</h2>
                 </div>
                 <div class="col g-col-6 d-flex justify-content-end ">
-                    <a id="BtnAgregar" href="" class="btn btn-primary ml-auto">
+                    <a id="BtnAgregar" href="{{route('Requesiciones.create')}}" class="btn btn-primary ml-auto">
                         <i class="fas fa-plus"></i>
                         Crear
                     </a>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Empleado;
 use Illuminate\Http\Request;
 
 class SoloPeticionesController extends Controller
@@ -24,7 +25,8 @@ class SoloPeticionesController extends Controller
      */
     public function index()
     {
-        return view('Peticiones');
+        return view('peticiones');
+
     }
 
     /**

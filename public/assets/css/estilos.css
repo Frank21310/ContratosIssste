@@ -13,7 +13,9 @@
     font-family: 'Montserrat', sans-serif;
 }
 
-
+.input-group-append {
+    cursor: pointer;
+  }
 
 
 /* Button */
