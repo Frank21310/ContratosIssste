@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
     {
         $useradmin=User::create([
             'empleado_num'=>'19920182',
-            'email'=>'admin@gmail.com',
+            'email'=>'administrador@admin.com',
             'password'=>Hash::make('admin'),
             'rol_id'=>'1',
         ]);
@@ -24,6 +24,12 @@ class UserSeeder extends Seeder
             'empleado_num'=>'19920153',
             'email'=>'alicegarciapacheco@gmail.com',
             'password'=>Hash::make('alis1234'),
+            'rol_id'=>'2',
+        ]);
+        User::create([
+            'empleado_num'=>'00000001',
+            'email'=>'admin@contratos.com',
+            'password'=>Hash::make('admin'),
             'rol_id'=>'2',
         ]);
     }

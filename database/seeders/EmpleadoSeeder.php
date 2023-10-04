@@ -30,5 +30,13 @@ class EmpleadoSeeder extends Seeder
             'cargo_id_cargo'=>'2',
             'dependencia_id_dependencia'=>'1',
         ]);
+        Empleado::create([
+            'num_empleado'=>'00000001',
+            'nombre'=>'Administrador',
+            'apellido_paterno'=>' Contratos ',
+            'apellido_materno'=>'Contratos',
+            'cargo_id_cargo'=>'3',
+            'dependencia_id_dependencia'=>'1',
+        ]);
     }
 }

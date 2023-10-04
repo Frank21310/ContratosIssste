@@ -13,8 +13,12 @@ return new class extends Migration
     {
         Schema::create('requesiciones', function (Blueprint $table) {
             $table->bigIncrements('id_requesicion');
-            $table->string('dependencia');
-            $table->string('area');
+            $table->foreignId('dependencia_id_dependencia')
+            ->references('id_dependencia')
+            ->on('dependencias');
+            $table->foreignId('area_id_area')
+            ->references('id_area')
+            ->on('areas');
             $table->date('fecha_elaboracion');
             $table->bigInteger('no_requesicion');
             $table->date('fecha_requerida');
