@@ -76,7 +76,6 @@
                                             <a href="" class="btn btn-info"><i class="fas fa-eye"></i></a>
                                             <a href="" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>
                                             <a href="" class="btn btn-danger"><i class="fas fa-trash"></i></a>
-
                                         </div>
                                     </td>
                                 </tr>
