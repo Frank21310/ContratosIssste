@@ -5,7 +5,7 @@
         <div class="card-header">
             <div class="row">
                 <div class="col">
-                    <h2 class="">Nueva Requesicion</h2>
+                    <h2 class="">Nueva requisición</h2>
                 </div>
                 <div class="col g-col-6 d-flex justify-content-end ">
                     <a id="BtnAgregar" href="{{route('Requesiciones.create')}}" class="btn btn-primary ml-auto">
@@ -20,8 +20,8 @@
 
         <div class="card-body">
             <div class="row">
-                <h3>Requesiciones elaboradas</h3>
-                <p>Tabla de requesiciones elaboradas</p>
+                <h3>Requisición elaboradas</h3>
+                <p>Tabla de Requisición elaboradas</p>
                 <div class="col-4">
                     <div class="form-group">
                         <a class="navbar-brand">Listar</a>
@@ -60,7 +60,7 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Numero de Requesicion</th>
+                                <th>Numero de requisición</th>
                                 <th>Dependencia</th>
                                 <th>Fecha de elaboracion</th>
                                 <th>Solicita</th>

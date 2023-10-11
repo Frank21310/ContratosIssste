@@ -65,7 +65,7 @@
         <div class="dropdown">
             <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle"
                 data-bs-toggle="dropdown" aria-expanded="false">
-                <strong>{{Auth::user()->empleado->nombre }}{{Auth::user()->empleado->apellido_paterno}}</strong>
+                <strong>{{Auth::user()->empleado->nombre }} {{Auth::user()->empleado->apellido_paterno}}</strong>
             </a>
             <ul class="dropdown-menu text-small shadow">
                 <li><a class="dropdown-item" href="{{ route('Empleados.show', Auth::user()->empleado->num_empleado) }}">Perfil</a></li>

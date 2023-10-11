@@ -22,6 +22,7 @@ return new class extends Migration
             $table->date('fecha_elaboracion');
             $table->bigInteger('no_requesicion');
             $table->date('fecha_requerida');
+            $table->string('lugar_entrega');
             $table->float('otros_gravamientos');
             $table->float('total');
             $table->string('anexos');

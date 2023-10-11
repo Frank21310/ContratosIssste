@@ -4,7 +4,7 @@
         <div class="card-header">
             <div class="row">
                 <div class="col">
-                    <h2 class="">Nueva requesicion</h2>
+                    <h2 class="">Nueva requisición</h2>
                 </div>
                 <div class="col g-col-6 d-flex justify-content-end ">
                     <a id="BtnAgregar" href="{{route('Requesiciones.index')}}" class="btn btn-primary ml-auto">
