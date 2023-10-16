@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('Cucops', function (Blueprint $table) {
-            $table->bigIncrements('id_cucop');
-            $table->bigInteger('tipo');
-            $table->bigInteger('clave_cucop');
-            $table->bigInteger('partida_especifica');
-            $table->string('descripcion');
-            $table->bigInteger('nivel');
-            $table->string('unidad_medida');
+        Schema::create('insumos_cucop', function (Blueprint $table) {
+            $table->string('cucop');
+            $table->foreignId('id_partida_especifica_id')
+            ->references('id_partida_especifica')
+            ->on('partidas_cucop'); 
+            $table->id('clave_cucop');
+            $table->string('descripcion_insumo');
+            $table->string('CABM');
             $table->string('tipo_contratacion');
             $table->timestamps();
         });
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('Cucops');
+        Schema::dropIfExists('insumos_cucop');
     }
 };

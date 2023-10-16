@@ -13,13 +13,19 @@ return new class extends Migration
     {
         Schema::create('detallerequesiciones', function (Blueprint $table) {
             $table->id();
+
             $table->foreignId('requesicion_id_requesicion')
             ->references('id_requesicion')
             ->on('requesiciones');
-            $table->bigInteger('num_partida');
+
+            $table->foreignId('num_partida')
+            ->references('id_partida_especifica')
+            ->on('partidas_cucop');
+
             $table->foreignId('cucop')
-            ->references('id_cucop')
-            ->on('Cucops');
+            ->references('clave_cucop')
+            ->on('insumos_cucop');
+
             $table->string('descripcion');
             $table->float('cantidad');
             $table->float('unidad_medida');

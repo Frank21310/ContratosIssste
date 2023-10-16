@@ -60,26 +60,23 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Tipo</th>
-                                <th>Clave CUPCoP</th>
+                                <th>CUPCoP</th>
+                                <th>CUPCoP +</th>
                                 <th>Partida Especifica</th>
                                 <th>Descripcion</th>
-                                <th>Nivel</th>
-                                <th>Unidad de medida</th>
+                                <th>CABM</th>
                                 <th>Tipos de contratacion</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($CUCops as $CUCop)
                                 <tr>
-                                    <td>{{ $CUCop->tipo}}</td>
-                                    <td>{{ $CUCop->clave_cucop }}</td>
-                                    <td>{{ $CUCop->partida_especifica }}</td>
-                                    <td>{{ $CUCop->descripcion }}</td>
-                                    <td>{{ $CUCop->nivel }}</td>
-                                    <td>{{ $CUCop->unidad_medida }}</td>
+                                    <td>{{ $CUCop->clave_cucop}}</td>
+                                    <td>{{ $CUCop->cucop }}</td>
+                                    <td>{{ $CUCop->id_partida_especifica_id }}</td>
+                                    <td>{{ $CUCop->descripcion_insumo }}</td>
+                                    <td>{{ $CUCop->CABM }}</td>
                                     <td>{{ $CUCop->tipo_contratacion }}</td>
-
                                 </tr>
                             @endforeach
                         </tbody>

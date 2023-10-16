@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cucops;
+use App\Models\Insumos_cucop;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 
@@ -26,17 +27,17 @@ class CUCoPsController extends Controller
      */
     public function index(Request $request)
     {
-        $CUCops = Cucops::select('*')->orderBy('tipo', 'ASC');
+        $CUCops = Insumos_cucop::select('*')->orderBy('clave_cucop', 'ASC');
         $limit = (isset($request->limit)) ? $request->limit : 10;
 
         if (isset($request->search)) {
             $CUCops = $CUCops
-                ->where('tipo', 'like', '%' . $request->search . '%')
-                ->orWhere('clave_cucop', 'like', '%' . $request->search . '%')
-                ->orWhere('partida_especifica', 'like', '%' . $request->search . '%')
-                ->orWhere('descripcion', 'like', '%' . $request->search . '%')
-                ->orWhere('nivel', 'like', '%' . $request->search . '%')
-                ->orWhere('unidad_medida', 'like', '%' . $request->search . '%');
+                ->where('clave_cucop', 'like', '%' . $request->search . '%')
+                ->orWhere('cucop', 'like', '%' . $request->search . '%')
+                ->orWhere('id_partida_especifica_id', 'like', '%' . $request->search . '%')
+                ->orWhere('descripcion_insumo', 'like', '%' . $request->search . '%')
+                ->orWhere('CABM', 'like', '%' . $request->search . '%')
+                ->orWhere('tipo_contratacion', 'like', '%' . $request->search . '%');
         }
         $CUCops = $CUCops->paginate($limit)->appends($request->all());
         return view('CUCop.index', compact('CUCops'));
