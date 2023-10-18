@@ -23,7 +23,7 @@ return new class extends Migration
             ->on('partidas_cucop');
 
             $table->foreignId('cucop')
-            ->references('clave_cucop')
+            ->references('id_cucop')
             ->on('insumos_cucop');
 
             $table->string('descripcion');

@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Area;
 use App\Models\Condicion;
+use App\Models\DetalleRequesicion;
 use App\Models\Garantia;
 use App\Models\Insumos_cucop;
 use App\Models\Pais;
 use App\Models\Partidas_cucop;
 use App\Models\Requesicion;
+use Database\Seeders\PartidaSeeder;
 use Illuminate\Http\Request;
 
 class RequesicionesController extends Controller
@@ -38,17 +40,13 @@ class RequesicionesController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
         $areas  = Area::all();
         $condiciones  = Condicion::all();
         $garantias  = Garantia::all();
         $paises  = Pais::all();
-
         $partidas = Partidas_cucop::all();
-
-
-        $insumos = Insumos_cucop::all();
 
 
         return view('Requesiciones.create', compact(
@@ -57,30 +55,37 @@ class RequesicionesController extends Controller
             'condiciones',
             'paises',
             'partidas',
-            'insumos'
         ));
     }
 
-    public function cargarInsumos( $id_partida)
+
+    public function claveCucop( Request $request)
     {
-        $insumos = Insumos_cucop::where('id_partida', $id_partida)->get();
+         $nPartida = $request->input('nPartida');
 
-        return response()->json($insumos);
+         $insumos = Insumos_cucop::where('id_partida_especifica_id', $nPartida)->get();
+ 
+         // Prepara un arreglo de resultados
+        $resultados = [];
+         foreach ($insumos as $insumo) {
+             $resultados[] = [
+                 'clave_cucop' => $insumo->clave_cucop,
+                 'descripcion_insumo' => $insumo->descripcion_insumo,
+             ];
+         }
+ 
+         // Devuelve los resultados en formato JSON
+         return response()->json($resultados);
     }
+    
+     public function fclaveCucop(Request $request)
+    {
+        // Aquí obtén los datos de la base de datos, por ejemplo:
+        $partidaId  = $request->input('nPartida');
+        $data = Insumos_cucop::where('id_partida_especifica_id', $partidaId )->get();
 
-
-
-
-    /*public function getinsumos($idpartidas) {
-        $models = Insumos_cucop::where('id_partida_especifica_id' == $idpartidas)->get();
-        $html = '<option value="">Seleccione un modelo</option>';
-
-        foreach ($models as $model) {
-            $html .= "<option value='{$model->cucop}'>{$model->descripcion_insumo}</option>";
-        }
-
-        return $html;
-    }*/
+        return response()->json($data);
+    }
 
     /**
      * Store a newly created resource in storage.

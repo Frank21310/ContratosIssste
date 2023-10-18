@@ -57,27 +57,23 @@
         <select class="form-control" id="partida">
             <option value="">Seleccione la partida</option>
             @foreach ($partidas as $partida)
-                <option value="{{$partida->id_partida_especifica}}">
+                <option value="{{ $partida->id_partida_especifica }}">
                     {{ $partida->id_partida_especifica }}, {{ $partida->descripcion }}
                 </option>
             @endforeach
         </select>
     </div>
-    
+
     <div class="col mx-auto p-2">
         <label>CUCoP:</label>
-        <select class="form-control" id="insumoCucop">
+        <select class="form-control" id="a">
             <option value="">Selecciona</option>
         </select>
     </div>
     <div class="col mx-auto p-2">
         <label>Descripcion:</label>
-        <select class="form-control" id="condiciones">
-            @foreach ($insumos as $insumo)
-                <option name="pais_id_pais"
-                    value="{{ isset($requisicion) ? $requisicion->pais_id_pais : old('pais_id_pais') }}">
-                    {{ $insumo->descripcion_insumo }}</option>
-            @endforeach
+        <select class="form-control" id="insumoCucop">
+           
         </select>
     </div>
     <div class="col mx-auto p-2">
@@ -323,29 +319,34 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     // Manejar el cambio en el primer select
-    $('#partida').on('change', function () {
-        
+    $('#partida').on('change', function() {
         var partidaId = $(this).val();
-        
+
         if (partidaId) {
-            alert(partidaId);
             $.ajax({
-                type: "GET",
-                url: "{{ route('./Requesiciones/create', '') }}/" + partidaId,
-                success: function (data) {
-                    
-                    $('#insumoCucop').empty();
-                    $('#insumoCucop').append('<option value="">Sele</option>');
-                    $.each(data, function (key, value) {
-                        $('#insumoCucop').append('<option value="' + value.clave_cucop + '">' + value.descripcion_insumo + '</option>');
+                url: "{{ route('fclaveCucop') }}", // Ruta correcta
+                method: 'get',
+                data: {
+                    nPartida: partidaId
+                },
+                success: function(data) {
+                    alert(partidaId);
+                    var select = $('#insumoCucop');
+                    select.empty();
+                    select.append('<option value="">Selecciona un insumo</option>');
+
+                    $.each(data, function(index, item) {
+                        select.append('<option value="' + item.clave_cucop + '">' + item
+                            .descripcion_insumo + '</option>');
                     });
+
                 }
             });
         } else {
             $('#insumoCucop').empty();
-            $('#insumoCucop').append('<option value="">Seleca</option>');
+            $('#insumoCucop').append('<option value="">Sin valores</option>');
         }
-    })
+    });
 </script>
 
 <script type="text/javascript">
@@ -354,7 +355,6 @@
         $('.add-btn').click(function(e) {
             e.preventDefault();
             i++;
-
             $('.newData').append('<div id="newRow' + i + '" class="row">' +
                 '<div class="col mx-auto p-2">' +
                 '<label>Num. Partida:</label>' +
@@ -368,23 +368,11 @@
                 '</div>' +
                 ' <div class="col mx-auto p-2">' +
                 ' <label>CUCoP:</label>' +
-                '<select class="form-control" id="condiciones">' +
-                '@foreach ($insumos as $insumo)' +
-                '<option name="pais_id_pais" value="{{ isset($requisicion) ? $requisicion->partida : old('partida') }}">' +
-                '{{ $insumo->clave_cucop }}' +
-                '</option>' +
-                '@endforeach' +
-                '</select>' +
+                
                 ' </div>' +
                 ' <div class="col mx-auto p-2">' +
                 ' <label>Descripcion:</label>' +
-                '<select class="form-control" id="condiciones">' +
-                '@foreach ($insumos as $insumo)' +
-                '<option name="pais_id_pais" value="{{ isset($requisicion) ? $requisicion->partida : old('partida') }}">' +
-                '{{ $insumo->descripcion_insumo }}' +
-                '</option>' +
-                '@endforeach' +
-                '</select>' +
+                
                 ' </div>' +
                 ' <div class="col mx-auto p-2">' +
                 ' <label>Cantidad Solicitada:</label>' +
@@ -420,8 +408,6 @@
 
     });
 </script>
-
-
 
 
 @push('scripts')

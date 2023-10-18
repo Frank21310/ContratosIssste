@@ -21,52 +21,38 @@ use App\Http\Controllers\UsuariosController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
 Route::get('/', function () {
     return view('welcome');
 });
 
 Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes Administrador
 |--------------------------------------------------------------------------
 */
-Route::group(['middleware'=>['auth']],function(){
+Route::group(['middleware' => ['auth']], function () {
     Route::get('/Administrador', [SoloAdminController::class, 'index'])->name(' administrador');
     Route::resource('roles', RolesController::class);
     Route::resource('Empleados', EmpleadosController::class);
     Route::resource('Usuarios', UsuariosController::class);
-
 })->namespace('root');
-
-Route::group(['middleware'=>['auth']],function(){
-
-    Route::get('/Peticiones', [SoloPeticionesController::class, 'index'])->name(' peticiones');
-
-    Route::get('/Requesiciones/create', [RequesicionesController::class, 'create']);
-
-    Route::get('./Requesiciones/create/{id_partida}', 'RequesicionesController@cargarInsumos')->name('./Requesiciones/create');
-
+/*
+|--------------------------------------------------------------------------
+| Web Routes peticiones
+|--------------------------------------------------------------------------
+*/
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/fclaveCucop', [RequesicionesController::class, 'fclaveCucop'])->name('fclaveCucop');
 
     Route::resource('Requesiciones', RequesicionesController::class);
     Route::resource('CUCop', CUCoPsController::class);
 
 
-
-
 })->namespace('Peticiones');
-
-
-
-
-
 /*
 |----------------------------------------------------------------- ---------
-| Web Routes Peticiones
+| Web Routes administradorContratos
 |--------------------------------------------------------------------------
 */
-
-
