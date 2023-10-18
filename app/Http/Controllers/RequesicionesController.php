@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Area;
 use App\Models\Condicion;
-use App\Models\Cucops;
 use App\Models\Garantia;
+use App\Models\Insumos_cucop;
 use App\Models\Pais;
+use App\Models\Partidas_cucop;
 use App\Models\Requesicion;
 use Illuminate\Http\Request;
 
@@ -43,10 +44,43 @@ class RequesicionesController extends Controller
         $condiciones  = Condicion::all();
         $garantias  = Garantia::all();
         $paises  = Pais::all();
-        $cucops = Cucops::all();
 
-        return view('Requesiciones.create', compact('areas', 'garantias','condiciones','paises','cucops'));
+        $partidas = Partidas_cucop::all();
+
+
+        $insumos = Insumos_cucop::all();
+
+
+        return view('Requesiciones.create', compact(
+            'areas',
+            'garantias',
+            'condiciones',
+            'paises',
+            'partidas',
+            'insumos'
+        ));
     }
+
+    public function cargarInsumos( $id_partida)
+    {
+        $insumos = Insumos_cucop::where('id_partida', $id_partida)->get();
+
+        return response()->json($insumos);
+    }
+
+
+
+
+    /*public function getinsumos($idpartidas) {
+        $models = Insumos_cucop::where('id_partida_especifica_id' == $idpartidas)->get();
+        $html = '<option value="">Seleccione un modelo</option>';
+
+        foreach ($models as $model) {
+            $html .= "<option value='{$model->cucop}'>{$model->descripcion_insumo}</option>";
+        }
+
+        return $html;
+    }*/
 
     /**
      * Store a newly created resource in storage.

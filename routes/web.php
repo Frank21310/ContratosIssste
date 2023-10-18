@@ -43,9 +43,18 @@ Route::group(['middleware'=>['auth']],function(){
 })->namespace('root');
 
 Route::group(['middleware'=>['auth']],function(){
+
     Route::get('/Peticiones', [SoloPeticionesController::class, 'index'])->name(' peticiones');
+
+    Route::get('/Requesiciones/create', [RequesicionesController::class, 'create']);
+
+    Route::get('./Requesiciones/create/{id_partida}', 'RequesicionesController@cargarInsumos')->name('./Requesiciones/create');
+
+
     Route::resource('Requesiciones', RequesicionesController::class);
     Route::resource('CUCop', CUCoPsController::class);
+
+
 
 
 })->namespace('Peticiones');
