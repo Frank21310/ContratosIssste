@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Pais;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,11 @@ class PaisSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Pais::create([
+            'nombre_pais'=>'Mexico',
+        ]);
+        Pais::create([
+            'nombre_pais'=>'Estados Unidos',
+        ]);
     }
 }

@@ -10,6 +10,7 @@ use App\Models\Insumos_cucop;
 use App\Models\Pais;
 use App\Models\Partidas_cucop;
 use App\Models\Requesicion;
+use App\Models\Unidad_medida;
 use Database\Seeders\PartidaSeeder;
 use Illuminate\Http\Request;
 
@@ -20,6 +21,7 @@ class RequesicionesController extends Controller
      *
      * @return void
      */
+    
     public function __construct()
     {
         $this->middleware('auth');
@@ -47,7 +49,7 @@ class RequesicionesController extends Controller
         $garantias  = Garantia::all();
         $paises  = Pais::all();
         $partidas = Partidas_cucop::all();
-
+        $unidades = Unidad_medida::all();
 
         return view('Requesiciones.create', compact(
             'areas',
@@ -55,34 +57,16 @@ class RequesicionesController extends Controller
             'condiciones',
             'paises',
             'partidas',
+            'unidades',
         ));
     }
 
-
-    public function claveCucop( Request $request)
+    public function fclaveCucop(Request $request)
     {
-         $nPartida = $request->input('nPartida');
 
-         $insumos = Insumos_cucop::where('id_partida_especifica_id', $nPartida)->get();
- 
-         // Prepara un arreglo de resultados
-        $resultados = [];
-         foreach ($insumos as $insumo) {
-             $resultados[] = [
-                 'clave_cucop' => $insumo->clave_cucop,
-                 'descripcion_insumo' => $insumo->descripcion_insumo,
-             ];
-         }
- 
-         // Devuelve los resultados en formato JSON
-         return response()->json($resultados);
-    }
-    
-     public function fclaveCucop(Request $request)
-    {
-        // Aquí obtén los datos de la base de datos, por ejemplo:
         $partidaId  = $request->input('nPartida');
-        $data = Insumos_cucop::where('id_partida_especifica_id', $partidaId )->get();
+        $data = Insumos_cucop::where('id_partida_especifica_id', $partidaId)->get();
+        $datacucopid  = $request->input('datacucop');
 
         return response()->json($data);
     }
@@ -93,10 +77,29 @@ class RequesicionesController extends Controller
     public function store(Request $request)
     {
         $requisicion = new Requesicion();
+        $detallerequisicion = new DetalleRequesicion();
         $requisicion = $this->createUpdateRol($request, $requisicion);
         return redirect()
             ->route('Requesiciones.index3');
+
+        $detallerequisicion = $this->createUpdateRol($request, $detallerequisicion);
+        return redirect()
+            ->route('Requesiciones.index3');
     }
+    public function createUpdateDetalleRequisicion(Request $request, $detallerequisicion)
+    {
+        $detallerequisicion->requesicion_id_requesicion = $request->requesicion_id_requesicion;
+        $detallerequisicion->num_partida = $request->num_partida;
+        $detallerequisicion->cucop = $request->cucop;
+        $detallerequisicion->descripcion = $request->descripcion;
+        $detallerequisicion->cantidad = $request->cantidad;
+        $detallerequisicion->unidad_medida = $request->unidad_medida;
+        $detallerequisicion->precio = $request->precio;
+        $detallerequisicion->importe = $request->importe;
+        $detallerequisicion->save();
+        return  $detallerequisicion;
+    }
+
     public function createUpdateRequisicion(Request $request, $requisicion)
     {
         $requisicion->dependencia_id_dependencia = $request->dependencia_id_dependencia;

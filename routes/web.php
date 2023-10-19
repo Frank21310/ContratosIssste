@@ -44,6 +44,9 @@ Route::group(['middleware' => ['auth']], function () {
 |--------------------------------------------------------------------------
 */
 Route::group(['middleware' => ['auth']], function () {
+    
+    Route::get('/Peticiones', [SoloPeticionesController::class, 'index'])->name(' Peticiones');
+
     Route::get('/fclaveCucop', [RequesicionesController::class, 'fclaveCucop'])->name('fclaveCucop');
 
     Route::resource('Requesiciones', RequesicionesController::class);

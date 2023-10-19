@@ -31,3 +31,4 @@
         ' <a href="" class="remove-lnk" class="btn btn-danger me-md-2 mt-2"><i class="fas fa-trash"></i></a>' +
         ' </div>' +    
 '</div>'
+

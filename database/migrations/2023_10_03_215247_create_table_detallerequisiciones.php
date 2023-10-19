@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('detallerequesiciones', function (Blueprint $table) {
+        Schema::create('detallerequisiciones', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('requesicion_id_requesicion')
-            ->references('id_requesicion')
-            ->on('requesiciones');
+            $table->foreignId('requisicion_id')
+            ->references('id_requisicion')
+            ->on('requisiciones');
 
             $table->foreignId('num_partida')
             ->references('id_partida_especifica')
@@ -28,7 +28,11 @@ return new class extends Migration
 
             $table->string('descripcion');
             $table->float('cantidad');
-            $table->float('unidad_medida');
+
+            $table->foreignId('unidad_medida')
+            ->references('idunidad_medida')
+            ->on('unidad_medida');
+
             $table->float('precio');
             $table->float('importe');
             $table->timestamps();
@@ -40,6 +44,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('detallerequesiciones');
+        Schema::dropIfExists('detallerequisiciones');
     }
 };

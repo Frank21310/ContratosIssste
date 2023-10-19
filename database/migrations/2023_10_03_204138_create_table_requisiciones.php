@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('requesiciones', function (Blueprint $table) {
-            $table->bigIncrements('id_requesicion');
+        Schema::create('requisiciones', function (Blueprint $table) {
+            $table->bigIncrements('id_requisicion');
             $table->foreignId('dependencia_id_dependencia')
             ->references('id_dependencia')
             ->on('dependencias');
@@ -64,6 +64,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('requesiciones');
+        Schema::dropIfExists('requisiciones');
     }
 };

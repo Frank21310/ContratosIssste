@@ -13,13 +13,14 @@ class AreaSeeder extends Seeder
      */
     public function run(): void
     {
+        
         Area::create([
             'nombre_area'=>'Direccion',
             'dependencia_id_dependencia'=>'1'
         ]);
         Area::create([
             'nombre_area'=>'Administracion',
-            'dependencia_id_dependencia'=>'1'
+            'dependencia_id_dependencia'=>'1' 
         ]);
         Area::create([
             'nombre_area'=>'Finanzas',

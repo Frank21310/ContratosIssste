@@ -1,10 +1,10 @@
 @csrf
-
 <div class="row">
-    {{-- Dependencia entidad --}}
+    {{-- Dependencia --}}
     <div class="col">
         <label>Nombre de la dependencia o entidad:</label>
-        <span type="text" name="nombre" value="{{ isset($requisicion) ? $requisicion->nombre : old('nombre') }}"
+        <span type="text" name="dependencia_id_dependencia"
+            value="{{ isset($requisicion) ? $requisicion->dependencia_id_dependencia : old('dependencia_id_dependencia') }}"
             class="form-control">{{ Auth::user()->empleado->dependenciaempleado->nombre }}</span>
     </div>
     {{-- Area Requeriente  --}}
@@ -19,12 +19,13 @@
         </select>
     </div>
 </div>
+
 <div class="row">
     {{-- Fecha de elaboracion --}}
     <div class="col">
         <label>Fecha de elaboracion:</label>
         <input type="date" class="form-control" name="fecha_elaboracion	"
-            value="{{ isset($requisicion) ? $requisicion->fecha_elaboracion : old('fecha_elaboracion	') }}">
+            value="{{ isset($requisicion) ? $requisicion->fecha_elaboracion : old('fecha_elaboracion') }}">
     </div>
     {{-- Numero de requisicion --}}
     <div class="col">
@@ -51,109 +52,117 @@
 
 <hr>
 
+{{-- Detalle requisicion --}}
 <div class="row">
+    {{-- Numero de partida --}}
     <div class="col mx-auto p-2">
         <label>Num. Partida:</label>
         <select class="form-control" id="partida">
             <option value="">Seleccione la partida</option>
             @foreach ($partidas as $partida)
-                <option value="{{ $partida->id_partida_especifica }}">
+                <option name="num_partida" value="{{ $partida->id_partida_especifica }}"
+                    value="{{ isset($detallerequisicion) ? $detallerequisicion->num_partida : old('num_partida') }}"
+                    class="form-control">
                     {{ $partida->id_partida_especifica }}, {{ $partida->descripcion }}
                 </option>
             @endforeach
         </select>
     </div>
-
+    {{-- Clave Cucop --}}
     <div class="col mx-auto p-2">
         <label>CUCoP:</label>
-        <select class="form-control" id="a">
-            <option value="">Selecciona</option>
-        </select>
+        <span id="cucop" type="text" class="form-control" name="cucop"
+            value="{{ isset($detallerequisicion) ? $detallerequisicion->cucop : old('cucop') }}">Clave</span>
     </div>
+    {{-- descripcion --}}
     <div class="col mx-auto p-2">
         <label>Descripcion:</label>
         <select class="form-control" id="insumoCucop">
-           
+            <option id="insumoCucopoption" class="form-control" name="descripcion"
+                value="{{ isset($detallerequisicion) ? $detallerequisicion->descripcion : old('descripcion') }}">
+            </option>
         </select>
     </div>
+    {{-- Cantidad --}}
     <div class="col mx-auto p-2">
         <label>Cantidad Solicitada:</label>
-        <input type="number" min="0" placeholder="1.0" step="0.01" class="form-control">
+        <input type="number" min="0" placeholder="1.0" step="0.01" class="form-control" name="cantidad"
+            value="{{ isset($detallerequisicion) ? $detallerequisicion->cantidad : old('cantidad') }}">
 
     </div>
+    {{-- Unidad --}}
     <div class="col mx-auto p-2">
         <label>Unidad de medida:</label>
         <select class="form-control" id="condiciones">
-            <option name="pais_id_pais"
-                value="{{ isset($requisicion) ? $requisicion->pais_id_pais : old('pais_id_pais') }}">
-
-                Servicio</option>
-            <option name="pais_id_pais"
-                value="{{ isset($requisicion) ? $requisicion->pais_id_pais : old('pais_id_pais') }}">
-
-                Pieza</option>
-            <option name="pais_id_pais"
-                value="{{ isset($requisicion) ? $requisicion->pais_id_pais : old('pais_id_pais') }}">
-
-                Kilogramo</option>
-            <option name="pais_id_pais"
-                value="{{ isset($requisicion) ? $requisicion->pais_id_pais : old('pais_id_pais') }}">
-
-                Litro</option>
-
+            @foreach ($unidades as $unidad)
+                <option name="area_id_area"
+                    value="{{ isset($requisicion) ? $requisicion->area_id_area : old('area_id_area') }}">
+                    {{ $unidad->descripcion_unidad }}</option>
+            @endforeach
         </select>
     </div>
+    {{-- Precio --}}
     <div class="col mx-auto p-2">
         <label>Precio: </label>
-        <input type="number" class="form-control">
+        <input type="number" class="form-control" name="precio"
+            value="{{ isset($detallerequisicion) ? $detallerequisicion->precio : old('precio') }}">
     </div>
+    {{-- Importe --}}
     <div class="col mx-auto p-2">
         <label>Importe:</label>
-        <input type="text" class="form-control">
+        <input type="number" class="form-control" name="importe"
+            value="{{ isset($detallerequisicion) ? $detallerequisicion->importe : old('importe') }}">
     </div>
+    {{-- Boton de agregar --}}
     <div class=" col-1 d-flex align-items-center justify-content-md-end">
         <a href="" class="btn add-btn btn-info me-md-2 mt-4"><i class="fas fa-plus"></i></a>
     </div>
 
 
 </div>
+{{-- Div que agrega mas partidas --}}
 <div class="newData"></div>
+
+{{-- Boton de agregar --}}
 <div class=" col d-flex align-items-center justify-content-md-end">
     <a href="" class="btn add-btn btn-info me-md-2 mt-2"><i class="fas fa-plus"></i></a>
 </div>
-<div>
-    <hr>
-    <div class="row">
-        <div class="col mx-auto p-2  d-flex align-items-end flex-column">
-            <label>Sub Total: </label>
-        </div>
-        <div class="col-4 mx-auto p-2  d-flex align-items-end flex-column">
-            <input type="text" class="form-control" disabled>
-        </div>
+
+
+<hr>
+
+{{-- Sub Total --}}
+<div class="row">
+    <div class="col mx-auto p-2  d-flex align-items-end flex-column">
+        <label>Sub Total: </label>
     </div>
-    <div class="row">
-        <div class="col mx-auto p-2  d-flex align-items-end flex-column">
-            <label>I.V.A: </label>
-        </div>
-        <div class="col-4  mx-auto p-2  d-flex align-items-end flex-column">
-            <input type="text" class="form-control" disabled>
-        </div>
+    <div class="col-4 mx-auto p-2  d-flex align-items-end flex-column">
+        <input type="text" class="form-control" disabled>
     </div>
-    <div class="row">
-        <div class="col mx-auto p-2  d-flex align-items-end flex-column">
-            <label>Otros Gravamientos: </label>
-        </div>
-        <div class="col-4  mx-auto p-2  d-flex align-items-end flex-column">
-            <input type="text" class="form-control">
-        </div>
+</div>
+
+<div class="row">
+    <div class="col mx-auto p-2  d-flex align-items-end flex-column">
+        <label>I.V.A: </label>
     </div>
-    <div class="row">
-        <div class="col mx-auto p-2  d-flex align-items-end flex-column">
-            <label>Total: </label>
-        </div>
-        <div class="col-4  mx-auto p-2  d-flex align-items-end flex-column">
-            <input type="text" class="form-control" disabled>
-        </div>
+    <div class="col-4  mx-auto p-2  d-flex align-items-end flex-column">
+        <input type="text" class="form-control" disabled>
+    </div>
+</div>
+<div class="row">
+    <div class="col mx-auto p-2  d-flex align-items-end flex-column">
+        <label>Otros Gravamientos: </label>
+    </div>
+    <div class="col-4  mx-auto p-2  d-flex align-items-end flex-column">
+        <input type="text" class="form-control">
+    </div>
+</div>
+<div class="row">
+    <div class="col mx-auto p-2  d-flex align-items-end flex-column">
+        <label>Total: </label>
+    </div>
+    <div class="col-4  mx-auto p-2  d-flex align-items-end flex-column">
+        <input type="text" class="form-control" disabled>
     </div>
 </div>
 
@@ -317,38 +326,6 @@
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    // Manejar el cambio en el primer select
-    $('#partida').on('change', function() {
-        var partidaId = $(this).val();
-
-        if (partidaId) {
-            $.ajax({
-                url: "{{ route('fclaveCucop') }}", // Ruta correcta
-                method: 'get',
-                data: {
-                    nPartida: partidaId
-                },
-                success: function(data) {
-                    alert(partidaId);
-                    var select = $('#insumoCucop');
-                    select.empty();
-                    select.append('<option value="">Selecciona un insumo</option>');
-
-                    $.each(data, function(index, item) {
-                        select.append('<option value="' + item.clave_cucop + '">' + item
-                            .descripcion_insumo + '</option>');
-                    });
-
-                }
-            });
-        } else {
-            $('#insumoCucop').empty();
-            $('#insumoCucop').append('<option value="">Sin valores</option>');
-        }
-    });
-</script>
-
 <script type="text/javascript">
     $(function() {
         var i = 1;
@@ -356,40 +333,66 @@
             e.preventDefault();
             i++;
             $('.newData').append('<div id="newRow' + i + '" class="row">' +
+                '<div class="row">' +
+                '{{-- Numero de partida --}}' +
                 '<div class="col mx-auto p-2">' +
                 '<label>Num. Partida:</label>' +
-                '<select class="form-control" id="condiciones">' +
+                '<select class="form-control" id="partida">' +
+                '<option value="">Seleccione la partida</option>' +
                 '@foreach ($partidas as $partida)' +
-                '<option name="pais_id_pais" value="{{ isset($requisicion) ? $requisicion->partida : old('partida') }}">' +
-                '{{ $partida->id_partida_especifica }}' +
+                '<option name="num_partida" value="{{ $partida->id_partida_especifica }}"' +
+                'value="{{ isset($detallerequisicion) ? $detallerequisicion->num_partida : old('num_partida') }}"' +
+                'class="form-control">' +
+                '{{ $partida->id_partida_especifica }}, {{ $partida->descripcion }}' +
                 '</option>' +
                 '@endforeach' +
                 '</select>' +
                 '</div>' +
-                ' <div class="col mx-auto p-2">' +
-                ' <label>CUCoP:</label>' +
-                
-                ' </div>' +
-                ' <div class="col mx-auto p-2">' +
-                ' <label>Descripcion:</label>' +
-                
-                ' </div>' +
-                ' <div class="col mx-auto p-2">' +
-                ' <label>Cantidad Solicitada:</label>' +
-                ' <input type="text" class="form-control">' +
-                ' </div>' +
-                ' <div class="col mx-auto p-2">' +
-                ' <label>Unidad de medida:</label>' +
-                ' <input type="text" class="form-control">' +
-                ' </div>' +
-                ' <div class="col mx-auto p-2">' +
-                ' <label>Precio: </label>' +
-                ' <input type="text" class="form-control">' +
-                ' </div>' +
-                ' <div class="col mx-auto p-2">' +
-                ' <label>Importe:</label>' +
-                ' <input type="text" class="form-control">' +
-                ' </div>' +
+                '{{-- Clave Cucop --}}' +
+                '<div class="col mx-auto p-2">' +
+                '<label>CUCoP:</label>' +
+                '<span id="cucop" type="text" class="form-control" name="cucop"' +
+                'value="{{ isset($detallerequisicion) ? $detallerequisicion->cucop : old('cucop') }}">Clave</span>' +
+                '</div>' +
+                '{{-- descripcion --}}' +
+                '<div class="col mx-auto p-2">' +
+                '<label>Descripcion:</label>' +
+                '<select class="form-control" id="insumoCucop">' +
+                '<option id="insumoCucopoption" class="form-control" name="descripcion"' +
+                'value="{{ isset($detallerequisicion) ? $detallerequisicion->descripcion : old('descripcion') }}">' +
+                '</option>' +
+                '</select>' +
+                '</div>' +
+                '{{-- Cantidad --}}' +
+                '<div class="col mx-auto p-2">' +
+                '<label>Cantidad Solicitada:</label>' +
+                '<input type="number" min="0" placeholder="1.0" step="0.01" class="form-control" name="cantidad"' +
+                'value="{{ isset($detallerequisicion) ? $detallerequisicion->cantidad : old('cantidad') }}">' +
+                '</div>' +
+                '{{-- Unidad --}}' +
+                '<div class="col mx-auto p-2">' +
+                '<label>Unidad de medida:</label>' +
+                '<select class="form-control" id="condiciones">' +
+                '@foreach ($unidades as $unidad)' +
+                '<option name="area_id_area"' +
+                'value="{{ isset($requisicion) ? $requisicion->area_id_area : old('area_id_area') }}">' +
+                '{{ $unidad->descripcion_unidad }}</option>' +
+                '@endforeach' +
+                '</select>' +
+                '</div>' +
+                '{{-- Precio --}}' +
+                '<div class="col mx-auto p-2">' +
+                '<label>Precio: </label>' +
+                '<input type="number" class="form-control" name="precio"' +
+                'value="{{ isset($detallerequisicion) ? $detallerequisicion->precio : old('precio') }}">' +
+                '</div>' +
+                '{{-- Importe --}}' +
+                '<div class="col mx-auto p-2">' +
+                '<label>Importe:</label>' +
+                '<input type="number" class="form-control" name="importe"' +
+                'value="{{ isset($detallerequisicion) ? $detallerequisicion->importe : old('importe') }}">' +
+                '</div>' +
+                '{{-- Boton de agregar --}}' +
                 ' <div class="col-1  d-flex align-items-center justify-content-md-end">' +
                 ' <a href="" id="' + i +
                 '" class="btn remove-lnk btn-danger me-md-2 mt-4"><i class="fas fa-trash"></i></a>' +
@@ -408,7 +411,53 @@
 
     });
 </script>
+<script>
+    // Manejar el cambio en el primer select
+    $('#partida').on('change', function() {
+        var partidaId = $(this).val();
 
+        if (partidaId) {
+            $.ajax({
+                url: "{{ route('fclaveCucop') }}", // Ruta correcta
+                method: 'get',
+                data: {
+                    nPartida: partidaId
+                },
+                success: function(data) {
+                    var select = $('#insumoCucop');
+                    select.empty();
+                    select.append('<option id="datacucop" value="">Selecciona un insumo</option>');
+
+                    $.each(data, function(index, item) {
+                        select.append('<option value="' + item.clave_cucop + '">' + item
+                            .descripcion_insumo + '</option>');
+
+                    });
+                }
+
+            });
+        } else {
+            $('#insumoCucop').empty();
+            $('#insumoCucop').append('<option value="">Sin valores</option>');
+        }
+    });
+</script>
+
+<script>
+    // Obtén una referencia al span y al select
+    const spanCucop = document.getElementById('cucop');
+    const selectInsumoCucop = document.getElementById('insumoCucop');
+
+    // Escucha el evento 'change' en el select
+    selectInsumoCucop.addEventListener('change', function() {
+        // Obtiene el valor seleccionado del select
+        const selectedOption = selectInsumoCucop.options[selectInsumoCucop.selectedIndex];
+        const selectedId = selectedOption.value; // Suponiendo que el valor de la opción es el ID
+
+        // Actualiza el contenido del span con el ID seleccionado
+        spanCucop.textContent = selectedId;
+    });
+</script>
 
 @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
