@@ -78,14 +78,15 @@ class RequesicionesController extends Controller
     {
         $requisicion = new Requesicion();
         $detallerequisicion = new DetalleRequesicion();
-        $requisicion = $this->createUpdateRol($request, $requisicion);
+        $requisicion = $this->createUpdateRequisicion($request, $requisicion);
         return redirect()
-            ->route('Requesiciones.index3');
+            ->route('Requesiciones.index');
 
-        $detallerequisicion = $this->createUpdateRol($request, $detallerequisicion);
+        $detallerequisicion = $this->createUpdateDetalleRequisicion($request, $detallerequisicion);
         return redirect()
-            ->route('Requesiciones.index3');
+            ->route('Requesiciones.index');
     }
+
     public function createUpdateDetalleRequisicion(Request $request, $detallerequisicion)
     {
         $detallerequisicion->requesicion_id_requesicion = $request->requesicion_id_requesicion;
@@ -107,6 +108,7 @@ class RequesicionesController extends Controller
         $requisicion->fecha_elaboracion = $request->fecha_elaboracion;
         $requisicion->no_requesicion = $request->no_requesicion;
         $requisicion->fecha_requerida = $request->fecha_requerida;
+        $requisicion->lugar_entrega = $request->lugar_entrega;
         $requisicion->otros_gravamientos = $request->otros_gravamientos;
         $requisicion->total = $request->total;
         $requisicion->anexos = $request->anexos;

@@ -11,13 +11,14 @@ class Requesicion extends Model
 {
     use HasFactory;
     protected $primaryKey = 'id_requesicion';
-    protected $table = 'requesiciones';
+    protected $table = 'requisiciones';
     protected $fillable = [
         'dependencia_id_dependencia',
         'area_id_area',
         'fecha_elaboracion',
         'no_requesicion',
         'fecha_requerida',
+        'lugar_entrega'.
         'otros_gravamientos',
         'total',
         'anexos',
