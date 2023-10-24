@@ -32,3 +32,6 @@
         ' </div>' +    
 '</div>'
 
+spanElements.forEach((span) => {
+    span.addEventListener('input', calcularSubTotal);
+});

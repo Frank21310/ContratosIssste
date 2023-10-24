@@ -48,7 +48,7 @@
                 <li class="{{ 'Requesiciones' == Request::is('Requesiciones*') ? 'active' : '' }}">
                     <a href="{{ route('Requesiciones.index') }}" class="nav-link link-body-emphasis">
                         <i class="fas fa-plus"></i>
-                        Requesiciones
+                        Requisiciones
                     </a>
                 </li>
 
