@@ -18,7 +18,7 @@ class Requesicion extends Model
         'fecha_elaboracion',
         'no_requesicion',
         'fecha_requerida',
-        'lugar_entrega'.
+        'lugar_entrega',
         'otros_gravamientos',
         'total',
         'anexos',

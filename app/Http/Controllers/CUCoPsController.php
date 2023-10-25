@@ -33,7 +33,6 @@ class CUCoPsController extends Controller
         if (isset($request->search)) {
             $CUCops = $CUCops
                 ->where('clave_cucop', 'like', '%' . $request->search . '%')
-                ->orWhere('cucop', 'like', '%' . $request->search . '%')
                 ->orWhere('id_partida_especifica_id', 'like', '%' . $request->search . '%')
                 ->orWhere('descripcion_insumo', 'like', '%' . $request->search . '%')
                 ->orWhere('CABM', 'like', '%' . $request->search . '%')

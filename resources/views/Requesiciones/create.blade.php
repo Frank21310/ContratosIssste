@@ -17,6 +17,7 @@
         <hr>
         <div class="card-body">
             <form action="{{ route('Requesiciones.store') }}" method="POST" enctype="multipart/form-data" id="create">
+                
                 @include('Requesiciones.formularios.form')
             </form>
         </div>

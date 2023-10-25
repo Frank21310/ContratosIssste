@@ -61,7 +61,6 @@
                         <thead>
                             <tr>
                                 <th>CUPCoP</th>
-                                <th>CUPCoP +</th>
                                 <th>Partida Especifica</th>
                                 <th>Descripcion</th>
                                 <th>CABM</th>
@@ -72,7 +71,6 @@
                             @foreach ($CUCops as $CUCop)
                                 <tr>
                                     <td>{{ $CUCop->clave_cucop}}</td>
-                                    <td>{{ $CUCop->cucop }}</td>
                                     <td>{{ $CUCop->id_partida_especifica_id }}</td>
                                     <td>{{ $CUCop->descripcion_insumo }}</td>
                                     <td>{{ $CUCop->CABM }}</td>
@@ -90,6 +88,7 @@
     </div>
 
     <Script type="text/javascript">
+    
         $('#limit').on('change', function() {
             window.location.href = "{{ route('CUCop.index') }}?limit=" + $(this).val() + '&search=' + $(
                 '#search').val()

@@ -1,21 +1,37 @@
 @csrf
+
+
+@if (count($errors) > 0)
+
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+
 <div class="row">
     {{-- Dependencia --}}
     <div class="col">
         <label>Nombre de la dependencia o entidad:</label>
-        <span type="text" name="dependencia_id_dependencia"
-            value="{{ isset($requisicion) ? $requisicion->dependencia_id_dependencia : old('dependencia_id_dependencia') }}"
-            class="form-control">{{ Auth::user()->empleado->dependenciaempleado->nombre }}</span>
+        @foreach ($dependenciaempleados as $dependenciaempleado)
+            <input type="text" name="dependencia_id_dependencia"
+                value="{{ Auth::user()->empleado->dependenciaempleado->id_dependencia }}" class="form-control" hidden>
+            <input type="text" value="{{ Auth::user()->empleado->dependenciaempleado->nombre }}" class="form-control"
+                readonly>
+        @endforeach
     </div>
     {{-- Area Requeriente  --}}
     <div class="col">
         <label>Area requirente:</label>
-        <select class="form-control" id="arearequierente">
+        <select name="area_id_area" class="form-control" id="area_id_area">
             <option value="">Seleccione el area</option>
             @foreach ($areas as $area)
-                <option name="area_id_area"
-                    value="{{ isset($requisicion) ? $requisicion->area_id_area : old('area_id_area') }}">
-                    {{ $area->nombre_area }}</option>
+                <option value="{{ $area->id_area  }}">
+                    {{ $area['nombre_area'] }}</option>
             @endforeach
         </select>
     </div>
@@ -25,30 +41,32 @@
     {{-- Fecha de elaboracion --}}
     <div class="col">
         <label>Fecha de elaboracion:</label>
-        <input type="date" class="form-control" name="fecha_elaboracion	"
-            value="{{ isset($requisicion) ? $requisicion->fecha_elaboracion : old('fecha_elaboracion') }}">
+        <input type="date" name="fecha_elaboracion" class="form-control">
     </div>
     {{-- Numero de requisicion --}}
     <div class="col">
         <label>No. requisicion: </label>
-        <input type="text" name="no_requesicion"
-            value="{{ isset($requisicion) ? $requisicion->no_requesicion : old('no_requesicion') }}"
-            class="form-control" placeholder="100XXXX">
+        <input type="text" name="no_requesicion" class="form-control" placeholder="100XXXX"  value="{{old('no_requesicion')}}">
     </div>
     {{-- Fecha requerida --}}
     <div class="col">
         <label>Fecha requerida: </label>
-        <input type="date" class="form-control" name="fecha_requerida	"
-            value="{{ isset($requisicion) ? $requisicion->fecha_requerida : old('fecha_requerida	') }}">
+        <input type="date" class="form-control" name="fecha_requerida" value="{{old('fecha_requerida')}}">
     </div>
 </div>
 <div class="row">
     {{-- Lugar de entrega --}}
     <div class="col">
         <label>Lugar de entrega: </label>
-        <input type="text" class="form-control" name="lugar_entrega"
-            value="{{ isset($requisicion) ? $requisicion->lugar_entrega : old('lugar_entrega') }}"
-            placeholder="Escriba la direccion del lugar de entrega....">
+        {{-- <select name="area_id_area" class="form-control" id="area_id_area">
+            <option value="">Seleccione el area</option>
+            @foreach ($entregas as $entrega)
+                <option value="{{ $entrega->nombre }}">
+                    {{ $entrega['nombre'] }}</option>
+            @endforeach
+        </select> --}}
+        <input type="text" name="lugar_entrega" class="form-control" 
+            placeholder="Escriba la direccion del lugar de entrega...." value="{{old('lugar_entrega')}}">
     </div>
 </div>
 
@@ -113,8 +131,8 @@
     {{-- Importe --}}
     <div class="col mx-auto p-2 d-flex align-items-center flex-column">
         <label>Importe:</label>
-        <input type="number" class="form-control importe" id="importe" name="importe"
-            value="{{ isset($detallerequisicion) ? $detallerequisicion->importe : old('importe') }}" readonly>
+        <input type="number" class="form-control importe" id="importe" name="importe" value="{{ old('importe') }}"
+            readonly>
     </div>
     {{-- Boton de agregar 
     <div class=" col-1 d-flex align-items-center justify-content-md-e   nd">
@@ -201,8 +219,6 @@
 <div class=" col d-flex align-items-center justify-content-md-end">
     <a href="" class="btn add-btn btn-info me-md-2 mt-2"><i class="fas fa-plus"></i></a>
 </div>
-
-
 <hr>
 
 {{-- Sub Total --}}
@@ -223,13 +239,14 @@
         <span id="iva" class="form-control">0</span>
     </div>
 </div>
+
 <div class="row">
     <div class="col mx-auto p-2  d-flex align-items-end flex-column">
         <label>Otros Gravamientos: </label>
     </div>
     <div class="col-4  mx-auto p-2  d-flex align-items-end flex-column">
-        <input id="gravamientos" min="0" placeholder="0.00" step="0.01" type="text"
-            class="form-control">
+        <input name="otros_gravamientos" id="gravamientos" min="0" placeholder="0.00" step="0.01"
+            type="text" class="form-control" value="{{old('otros_gravamientos')}}">
     </div>
 </div>
 <div class="row">
@@ -237,8 +254,8 @@
         <label>Total: </label>
     </div>
     <div class="col-4  mx-auto p-2  d-flex align-items-end flex-column">
-        <span id="total" class="form-control" name="total"
-        value="{{ isset($requisicion) ? $requisicion->total : old('total') }}">0</span>
+        <input  name="total" id="total" placeholder="0.00" step="0.01"
+            type="text" class="form-control" readonly>
     </div>
 </div>
 
@@ -248,8 +265,7 @@
     <div class="col mx-auto p-2">
         <label>Anexos: </label>
         <input type="text" placeholder="Ingresa el nombre de los anexos que se identifique a la solicitud"
-            class="form-control" name="anexos"
-            value="{{ isset($requisicion) ? $requisicion->anexos : old('anexos') }}">
+            class="form-control" name="anexos" value="{{ old('anexos') }}">
     </div>
 </div>
 <div class="row">
@@ -257,29 +273,22 @@
     <div class="col mx-auto p-2">
         <label>Anticipo: </label>
         <input type="text" class="form-control" name="aticipos" placeholder="Ingrese si requiere anticipo"
-            value="{{ isset($requisicion) ? $requisicion->aticipos : old('aticipos') }}">
+            value="{{ old('aticipos') }}">
     </div>
     {{-- Autorizacion de presupuesto --}}
     <div class="col mx-auto p-2">
         <label>Autorizacion de presupuesto: </label>
-        <select class="form-control" id="condiciones">
-            <option name="autorizacion_presupuesto"
-                value="{{ isset($requisicion) ? $requisicion->autorizacion_presupuesto : old('autorizacion_presupuesto') }}">
-                Si</option>
-            <option name="autorizacion_presupuesto"
-                value="{{ isset($requisicion) ? $requisicion->autorizacion_presupuesto : old('autorizacion_presupuesto') }}">
-                No</option>
-        </select>
+        <input type="text" placeholder="Ingresa el numero de oficio por el que se le autorizo el presupuesto"
+            class="form-control" name="autorizacion_presupuesto" value="{{ old('autorizacion_presupuesto') }}">
     </div>
     {{-- Existencia en almacen --}}
     <div class="col mx-auto p-2">
         <label>Existencia en almacen: </label>
-        <select class="form-control" id="condiciones">
-            <option name="existencia_almacen"
-                value="{{ isset($requisicion) ? $requisicion->existencia_almacen : old('existencia_almacen') }}">Si
+        <select name="existencia_almacen"  class="form-control" id="condiciones">
+
+            <option  value="1">Si
             </option>
-            <option name="existencia_almacen"
-                value="{{ isset($requisicion) ? $requisicion->existencia_almacen : old('existencia_almacen') }}">No
+            <option value="0">No
             </option>
         </select>
     </div>
@@ -289,8 +298,8 @@
     {{-- Observaciones --}}
     <div class="col mx-auto p-2">
         <label>Observaciones: </label>
-        <textarea class="form-control" ame="observaciones" placeholder="Observaciones de la solicitud....."
-            value="{{ isset($requisicion) ? $requisicion->observaciones : old('observaciones') }}" rows="3"></textarea>
+        <textarea class="form-control" name="observaciones" placeholder="Observaciones de la solicitud....."
+            value="{{old('observaciones') }}" rows="3"></textarea>
     </div>
 </div>
 <div class="row">
@@ -299,10 +308,10 @@
         <label>Registro Sanitario: </label>
         <select class="form-control" id="condiciones">
             <option name="registro_sanitario"
-                value="{{ isset($requisicion) ? $requisicion->registro_sanitario : old('registro_sanitario') }}">Si
+                value="{{1}}">Si
             </option>
             <option name="registro_sanitario"
-                value="{{ isset($requisicion) ? $requisicion->registro_sanitario : old('registro_sanitario') }}">No
+                value="{{2}}">No
             </option>
         </select>
     </div>
@@ -567,7 +576,7 @@
 
         // Calcula el total sumando el subtotal y el IVA.
         total = subtotal + iva + gravamiento;
-        totalInput.textContent = total.toFixed(2);
+        totalInput.value = total.toFixed(2);
     }
 </script>
 

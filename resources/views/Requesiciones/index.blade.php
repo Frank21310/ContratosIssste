@@ -66,18 +66,38 @@
                                 <th>Solicita</th>
                                 <th>Autoriza</th>
                                 <th>Estatus</th>
-
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+                            @foreach ($requisiciones as $requisicion)
+                            <tr>
+                                <td>{{ $requisicion->id_requisicion }}</td>
+                                <td>{{ $requisicion->dependencia_id_dependencia }}</td>
+                                <td>{{ $requisicion->fecha_elaboracion }}</td>
+                                <td>{{ $requisicion->solicita }}</td>
+                                <td>{{ $requisicion->autoriza }}</td>
+                                <td>Pendiente</td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <a href="{{ route('roles.show', $requisicion->id_requisicion) }}" class="btn btn-info"><i
+                                                class="fas fa-eye"></i></a>
+                                        <a href="{{ route('roles.edit', $requisicion->id_requisicion) }}" class="btn btn-primary"><i
+                                                class="fas fa-pencil-alt"></i></a>
+                                        <button type="submit" class="btn btn-danger " form="detele_{{ $requisicion->id_requisicion }}"
+                                            onclick="return confirm('¿Estas seguro de eliminar el registro?')">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                        <form action="{{ route('roles.destroy', $requisicion->id_requisicion) }}"
+                                            id="delete_{{ $requisicion->id_requisicion }}" method="post"
+                                            enctype="multipart/form-data" hidden>
+                                            @csrf
+                                            @method('DELETE')
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>

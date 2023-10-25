@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Area;
 use App\Models\Condicion;
+use App\Models\Dependencia;
 use App\Models\DetalleRequesicion;
 use App\Models\Garantia;
 use App\Models\Insumos_cucop;
@@ -11,8 +12,9 @@ use App\Models\Pais;
 use App\Models\Partidas_cucop;
 use App\Models\Requesicion;
 use App\Models\Unidad_medida;
-use Database\Seeders\PartidaSeeder;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
+
 
 class RequesicionesController extends Controller
 {
@@ -21,7 +23,7 @@ class RequesicionesController extends Controller
      *
      * @return void
      */
-    
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -33,10 +35,17 @@ class RequesicionesController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
+        $requisiciones = Requesicion::select('*')->orderBy('id_requisicion', 'ASC');
+        $limit = (isset($request->limit)) ? $request->limit : 10;
 
-        return view('Requesiciones.index');
+        if (isset($request->search)) {
+            $requisiciones = $requisiciones->where('id_requisicion', 'like', '%' . $request->search . '%')
+                ->orWhere('no_requesicion', 'like', '%' . $request->search . '%');
+        }
+        $requisiciones = $requisiciones->paginate($limit)->appends($request->all());
+        return view('Requesiciones.index', compact('requisiciones'));
     }
 
     /**
@@ -44,6 +53,7 @@ class RequesicionesController extends Controller
      */
     public function create(Request $request)
     {
+        $dependenciaempleados = Dependencia::all();
         $areas  = Area::all();
         $condiciones  = Condicion::all();
         $garantias  = Garantia::all();
@@ -52,6 +62,7 @@ class RequesicionesController extends Controller
         $unidades = Unidad_medida::all();
 
         return view('Requesiciones.create', compact(
+            'dependenciaempleados',
             'areas',
             'garantias',
             'condiciones',
@@ -76,18 +87,40 @@ class RequesicionesController extends Controller
      */
     public function store(Request $request)
     {
-        $requisicion = new Requesicion();
-        $detallerequisicion = new DetalleRequesicion();
-        $requisicion = $this->createUpdateRequisicion($request, $requisicion);
-        return redirect()
-            ->route('Requesiciones.index');
+        $this->validate($request, [
+            'area_id_area' => 'required',
+            'fecha_elaboracion' =>'required',
+            'fecha_requerida'  =>'required',
+            'lugar_entrega'  =>'required',
+            'otros_gravamientos'  =>'required',
+            'total'  => 'required',
+            'anexos'  => 'required',
+            'aticipos'  => 'required',
+            'existencia_almacen'  =>'required',
+            'observaciones' =>'required',
+            'registro_sanitario' =>'required',
+            'capacitacion'  =>'required',
+            'pais_id_pais'  =>'required',
+            'metodos_id_metodos'  =>'required',
+            'garantia_id_garantia'  =>'required',
+            'pluralidad'  =>'required',
+            'tiempo_fabricacion'  =>'required',
+            'condicion_id_condicion'  =>'required',
 
-        $detallerequisicion = $this->createUpdateDetalleRequisicion($request, $detallerequisicion);
+        ]);
+
+        Requesicion::create($request->all());
+        /*$requisicion = new Requesicion();
+        /*$detallerequisicion = new DetalleRequesicion();*/
+        /*$requisicion = $this->createUpdateRequisicion($request, $requisicion);
+            return redirect()
+            ->route('Requesiciones.index');*/
+        /*$detallerequisicion = $this->createUpdateDetalleRequisicion($request, $detallerequisicion);
         return redirect()
-            ->route('Requesiciones.index');
+            ->route('Requesiciones.index');*/
     }
 
-    public function createUpdateDetalleRequisicion(Request $request, $detallerequisicion)
+    /*public function createUpdateDetalleRequisicion(Request $request, $detallerequisicion)
     {
         $detallerequisicion->requesicion_id_requesicion = $request->requesicion_id_requesicion;
         $detallerequisicion->num_partida = $request->num_partida;
@@ -103,8 +136,8 @@ class RequesicionesController extends Controller
 
     public function createUpdateRequisicion(Request $request, $requisicion)
     {
-        $requisicion->dependencia_id_dependencia = $request->dependencia_id_dependencia;
-        $requisicion->area_id_area = $request->area_id_area;
+        $requisicion->dependencia_id_dependencia = $request->input('dependencia_id_dependencia');
+        $requisicion->area_id_area = $request->option('area_id_area');
         $requisicion->fecha_elaboracion = $request->fecha_elaboracion;
         $requisicion->no_requesicion = $request->no_requesicion;
         $requisicion->fecha_requerida = $request->fecha_requerida;
@@ -131,14 +164,15 @@ class RequesicionesController extends Controller
         $requisicion->autoriza = $request->autoriza;
         $requisicion->save();
         return  $requisicion;
-    }
+    }*/
 
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        //
+        $requisicion = Requesicion::where('id_requisicion', $id)->firstOrFail();
+        return view('Requesiciones.show', compact('requisicion'));
     }
 
     /**
@@ -146,7 +180,8 @@ class RequesicionesController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $requisicion = Requesicion::where('id_requisicion', $id)->firstOrFail();
+        return view('Requesiciones.edit', compact('requisicion'));
     }
 
     /**
@@ -154,7 +189,10 @@ class RequesicionesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $requisicion = Requesicion::where('id_requisicion', $id)->firstOrFail();
+        $requisicion = $this->createUpdateRol($request, $requisicion);
+        return redirect()
+            ->route('Requesiciones.index');
     }
 
     /**
@@ -162,6 +200,14 @@ class RequesicionesController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $requisicion = Requesicion::findOrFail($id);
+        try {
+            $requisicion->delete();
+            return redirect()
+                ->route('Requesiciones.index');
+        } catch (QueryException $e) {
+            return redirect()
+                ->route('Requesiciones.index');
+        }
     }
 }

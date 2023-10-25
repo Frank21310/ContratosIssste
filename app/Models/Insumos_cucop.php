@@ -13,7 +13,6 @@ class Insumos_cucop extends Model
     protected $primaryKey = 'clave_cucop';
     protected $table = 'insumos_cucop';
     protected $fillable = [
-        'cucop',
         'id_partida_especifica_id',
         'descripcion_insumo',
         'CABM',
