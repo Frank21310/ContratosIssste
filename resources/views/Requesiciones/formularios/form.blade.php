@@ -1,8 +1,6 @@
 @csrf
 
-
 @if (count($errors) > 0)
-
     <div class="alert alert-danger">
         <ul>
             @foreach ($errors->all() as $error)
@@ -11,7 +9,6 @@
         </ul>
     </div>
 @endif
-
 
 <div class="row">
     {{-- Dependencia --}}
@@ -30,7 +27,7 @@
         <select name="area_id_area" class="form-control" id="area_id_area">
             <option value="">Seleccione el area</option>
             @foreach ($areas as $area)
-                <option value="{{ $area->id_area  }}">
+                <option value="{{ $area->id_area }}">
                     {{ $area['nombre_area'] }}</option>
             @endforeach
         </select>
@@ -46,12 +43,13 @@
     {{-- Numero de requisicion --}}
     <div class="col">
         <label>No. requisicion: </label>
-        <input type="text" name="no_requesicion" class="form-control" placeholder="100XXXX"  value="{{old('no_requesicion')}}">
+        <input type="text" name="no_requesicion" class="form-control" placeholder="100XXXX"
+            value="{{ old('no_requesicion') }}">
     </div>
     {{-- Fecha requerida --}}
     <div class="col">
         <label>Fecha requerida: </label>
-        <input type="date" class="form-control" name="fecha_requerida" value="{{old('fecha_requerida')}}">
+        <input type="date" class="form-control" name="fecha_requerida" value="{{ old('fecha_requerida') }}">
     </div>
 </div>
 <div class="row">
@@ -65,8 +63,8 @@
                     {{ $entrega['nombre'] }}</option>
             @endforeach
         </select> --}}
-        <input type="text" name="lugar_entrega" class="form-control" 
-            placeholder="Escriba la direccion del lugar de entrega...." value="{{old('lugar_entrega')}}">
+        <input type="text" name="lugar_entrega" class="form-control"
+            placeholder="Escriba la direccion del lugar de entrega...." value="{{ old('lugar_entrega') }}">
     </div>
 </div>
 
@@ -231,6 +229,7 @@
     </div>
 </div>
 
+{{-- IVA --}}
 <div class="row">
     <div class="col mx-auto p-2  d-flex align-items-end flex-column">
         <label>I.V.A: </label>
@@ -240,22 +239,24 @@
     </div>
 </div>
 
+{{-- Gravamientos --}}
 <div class="row">
     <div class="col mx-auto p-2  d-flex align-items-end flex-column">
         <label>Otros Gravamientos: </label>
     </div>
     <div class="col-4  mx-auto p-2  d-flex align-items-end flex-column">
         <input name="otros_gravamientos" id="gravamientos" min="0" placeholder="0.00" step="0.01"
-            type="text" class="form-control" value="{{old('otros_gravamientos')}}">
+            type="text" class="form-control" value="{{ old('otros_gravamientos') }}">
     </div>
 </div>
+{{-- Total --}}
 <div class="row">
     <div class="col mx-auto p-2  d-flex align-items-end flex-column">
         <label>Total: </label>
     </div>
     <div class="col-4  mx-auto p-2  d-flex align-items-end flex-column">
-        <input  name="total" id="total" placeholder="0.00" step="0.01"
-            type="text" class="form-control" readonly>
+        <input name="total" id="total" placeholder="0.00" step="0.01" type="text" class="form-control"
+            readonly>
     </div>
 </div>
 
@@ -284,9 +285,9 @@
     {{-- Existencia en almacen --}}
     <div class="col mx-auto p-2">
         <label>Existencia en almacen: </label>
-        <select name="existencia_almacen"  class="form-control" id="condiciones">
+        <select name="existencia_almacen" class="form-control" id="condiciones">
 
-            <option  value="1">Si
+            <option value="1">Si
             </option>
             <option value="0">No
             </option>
@@ -299,19 +300,17 @@
     <div class="col mx-auto p-2">
         <label>Observaciones: </label>
         <textarea class="form-control" name="observaciones" placeholder="Observaciones de la solicitud....."
-            value="{{old('observaciones') }}" rows="3"></textarea>
+            value="{{ old('observaciones') }}" rows="3"></textarea>
     </div>
 </div>
 <div class="row">
     {{-- Registro Sanitario --}}
     <div class="col mx-auto p-2">
         <label>Registro Sanitario: </label>
-        <select class="form-control" id="condiciones">
-            <option name="registro_sanitario"
-                value="{{1}}">Si
+        <select class="form-control" name="registro_sanitario">
+            <option value="Si">Si
             </option>
-            <option name="registro_sanitario"
-                value="{{2}}">No
+            <option value="nO">No
             </option>
         </select>
     </div>
@@ -325,21 +324,18 @@
     {{-- Capacitacion --}}
     <div class="col mx-auto p-2">
         <label>Capacitacion: </label>
-        <select class="form-control" id="condiciones">
-            <option name="capacitacion"
-                value="{{ isset($requisicion) ? $requisicion->capacitacion : old('capacitacion') }}">Si</option>
-            <option name="capacitacion"
-                value="{{ isset($requisicion) ? $requisicion->capacitacion : old('capacitacion') }}">No</option>
+        <select name="capacitacion" class="form-control" id="condiciones">
+            <option value="{{ 1 }}">Si</option>
+            <option value="{{ 0 }}">No</option>
         </select>
     </div>
     {{-- Pais --}}
     <div class="col mx-auto p-2">
         <label>Pais de Origen: </label>
-        <select class="form-control" id="condiciones">
+        <select class="form-control" name="pais_id_pais">
             @foreach ($paises as $pais)
-                <option name="pais_id_pais"
-                    value="{{ isset($requisicion) ? $requisicion->pais_id_pais : old('pais_id_pais') }}">
-                    {{ $pais->nombre_pais }}</option>
+                <option value="{{ $pais->id_pais }}">
+                    {{ $pais['nombre_pais'] }}</option>
             @endforeach
         </select>
     </div>
@@ -347,40 +343,40 @@
     <div class="col mx-auto p-2">
         <label>Metodos de prueba: </label>
         <input type="text" class="form-control" name="metodos_id_metodos"
-            placeholder="Ingrese si requiere metodo de prueba"
-            value="{{ isset($metodos_id_metodos) ? $requisicion->metodos_id_metodos : old('metodos_id_metodos') }}">
+            placeholder="Ingrese si requiere metodo de prueba" value="{{ old('metodos_id_metodos') }}">
     </div>
 </div>
 
 <hr>
 <div class="row">
     <div class="col-6">
+        
         <div class="row">
+            {{-- Garantia --}}
             <div class="col-4">
                 <label>Tipo de garantia: </label>
-                <select class="form-control" id="condiciones">
+                <select class="form-control" name="garantia_id_garantia">
                     @foreach ($garantias as $garantia)
-                        <option name="garantia_id_garantia"
-                            value="{{ isset($requisicion) ? $requisicion->garantia_id_garantia : old('garantia_id_garantia') }}">
+                        <option value="{{ $garantia->id_garantia }}">
                             {{ $garantia->nombre_garantia }}</option>
                     @endforeach
                 </select>
             </div>
+            {{-- Porcentaje --}}
             <div class="col-3">
                 <label>Porcentaje: </label>
-                <input type="text" class="form-control" name="porcentaje"
-                    value="{{ isset($porcentaje) ? $requisicion->porcentaje : old('porcentaje') }}">
+                <input type="text" class="form-control" name="porcentaje" value="{{ old('porcentaje') }}">
             </div>
         </div>
         <br>
         <div class="row">
             <div class="row">
+                {{-- Condiciones --}}
                 <div class="col-5">
                     <label>Condiciones de entrega: </label>
-                    <select class="form-control" id="condiciones">
+                    <select class="form-control" name="condicion_id_condicion">
                         @foreach ($condiciones as $condicion)
-                            <option name="condicion_id_condicion"
-                                value="{{ isset($requisicion) ? $requisicion->condicion_id_condicion : old('condicion_id_condicion') }}">
+                            <option value="{{ $condicion->id_condicion }}">
                                 {{ $condicion->nombre_condicion }}</option>
                         @endforeach
                     </select>
@@ -389,36 +385,34 @@
         </div>
     </div>
     <div class="col-6">
-        <div class="row">
+        {{-- Plurianualidad --}}
+        <div class="row">  
             <div class="col">
                 <label>Plurianualidad: </label>
-                <select class="form-control" id="condiciones">
-                    <option name="pluralidad"
-                        value="{{ isset($requisicion) ? $requisicion->pluralidad : old('pluralidad') }}">Si</option>
-                    <option>No</option>
-                    <option name="pluralidad"
-                        value="{{ isset($requisicion) ? $requisicion->pluralidad : old('pluralidad') }}">Si</option>
-                    <option>Si</option>
+                <select class="form-control" name="pluralidad">
+                    <option name="pluralidad" value="{{ 1 }}">Si</option>
+                    <option name="pluralidad" value="{{ 0 }}">No</option>
                 </select>
             </div>
             <div class="col">
                 <label>Meses: </label>
-                <input type="text" class="form-control" name="meses"
-                    value="{{ isset($requisicion) ? $requisicion->meses : old('meses') }}">
+                <input type="text" class="form-control" name="meses" value="{{ old('meses') }}">
             </div>
         </div>
+        {{-- Garantia --}}
         <div class="row">
             <div class="col">
                 <label>Penas convencionales: </label>
                 <input type="text" class="form-control" name="penas_convencionales"
-                    value="{{ isset($requisicion) ? $requisicion->penas_convencionales : old('penas_convencionales') }}">
+                    value="{{ old('penas_convencionales') }}">
             </div>
         </div>
+        {{-- Fabricacion --}}
         <div class="row">
             <div class="col">
                 <label>Tiempo de fabricacion: </label>
                 <input type="text" class="form-control" name="tiempo_fabricacion"
-                    value="{{ isset($requisicion) ? $requisicion->tiempo_fabricacion : old('tiempo_fabricacion') }}">
+                    value="{{ old('tiempo_fabricacion') }}">
             </div>
         </div>
     </div>
@@ -426,15 +420,16 @@
 <hr>
 
 <div class="row">
+    {{-- Solicita --}}
     <div class="col">
         <label>Solicita: </label>
         <span type="text" class="form-control" name="solicita"
-            value="{{ isset($requisicion) ? $requisicion->solicita : old('tiempo_fabricacion') }}">{{ Auth::user()->empleado->nombre }}{{ Auth::user()->empleado->apellido_paterno }}{{ Auth::user()->empleado->apellido_materno }}</span>
+            value="{{ old('solicita') }}">{{ Auth::user()->empleado->nombre }}{{ Auth::user()->empleado->apellido_paterno }}{{ Auth::user()->empleado->apellido_materno }}</span>
     </div>
+    {{-- Autoriza --}}
     <div class="col">
         <label>Autoriza: </label>
-        <input type="text" class="form-control" name="autoriza"
-            value="{{ isset($requisicion) ? $requisicion->autoriza : old('autoriza') }}">
+        <input type="text" class="form-control" name="autoriza" value="{{ old('autoriza') }}">
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
