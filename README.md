@@ -9,14 +9,6 @@
 
 
 
-https://img.shields.io/badge/MariaDB-003545?style=for-the-badge&logo=mariadb&logoColor=white
-
-https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white
-https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
-https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
-https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white
-https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white
-
 <hr>
 
 
