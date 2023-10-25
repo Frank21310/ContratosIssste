@@ -1,5 +1,5 @@
 
-<h1 align="center"> SISTEMA WEB DE CONTRATOS DE BIENES Y SERVICIOS PARA LA REPRESENTACIÓN DEL ISSSTE EN OAXACA  </h1>
+<h1 align="center" id="titulo"> SISTEMA WEB DE CONTRATOS DE BIENES Y SERVICIOS PARA LA REPRESENTACIÓN DEL ISSSTE EN OAXACA  </h1>
 
 
 <hr>
@@ -14,7 +14,7 @@
 
 ##Índice
 
-*[SISTEMA WEB DE CONTRATOS DE BIENES Y SERVICIOS PARA LA REPRESENTACIÓN DEL ISSSTE EN OAXACA](#Titulo del sistema)
+*[Titulo del Sistema](#titulo)
 
 *[Insignias](#insignias)
 
