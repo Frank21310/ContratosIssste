@@ -3,6 +3,6 @@
 
 
 
-<p![Badge en Desarollo](https://img.shields.io/badge/STATUS-EN%20DESAROLLO-green)</p>
+<p aling="center">![Badge en Desarollo](https://img.shields.io/badge/STATUS-EN%20DESAROLLO-green)</p>
 
 
