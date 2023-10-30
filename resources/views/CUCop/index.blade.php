@@ -79,12 +79,16 @@
                             @endforeach
                         </tbody>
                     </table>
+                    
                 </div>
             </div>
         </div>
-
         <div class="card-footer">
+            @if ($CUCops->total() > 10)
+                {{ $CUCops->links() }}
+            @endif
         </div>
+
     </div>
 
     <Script type="text/javascript">

@@ -19,41 +19,44 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-
     @vite(['resources/js/app.js', 'resources/sass/app.scss'])
-
+    
     <link href="{{ asset('assets/css/estilos.css') }}" rel="stylesheet" type="text/css">
-
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
-
-
-
 
 </head>
 
 <body>
+
     <div id="app" class="wrapper">
         @guest
         @else
-        
             @include('layouts.barralateral')
         @endguest
-        
+
         <div id="content">
             @include('layouts.encabezado')
 
-            <main class="">
+            <main class="principal">
                 @yield('content')
             </main>
         </div>
+
     </div>
 
-    <!-- JS PARA FILTAR Y BUSCAR MEDIANTE PAGINADO -->
-
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+        integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous">
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#sidebarCollapse').on('click', function() {
+                $('#sidebar').toggleClass('active');
+            });
+        });
+    </script>
     
 
 </body>
-
-
 
 </html>

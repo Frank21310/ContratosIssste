@@ -74,7 +74,7 @@
 <div class="row ">
     {{-- Numero de partida --}}
     <div class="col-1 mx-auto p-2 d-flex align-items-center flex-column">
-        <label>Num. Partida:</label>
+        <label>N° Partida:</label>
         <select class="form-control " id="partida">
             <option value="">Selecciona</option>
             @foreach ($partidas as $partida)
@@ -93,7 +93,7 @@
             value="{{ isset($detallerequisicion) ? $detallerequisicion->cucop : old('cucop') }}">Clave</span>
     </div>
     {{-- descripcion --}}
-    <div class="col-4 mx-auto p-2 d-flex align-items-center flex-column">
+    <div class="col-6 mx-auto p-2 d-flex align-items-center flex-column">
         <label>Descripcion:</label>
         <select class="form-control" id="insumoCucop">
             <option value="">Seleccione el insumo</option>
@@ -103,11 +103,10 @@
         </select>
     </div>
     {{-- Cantidad --}}
-    <div class="col mx-auto p-2 d-flex align-items-center flex-column">
+    <div class="col-1 mx-auto p-2 d-flex align-items-center flex-column">
         <label>Cantidad Solicitada:</label>
         <input type="number" id="cantidad" min="0" placeholder="1.0" step="0.01" class="form-control"
             name="cantidad" value="{{ isset($detallerequisicion) ? $detallerequisicion->cantidad : old('cantidad') }}">
-
     </div>
     {{-- Unidad --}}
     <div class="col-1 mx-auto p-2 d-flex align-items-center flex-column">
@@ -423,17 +422,54 @@
     {{-- Solicita --}}
     <div class="col">
         <label>Solicita: </label>
-        <span type="text" class="form-control" name="solicita"
-            value="{{ old('solicita') }}">{{ Auth::user()->empleado->nombre }}{{ Auth::user()->empleado->apellido_paterno }}{{ Auth::user()->empleado->apellido_materno }}</span>
+        <input type="text" name="solicita"
+                value="{{ Auth::user()->empleado->num_empleado }}" class="form-control" hidden>
+            <input type="text" value="{{ Auth::user()->empleado->nombre }}{{ Auth::user()->empleado->apellido_paterno }}{{ Auth::user()->empleado->apellido_materno }}" class="form-control"
+                readonly>
     </div>
     {{-- Autoriza --}}
     <div class="col">
         <label>Autoriza: </label>
-        <input type="text" class="form-control" name="autoriza" value="{{ old('autoriza') }}">
+        <input type="text" name="autoriza"
+                value="{{ Auth::user()->empleado->num_empleado }}" class="form-control" hidden>
+            <input type="text" value="{{ Auth::user()->empleado->nombre }}{{ Auth::user()->empleado->apellido_paterno }}{{ Auth::user()->empleado->apellido_materno }}" class="form-control"
+                readonly>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#partida').on('change', function() {
+        var partidaId = $(this).val();
+
+        if (partidaId) {
+            $.ajax({
+                url: "{{ route('fclaveCucop') }}", // Ruta correcta
+                method: 'get',
+                data: {
+                    nPartida: partidaId
+                },
+                success: function(data) {
+                    var select = $('#insumoCucop');
+                    select.empty();
+                    select.append('<option id="datacucop" value="">Selecciona un insumo</option>');
+
+                    $.each(data, function(index, item) {
+                        select.append('<option value="' + item.clave_cucop + '">' + item
+                            .descripcion_insumo + '</option>');
+
+                    });
+                }
+
+            });
+        } else {
+            $('#insumoCucop').empty();
+            $('#insumoCucop').append('<option value="">Sin valores</option>');
+        }
+    });
+    });
+</script>
 
 {{-- Agregar mas campos --}}
 <script type="text/javascript">
@@ -575,38 +611,6 @@
     }
 </script>
 
-{{-- Filtro de insumos --}}
-<script>
-    // Manejar el cambio en el primer select
-    $('#partida').on('change', function() {
-        var partidaId = $(this).val();
-
-        if (partidaId) {
-            $.ajax({
-                url: "{{ route('fclaveCucop') }}", // Ruta correcta
-                method: 'get',
-                data: {
-                    nPartida: partidaId
-                },
-                success: function(data) {
-                    var select = $('#insumoCucop');
-                    select.empty();
-                    select.append('<option id="datacucop" value="">Selecciona un insumo</option>');
-
-                    $.each(data, function(index, item) {
-                        select.append('<option value="' + item.clave_cucop + '">' + item
-                            .descripcion_insumo + '</option>');
-
-                    });
-                }
-
-            });
-        } else {
-            $('#insumoCucop').empty();
-            $('#insumoCucop').append('<option value="">Sin valores</option>');
-        }
-    });
-</script>
 
 {{-- Mostrar Clave de insumo --}}
 <script>
