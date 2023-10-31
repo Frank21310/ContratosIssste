@@ -171,8 +171,23 @@ class RequesicionesController extends Controller
      */
     public function show(string $id)
     {
+        $dependenciaempleados = Dependencia::all();
+        $areas  = Area::all();
+        $condiciones  = Condicion::all();
+        $garantias  = Garantia::all();
+        $paises  = Pais::all();
+        $partidas = Partidas_cucop::all();
+        $unidades = Unidad_medida::all();
+
+
         $requisicion = Requesicion::where('id_requisicion', $id)->firstOrFail();
-        return view('Requesiciones.show', compact('requisicion'));
+        return view('Requesiciones.show', compact('requisicion','dependenciaempleados',
+        'areas',
+        'garantias',
+        'condiciones',
+        'paises',
+        'partidas',
+        'unidades',));
     }
 
     /**
