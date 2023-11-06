@@ -8,6 +8,7 @@ use App\Models\Dependencia;
 use App\Models\DetalleRequesicion;
 use App\Models\Garantia;
 use App\Models\Insumos_cucop;
+use App\Models\Metodo;
 use App\Models\Pais;
 use App\Models\Partidas_cucop;
 use App\Models\Requesicion;
@@ -60,6 +61,7 @@ class RequesicionesController extends Controller
         $paises  = Pais::all();
         $partidas = Partidas_cucop::all();
         $unidades = Unidad_medida::all();
+        $metodos = Metodo::all();
 
         return view('Requesiciones.create', compact(
             'dependenciaempleados',
@@ -69,6 +71,7 @@ class RequesicionesController extends Controller
             'paises',
             'partidas',
             'unidades',
+            'metodos',
         ));
     }
 
@@ -110,6 +113,10 @@ class RequesicionesController extends Controller
         ]);
 
         Requesicion::create($request->all());
+        
+
+
+
         /*$requisicion = new Requesicion();
         /*$detallerequisicion = new DetalleRequesicion();*/
         /*$requisicion = $this->createUpdateRequisicion($request, $requisicion);
@@ -171,23 +178,9 @@ class RequesicionesController extends Controller
      */
     public function show(string $id)
     {
-        $dependenciaempleados = Dependencia::all();
-        $areas  = Area::all();
-        $condiciones  = Condicion::all();
-        $garantias  = Garantia::all();
-        $paises  = Pais::all();
-        $partidas = Partidas_cucop::all();
-        $unidades = Unidad_medida::all();
-
-
+        
         $requisicion = Requesicion::where('id_requisicion', $id)->firstOrFail();
-        return view('Requesiciones.show', compact('requisicion','dependenciaempleados',
-        'areas',
-        'garantias',
-        'condiciones',
-        'paises',
-        'partidas',
-        'unidades',));
+        return view('Requesiciones.show', compact('requisicion'));
     }
 
     /**
