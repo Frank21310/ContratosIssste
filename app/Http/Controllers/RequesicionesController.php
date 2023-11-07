@@ -92,93 +92,83 @@ class RequesicionesController extends Controller
     {
         $this->validate($request, [
             'area_id_area' => 'required',
-            'fecha_elaboracion' =>'required',
-            'fecha_requerida'  =>'required',
-            'lugar_entrega'  =>'required',
-            'otros_gravamientos'  =>'required',
+            'fecha_elaboracion' => 'required',
+            'fecha_requerida'  => 'required',
+            'lugar_entrega'  => 'required',
+            'otros_gravamientos'  => 'required',
             'total'  => 'required',
             'anexos'  => 'required',
             'aticipos'  => 'required',
-            'existencia_almacen'  =>'required',
-            'observaciones' =>'required',
-            'registro_sanitario' =>'required',
-            'capacitacion'  =>'required',
-            'pais_id_pais'  =>'required',
-            'metodos_id_metodos'  =>'required',
-            'garantia_id_garantia'  =>'required',
-            'pluralidad'  =>'required',
-            'tiempo_fabricacion'  =>'required',
-            'condicion_id_condicion'  =>'required',
-
+            'existencia_almacen'  => 'required',
+            'observaciones' => 'required',
+            'registro_sanitario' => 'required',
+            'capacitacion'  => 'required',
+            'pais_id_pais'  => 'required',
+            'metodos_id_metodos'  => 'required',
+            'garantia_id_garantia'  => 'required',
+            'pluralidad'  => 'required',
+            'tiempo_fabricacion'  => 'required',
+            'condicion_id_condicion'  => 'required',
         ]);
 
-        Requesicion::create($request->all());
+        $requisicion = Requesicion::create([
+            'dependencia_id_dependencia' => $request->dependencia_id_dependencia,
+            'area_id_area' => $request->area_id_area,
+            'fecha_elaboracion' => $request->fecha_elaboracion,
+            'no_requesicion' => $request->no_requesicion,
+            'fecha_requerida' => $request->fecha_requerida,
+            'lugar_entrega' => $request->lugar_entrega,
+            'otros_gravamientos' => $request->otros_gravamientos,
+            'total' => $request->total,
+            'anexos' => $request->anexos,
+            'aticipos' => $request->aticipos,
+            'autorizacion_presupuesto' => $request->autorizacion_presupuesto,
+            'existencia_almacen' => $request->existencia_almacen,
+            'observaciones' => $request->observaciones,
+            'registro_sanitario' => $request->registro_sanitario,
+            'normas' => $request->normas,
+            'capacitacion' => $request->capacitacion,
+            'pais_id_pais' => $request->pais_id_pais,
+            'metodos_id_metodos' => $request->metodos_id_metodos,
+            'garantia_id_garantia' => $request->garantia_id_garantia,
+            'porcentaje' => $request->porcentaje,
+            'pluralidad' => $request->pluralidad,
+            'penas_convencionales' => $request->penas_convencionales,
+            'tiempo_fabricacion' => $request->tiempo_fabricacion,
+            'condicion_id_condicion' => $request->condicion_id_condicion,
+            'solicita' => $request->solicita,
+            'autoriza' => $request->autoriza,
+        ]);
         
-
-
-
-        /*$requisicion = new Requesicion();
-        /*$detallerequisicion = new DetalleRequesicion();*/
-        /*$requisicion = $this->createUpdateRequisicion($request, $requisicion);
+        if ($requisicion && $request->filled('cucop')) {
+            $requisicion_id = $requisicion->id_requesicion;
+            $detallerequisicion = DetalleRequesicion::create([
+                'requisicion_id' => $requisicion_id,
+                'num_partida' => $request->num_partida,
+                'cucop' => $request->cucop,
+                'descripcion' => $request->descripcion,
+                'cantidad' => $request->cantidad,
+                'unidad_medida' => $request->unidad_medida,
+                'precio' => $request->precio,
+                'importe' => $request->importe,
+                
+            ]);
             return redirect()
-            ->route('Requesiciones.index');*/
-        /*$detallerequisicion = $this->createUpdateDetalleRequisicion($request, $detallerequisicion);
+            ->route('Requesiciones.index');
+
+        } else {
+            return redirect()->route('Requesiciones.create');
+        }
         return redirect()
-            ->route('Requesiciones.index');*/
+            ->route('Requesiciones.index');
     }
-
-    /*public function createUpdateDetalleRequisicion(Request $request, $detallerequisicion)
-    {
-        $detallerequisicion->requesicion_id_requesicion = $request->requesicion_id_requesicion;
-        $detallerequisicion->num_partida = $request->num_partida;
-        $detallerequisicion->cucop = $request->cucop;
-        $detallerequisicion->descripcion = $request->descripcion;
-        $detallerequisicion->cantidad = $request->cantidad;
-        $detallerequisicion->unidad_medida = $request->unidad_medida;
-        $detallerequisicion->precio = $request->precio;
-        $detallerequisicion->importe = $request->importe;
-        $detallerequisicion->save();
-        return  $detallerequisicion;
-    }
-
-    public function createUpdateRequisicion(Request $request, $requisicion)
-    {
-        $requisicion->dependencia_id_dependencia = $request->input('dependencia_id_dependencia');
-        $requisicion->area_id_area = $request->option('area_id_area');
-        $requisicion->fecha_elaboracion = $request->fecha_elaboracion;
-        $requisicion->no_requesicion = $request->no_requesicion;
-        $requisicion->fecha_requerida = $request->fecha_requerida;
-        $requisicion->lugar_entrega = $request->lugar_entrega;
-        $requisicion->otros_gravamientos = $request->otros_gravamientos;
-        $requisicion->total = $request->total;
-        $requisicion->anexos = $request->anexos;
-        $requisicion->aticipos = $request->aticipos;
-        $requisicion->autorizacion_presupuesto = $request->autorizacion_presupuesto;
-        $requisicion->existencia_almacen = $request->existencia_almacen;
-        $requisicion->observaciones = $request->observaciones;
-        $requisicion->registro_sanitario = $request->registro_sanitario;
-        $requisicion->normas = $request->normas;
-        $requisicion->capacitacion = $request->capacitacion;
-        $requisicion->pais_id_pais = $request->pais_id_pais;
-        $requisicion->metodos_id_metodos = $request->metodos_id_metodos;
-        $requisicion->garantia_id_garantia = $request->garantia_id_garantia;
-        $requisicion->porcentaje = $request->porcentaje;
-        $requisicion->pluralidad = $request->pluralidad;
-        $requisicion->penas_convencionales = $request->penas_convencionales;
-        $requisicion->tiempo_fabricacion = $request->tiempo_fabricacion;
-        $requisicion->condicion_id_condicion = $request->condicion_id_condicion;
-        $requisicion->solicita = $request->solicita;
-        $requisicion->autoriza = $request->autoriza;
-        $requisicion->save();
-        return  $requisicion;
-    }*/
 
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        
+
         $requisicion = Requesicion::where('id_requisicion', $id)->firstOrFail();
         return view('Requesiciones.show', compact('requisicion'));
     }
