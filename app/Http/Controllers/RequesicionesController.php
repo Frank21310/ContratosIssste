@@ -72,6 +72,7 @@ class RequesicionesController extends Controller
             'partidas',
             'unidades',
             'metodos',
+            
         ));
     }
 
@@ -91,6 +92,7 @@ class RequesicionesController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
+
             'area_id_area' => 'required',
             'fecha_elaboracion' => 'required',
             'fecha_requerida'  => 'required',
@@ -109,9 +111,11 @@ class RequesicionesController extends Controller
             'pluralidad'  => 'required',
             'tiempo_fabricacion'  => 'required',
             'condicion_id_condicion'  => 'required',
+
         ]);
 
         $requisicion = Requesicion::create([
+
             'dependencia_id_dependencia' => $request->dependencia_id_dependencia,
             'area_id_area' => $request->area_id_area,
             'fecha_elaboracion' => $request->fecha_elaboracion,
@@ -138,11 +142,14 @@ class RequesicionesController extends Controller
             'condicion_id_condicion' => $request->condicion_id_condicion,
             'solicita' => $request->solicita,
             'autoriza' => $request->autoriza,
+
         ]);
         
+
         if ($requisicion && $request->filled('cucop')) {
             $requisicion_id = $requisicion->id_requesicion;
             $detallerequisicion = DetalleRequesicion::create([
+
                 'requisicion_id' => $requisicion_id,
                 'num_partida' => $request->num_partida,
                 'cucop' => $request->cucop,
@@ -153,13 +160,14 @@ class RequesicionesController extends Controller
                 'importe' => $request->importe,
                 
             ]);
+            
             return redirect()
             ->route('Requesiciones.index');
 
         } else {
             return redirect()->route('Requesiciones.create');
         }
-        return redirect()
+        return redirect()    
             ->route('Requesiciones.index');
     }
 
