@@ -86,7 +86,7 @@
         <label>Sub Total: </label>
     </div>
     <div class="col-4 mx-auto p-2  d-flex align-items-end flex-column">
-        <span class="form-control subtotal" id="subtotal" >0</span>
+        <span class="form-control subtotal" id="subtotal">0</span>
 
     </div>
 </div>
@@ -107,8 +107,8 @@
         <label>Otros Gravamientos: </label>
     </div>
     <div class="col-4  mx-auto p-2  d-flex align-items-end flex-column">
-        <input name="otros_gravamientos" class="form-control input-otros-grav" id="otros_gravamientos" min="0" placeholder="0.00"
-            step="0.01" type="text" value="{{ old('otros_gravamientos') }}">
+        <input name="otros_gravamientos" class="form-control input-otros-grav " id="otros_gravamientos" min="0"
+            placeholder="0.00" step="0.01" type="text" value="{{ old('otros_gravamientos') }}">
 
     </div>
 </div>
@@ -118,7 +118,8 @@
         <label>Total: </label>
     </div>
     <div class="col-4  mx-auto p-2  d-flex align-items-end flex-column">
-        <input name="total" id="total" placeholder="0.00" step="0.01" type="text" class="form-control total">
+        <input name="total" id="total" placeholder="0.00" step="0.01" type="text"
+            class="form-control total">
 
     </div>
 </div>
@@ -415,11 +416,11 @@
                 </div>
             </div>`;
         }
-
-        // Agrega un evento de escucha a ambos campos de entrada.
         $('.newData').on('input', 'input[name="cantidad"], input[name="precio"]', function() {
-            calcularMultiplicacion();
-        });
+                calcularMultiplicacion();
+                calcularSubTotal(); // Agrega esta línea
+            });
+
 
         // Función para calcular la multiplicación y mostrar el resultado.
         function calcularMultiplicacion() {
@@ -433,29 +434,33 @@
             const multiplicacion = numCantidad * numPrecio;
             resultado.val(multiplicacion.toFixed(2));
             calcularSubTotal();
+
+            
         }
 
         // Función para calcular el subtotal a partir de los elementos de importe.
         function calcularSubTotal() {
-    let subtotal = 0;
-    let iva = 0;
-    const gravamiento = parseFloat($('.input-otros-grav').val()) || 0; // Obtén el valor de los gravámenos
-    const importeElements = $('.importe');
+            let subtotal = 0;
+            let iva = 0;
+            const gravamiento = parseFloat($('.input-otros-grav').val()) || 0; // Convierte el valor a número
+                0; // Obtén el valor de los gravámenos
+            const importeElements = $('.importe');
 
-    importeElements.each(function(index, element) {
-        subtotal += parseFloat($(element).val()) || 0;
-    });
+            importeElements.each(function(index, element) {
+                subtotal += parseFloat($(element).val()) || 0;
+            });
 
-    $('#subtotal').text(subtotal.toFixed(2));
+            $('#subtotal').text(subtotal.toFixed(2));
 
-    // Calcula el IVA (puedes personalizar esta parte según tu tasa de IVA).
-    iva = subtotal * 0.16; // Ejemplo: IVA al 16%.
-    $('#iva').text(iva.toFixed(2));
+            // Calcula el IVA (puedes personalizar esta parte según tu tasa de IVA).
+            iva = subtotal * 0.16; // Ejemplo: IVA al 16%.
+            $('#iva').text(iva.toFixed(2));
 
-    // Calcula el total sumando el subtotal, el IVA y los gravámenos.
-    total = subtotal + iva + gravamiento;
-    $('#total').val(total.toFixed(2));
-}
+            // Calcula el total sumando el subtotal, el IVA y los gravámenos.
+            total = subtotal + iva + gravamiento;
+            $('#total').val(total.toFixed(2));
+        }
+
 
 
         // Manejar el evento de clic en el botón "Agregar Campo"
