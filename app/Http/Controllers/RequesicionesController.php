@@ -38,8 +38,9 @@ class RequesicionesController extends Controller
      */
     public function index(Request $request)
     {
-        $requisiciones = Requesicion::select('*')->orderBy('id_requisicion', 'ASC');
-        $limit = (isset($request->limit)) ? $request->limit : 10;
+
+        $requisiciones = Requesicion::select('*')->orderBy('id_requisicion', 'DESC');
+        $limit = (isset($request->limit)) ? $request->limit : 5;
 
         if (isset($request->search)) {
             $requisiciones = $requisiciones->where('id_requisicion', 'like', '%' . $request->search . '%')
@@ -72,7 +73,7 @@ class RequesicionesController extends Controller
             'partidas',
             'unidades',
             'metodos',
-            
+
         ));
     }
 
@@ -144,12 +145,11 @@ class RequesicionesController extends Controller
             'autoriza' => $request->autoriza,
 
         ]);
-        
 
         if ($requisicion && $request->filled('cucop')) {
-            $requisicion_id = $requisicion->id_requesicion;
+            $requisicion_id = $requisicion->id_requisicion;
+        
             $detallerequisicion = DetalleRequesicion::create([
-
                 'requisicion_id' => $requisicion_id,
                 'num_partida' => $request->num_partida,
                 'cucop' => $request->cucop,
@@ -158,16 +158,14 @@ class RequesicionesController extends Controller
                 'unidad_medida' => $request->unidad_medida,
                 'precio' => $request->precio,
                 'importe' => $request->importe,
-                
             ]);
-            
-            return redirect()
-            ->route('Requesiciones.index');
 
+            return redirect()
+                ->route('Requesiciones.index');
         } else {
             return redirect()->route('Requesiciones.create');
         }
-        return redirect()    
+        return redirect()
             ->route('Requesiciones.index');
     }
 
@@ -176,8 +174,8 @@ class RequesicionesController extends Controller
      */
     public function show(string $id)
     {
+        $requisicion = Requesicion::with('detalles')->where('id_requisicion', $id)->firstOrFail();
 
-        $requisicion = Requesicion::where('id_requisicion', $id)->firstOrFail();
         return view('Requesiciones.show', compact('requisicion'));
     }
 

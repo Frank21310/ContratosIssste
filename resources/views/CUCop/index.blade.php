@@ -70,7 +70,7 @@
                         <tbody>
                             @foreach ($CUCops as $CUCop)
                                 <tr>
-                                    <td>{{ $CUCop->clave_cucop}}</td>
+                                    <td>{{ $CUCop->id_cucop}}</td>
                                     <td>{{ $CUCop->id_partida_especifica_id }}</td>
                                     <td>{{ $CUCop->descripcion_insumo }}</td>
                                     <td>{{ $CUCop->CABM }}</td>

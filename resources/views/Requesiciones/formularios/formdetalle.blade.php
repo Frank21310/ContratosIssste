@@ -46,152 +46,33 @@
 
 <hr>
 
-{{-- Detalle requisicion --}}
-<div class="row ">
-    {{-- Numero de partida --}}
-    <div class="col-1 mx-auto p-2 d-flex align-items-center flex-column">
-        <label>N° Partida:</label>
-        <select class="form-control " id="partida">
-            <option value="">Selecciona</option>
-            @foreach ($partidas as $partida)
-                <option name="num_partida" value="{{ $partida->id_partida_especifica }}"
-                    value="{{ isset($detallerequisicion) ? $detallerequisicion->num_partida : old('num_partida') }}"
-                    class="form-control">
-                    {{ $partida->id_partida_especifica }} - {{ $partida->descripcion }}
-                </option>
-            @endforeach
-        </select>
-    </div>
-    {{-- Clave Cucop --}}
-    <div class="col-1 mx-auto p-2 d-flex align-items-center flex-column">
-        <label>CUCoP:</label>
-        <span id="cucop" type="text" class="form-control" name="cucop"
-            value="{{ isset($detallerequisicion) ? $detallerequisicion->cucop : old('cucop') }}">Clave</span>
-    </div>
-    {{-- descripcion --}}
-    <div class="col-6 mx-auto p-2 d-flex align-items-center flex-column">
-        <label>Descripcion:</label>
-        <select class="form-control" id="insumoCucop">
-            <option value="">Seleccione el insumo</option>
-            <option id="insumoCucopoption" class="form-control" name="descripcion"
-                value="{{ isset($detallerequisicion) ? $detallerequisicion->descripcion : old('descripcion') }}">
-            </option>
-        </select>
-    </div>
-    {{-- Cantidad --}}
-    <div class="col-1 mx-auto p-2 d-flex align-items-center flex-column">
-        <label>Cantidad Solicitada:</label>
-        <input type="number" id="cantidad" min="0" placeholder="1.0" step="0.01" class="form-control"
-            name="cantidad" value="{{ isset($detallerequisicion) ? $detallerequisicion->cantidad : old('cantidad') }}">
-    </div>
-    {{-- Unidad --}}
-    <div class="col-1 mx-auto p-2 d-flex align-items-center flex-column">
-        <label>Medida:</label>
-        <select class="form-control" id="condiciones">
-            @foreach ($unidades as $unidad)
-                <option name="area_id_area"
-                    value="{{ isset($requisicion) ? $requisicion->area_id_area : old('area_id_area') }}">
-                    {{ $unidad->descripcion_unidad }}</option>
-            @endforeach
-        </select>
-    </div>
-    {{-- Precio --}}
-    <div class="col mx-auto p-2 d-flex align-items-center flex-column">
-        <label>Precio: </label>
-        <input type="number" id="precio" min="0" placeholder="1.0" step="0.01" class="form-control"
-            name="precio" value="{{ isset($detallerequisicion) ? $detallerequisicion->precio : old('precio') }}">
-    </div>
-    {{-- Importe --}}
-    <div class="col mx-auto p-2 d-flex align-items-center flex-column">
-        <label>Importe:</label>
-        <input type="number" class="form-control importe" id="importe" name="importe" value="{{ old('importe') }}"
-            readonly>
-    </div>
-    {{-- Boton de agregar 
-    <div class=" col-1 d-flex align-items-center justify-content-md-e   nd">
-        <a href="" class="btn add-btn btn-info me-md-2 mt-4"><i class="fas fa-plus"></i></a>
-    </div> --}}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Partida</th>
+            <th>CUCoP</th>
+            <th>Descripcion</th>
+            <th>Cantidad</th>
+            <th>Unidad Medida</th>
+            <th>Precio</th>
+            <th>Importe</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($requisicion->detalles as $detalle)
+            <tr>
+                <td>{{ $detalle->num_partida }}</td>
+                <td>{{ $detalle->cucop }}</td>
+                <td>{{ $detalle->descripcion }}</td>
+                <td>{{ $detalle->cantidad }}</td>
+                <td>{{ $detalle->unidad_medida }}</td>
+                <td>{{ $detalle->precio }}</td>
+                <td>{{ $detalle->importe }}</td>
+            </tr>
+        @endforeach
+    </tbody>
+</table>
 
-
-</div>
-{{-- Detalle requisicion --}}
-<div class="row ">
-    {{-- Numero de partida --}}
-    <div class="col-1 mx-auto p-2 d-flex align-items-center flex-column">
-        <label>Num. Partida:</label>
-        <select class="form-control " id="partida">
-            <option value="">Selecciona</option>
-            @foreach ($partidas as $partida)
-                <option name="num_partida" value="{{ $partida->id_partida_especifica }}"
-                    value="{{ isset($detallerequisicion) ? $detallerequisicion->num_partida : old('num_partida') }}"
-                    class="form-control">
-                    {{ $partida->id_partida_especifica }} - {{ $partida->descripcion }}
-                </option>
-            @endforeach
-        </select>
-    </div>
-    {{-- Clave Cucop --}}
-    <div class="col-1 mx-auto p-2 d-flex align-items-center flex-column">
-        <label>CUCoP:</label>
-        <span id="cucop" type="text" class="form-control" name="cucop"
-            value="{{ isset($detallerequisicion) ? $detallerequisicion->cucop : old('cucop') }}">Clave</span>
-    </div>
-    {{-- descripcion --}}
-    <div class="col-4 mx-auto p-2 d-flex align-items-center flex-column">
-        <label>Descripcion:</label>
-        <select class="form-control" id="insumoCucop">
-            <option value="">Seleccione el insumo</option>
-            <option id="insumoCucopoption" class="form-control" name="descripcion"
-                value="{{ isset($detallerequisicion) ? $detallerequisicion->descripcion : old('descripcion') }}">
-            </option>
-        </select>
-    </div>
-    {{-- Cantidad --}}
-    <div class="col mx-auto p-2 d-flex align-items-center flex-column">
-        <label>Cantidad Solicitada:</label>
-        <input type="number" id="cantidad" min="0" placeholder="1.0" step="0.01" class="form-control"
-            name="cantidad"
-            value="{{ isset($detallerequisicion) ? $detallerequisicion->cantidad : old('cantidad') }}">
-
-    </div>
-    {{-- Unidad --}}
-    <div class="col-1 mx-auto p-2 d-flex align-items-center flex-column">
-        <label>Medida:</label>
-        <select class="form-control" id="condiciones">
-            @foreach ($unidades as $unidad)
-                <option name="area_id_area"
-                    value="{{ isset($requisicion) ? $requisicion->area_id_area : old('area_id_area') }}">
-                    {{ $unidad->descripcion_unidad }}</option>
-            @endforeach
-        </select>
-    </div>
-    {{-- Precio --}}
-    <div class="col mx-auto p-2 d-flex align-items-center flex-column">
-        <label>Precio: </label>
-        <input type="number" id="precio" min="0" placeholder="1.0" step="0.01" class="form-control"
-            name="precio" value="{{ isset($detallerequisicion) ? $detallerequisicion->precio : old('precio') }}">
-    </div>
-    {{-- Importe --}}
-    <div class="col mx-auto p-2 d-flex align-items-center flex-column">
-        <label>Importe:</label>
-        <input type="number" class="form-control importe" id="importe" name="importe"
-            value="{{ isset($detallerequisicion) ? $detallerequisicion->importe : old('importe') }}" readonly>
-    </div>
-    {{-- Boton de agregar 
-    <div class=" col-1 d-flex align-items-center justify-content-md-e   nd">
-        <a href="" class="btn add-btn btn-info me-md-2 mt-4"><i class="fas fa-plus"></i></a>
-    </div> --}}
-
-
-</div>
-<div class="newData"></div>
-
-
-{{-- Boton de agregar --}}
-<div class=" col d-flex align-items-center justify-content-md-end">
-    <a href="" class="btn add-btn btn-info me-md-2 mt-2"><i class="fas fa-plus"></i></a>
-</div>
-<hr>
 
 {{-- Sub Total --}}
 <div class="row">
@@ -392,200 +273,6 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('#partida').on('change', function() {
-            var partidaId = $(this).val();
-
-            if (partidaId) {
-                $.ajax({
-                    url: "{{ route('fclaveCucop') }}", // Ruta correcta
-                    method: 'get',
-                    data: {
-                        nPartida: partidaId
-                    },
-                    success: function(data) {
-                        var select = $('#insumoCucop');
-                        select.empty();
-                        select.append(
-                            '<option id="datacucop" value="">Selecciona un insumo</option>'
-                        );
-
-                        $.each(data, function(index, item) {
-                            select.append('<option value="' + item.clave_cucop +
-                                '">' + item
-                                .descripcion_insumo + '</option>');
-
-                        });
-                    }
-
-                });
-            } else {
-                $('#insumoCucop').empty();
-                $('#insumoCucop').append('<option value="">Sin valores</option>');
-            }
-        });
-    });
-</script>
-
-{{-- Agregar mas campos --}}
-<script type="text/javascript">
-    $(function() {
-        var i = 1;
-        $('.add-btn').click(function(e) {
-            e.preventDefault();
-            i++;
-            $('.newData').append('<div id="newRow' + i + '" class="row">' +
-                '<div class="row">' +
-                '{{-- Numero de partida --}}' +
-                '<div class="col mx-auto p-2">' +
-                '<label>Num. Partida:</label>' +
-                '<select class="form-control" id="partida">' +
-                '<option value="">Seleccione la partida</option>' +
-                '@foreach ($partidas as $partida)' +
-                '<option name="num_partida" value="{{ $partida->id_partida_especifica }}"' +
-                'value="{{ isset($detallerequisicion) ? $detallerequisicion->num_partida : old('num_partida') }}"' +
-                'class="form-control">' +
-                '{{ $partida->id_partida_especifica }}, {{ $partida->descripcion }}' +
-                '</option>' +
-                '@endforeach' +
-                '</select>' +
-                '</div>' +
-                '{{-- Clave Cucop --}}' +
-                '<div class="col mx-auto p-2">' +
-                '<label>CUCoP:</label>' +
-                '<span id="cucop" type="text" class="form-control" name="cucop"' +
-                'value="{{ isset($detallerequisicion) ? $detallerequisicion->cucop : old('cucop') }}">Clave</span>' +
-                '</div>' +
-                '{{-- descripcion --}}' +
-                '<div class="col mx-auto p-2">' +
-                '<label>Descripcion:</label>' +
-                '<select class="form-control" id="insumoCucop">' +
-                '<option id="insumoCucopoption" class="form-control" name="descripcion"' +
-                'value="{{ isset($detallerequisicion) ? $detallerequisicion->descripcion : old('descripcion') }}">' +
-                '</option>' +
-                '</select>' +
-                '</div>' +
-                '{{-- Cantidad --}}' +
-                '<div class="col mx-auto p-2">' +
-                '<label>Cantidad Solicitada:</label>' +
-                '<input type="number" id="cantidad" min="0" placeholder="1.0" step="0.01" class="form-control" name="cantidad"' +
-                'value="{{ isset($detallerequisicion) ? $detallerequisicion->cantidad : old('cantidad') }}">' +
-                '</div>' +
-                '{{-- Unidad --}}' +
-                '<div class="col mx-auto p-2">' +
-                '<label>Unidad de medida:</label>' +
-                '<select class="form-control" id="condiciones">' +
-                '@foreach ($unidades as $unidad)' +
-                '<option name="area_id_area"' +
-                'value="{{ isset($requisicion) ? $requisicion->area_id_area : old('area_id_area') }}">' +
-                '{{ $unidad->descripcion_unidad }}</option>' +
-                '@endforeach' +
-                '</select>' +
-                '</div>' +
-                '{{-- Precio --}}' +
-                '<div class="col mx-auto p-2">' +
-                '<label>Precio: </label>' +
-                '<input type="number" id="precio" class="form-control" name="precio"' +
-                'value="{{ isset($detallerequisicion) ? $detallerequisicion->precio : old('precio') }}">' +
-                '</div>' +
-                '{{-- Importe --}}' +
-                '<div class="col mx-auto p-2">' +
-                '<label>Importe:</label>' +
-                '<span type="number" id="importe" class="form-control" name="importe"' +
-                'value="{{ isset($detallerequisicion) ? $detallerequisicion->importe : old('importe') }}"></span>' +
-                '</div>' +
-                '{{-- Boton de agregar --}}' +
-                ' <div class="col-1  d-flex align-items-center justify-content-md-end">' +
-                ' <a href="" id="' + i +
-                '" class="btn remove-lnk btn-danger me-md-2 mt-4"><i class="fas fa-trash"></i></a>' +
-                ' </div>' +
-                '</div>'
-            );
-        });
-
-
-        $(document).on('click', '.remove-lnk', function(e) {
-            e.preventDefault();
-
-            var id = $(this).attr("id");
-            $('#newRow' + id + '').remove();
-        });
-
-    });
-</script>
-
-{{-- Calculo de importe --}}
-<script>
-    // Selecciona los elementos de entrada y el elemento donde se mostrará el resultado.
-    const inputCantidad = document.getElementById('cantidad');
-    const inputPrecio = document.getElementById('precio');
-    const resultado = document.getElementById('importe');
-
-    const importeElements = document.querySelectorAll('.importe');
-    const subtotalInput = document.getElementById('subtotal');
-    const ivaInput = document.getElementById('iva');
-    const inputotrosGrav = document.getElementById('gravamientos')
-    const totalInput = document.getElementById('total');
-
-    // Agrega un evento de escucha a ambos campos de entrada.
-    inputCantidad.addEventListener('input', calcularMultiplicacion);
-    inputPrecio.addEventListener('input', calcularMultiplicacion);
-    inputotrosGrav.addEventListener('input', calcularMultiplicacion)
-    importeElements.forEach((element) => {
-        element.addEventListener('input', calcularSubTotal);
-    });
-
-    // Función para calcular la multiplicación y mostrar el resultado.
-    function calcularMultiplicacion() {
-        const numCantidad = parseFloat(inputCantidad.value) || 0;
-        const numPrecio = parseFloat(inputPrecio.value) || 0;
-
-        const multiplicacion = numCantidad * numPrecio;
-        resultado.value = multiplicacion.toFixed(2);
-        calcularSubTotal();
-    }
-
-    // Función para calcular el subtotal a partir de los elementos de importe.
-    function calcularSubTotal() {
-        let subtotal = 0;
-        let iva = 0;
-        const gravamiento = parseFloat(inputotrosGrav.value) || 0;
-
-        importeElements.forEach((element) => {
-            subtotal += parseFloat(element.value) || 0;
-        });
-
-        subtotalInput.textContent = subtotal.toFixed(2);
-
-        // Calcula el IVA (puedes personalizar esta parte según tu tasa de IVA).
-        iva = subtotal * 0.16; // Ejemplo: IVA al 16%.
-        ivaInput.textContent = iva.toFixed(2);
-
-        // Calcula el total sumando el subtotal y el IVA.
-        total = subtotal + iva + gravamiento;
-        totalInput.value = total.toFixed(2);
-    }
-</script>
-
-
-{{-- Mostrar Clave de insumo --}}
-<script>
-    // Obtén una referencia al span y al select
-    const spanCucop = document.getElementById('cucop');
-    const selectInsumoCucop = document.getElementById('insumoCucop');
-
-    // Escucha el evento 'change' en el select
-    selectInsumoCucop.addEventListener('change', function() {
-        // Obtiene el valor seleccionado del select
-        const selectedOption = selectInsumoCucop.options[selectInsumoCucop.selectedIndex];
-        const selectedId = selectedOption.value; // Suponiendo que el valor de la opción es el ID
-
-        // Actualiza el contenido del span con el ID seleccionado
-        spanCucop.textContent = selectedId;
-    });
-</script>
-
 
 @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>

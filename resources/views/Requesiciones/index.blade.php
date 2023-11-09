@@ -94,6 +94,9 @@
         </div>
 
         <div class="card-footer">
+            @if ($requisiciones->total() > 10)
+                {{ $requisiciones->links() }}
+            @endif
         </div>
     </div>
 

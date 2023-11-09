@@ -25,7 +25,7 @@ class DetalleRequesicion extends Model
     
     public function requisicion()
     {
-        return $this->belongsTo(Requesicion::class, 'requisicion_id', 'id_requesicion');
+        return $this->belongsTo(Requesicion::class, 'requisicion_id', 'id_requisicion');
     }
     
     public function CucopsDetalle(): HasOne

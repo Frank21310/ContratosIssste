@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Requesicion extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'id_requesicion';
+    protected $primaryKey = 'id_requisicion';
     protected $table = 'requisiciones';
     protected $fillable = [
         'dependencia_id_dependencia',
@@ -40,6 +40,10 @@ class Requesicion extends Model
         'solicita',
         'autoriza',
     ];
+    public function detalles()
+    {
+        return $this->hasMany(DetalleRequesicion::class, 'requisicion_id');
+    }
     public function dependenciarequesicion(): HasOne
     {
         return $this->hasOne(Dependencia::class, 'id_dependencia','dependencia_id_dependencia' );
