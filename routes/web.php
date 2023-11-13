@@ -10,6 +10,9 @@ use App\Http\Controllers\RolesController;
 use App\Http\Controllers\SoloAdminController;
 use App\Http\Controllers\SoloPeticionesController;
 use App\Http\Controllers\UsuariosController;
+use App\Http\Middleware\SoloAdminContratos;
+use App\Http\Middleware\SoloContratante;
+use App\Http\Middleware\SoloFinanzas;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,6 +59,41 @@ Route::group(['middleware' => ['auth']], function () {
 })->namespace('Peticiones');
 /*
 |----------------------------------------------------------------- ---------
-| Web Routes administradorContratos
+| Web Routes Contratante
 |--------------------------------------------------------------------------
 */
+Route::group(['middleware' => ['auth']], function () {
+    
+    Route::get('/Contratante', [SoloContratante::class, 'index'])->name(' Contratante');
+
+})->namespace('Contratante');
+/*
+|----------------------------------------------------------------- ---------
+| Web Routes AdminContratos
+|--------------------------------------------------------------------------
+*/
+Route::group(['middleware' => ['auth']], function () {
+    
+    Route::get('/AdminContratos', [SoloAdminContratos::class, 'index'])->name(' AdminContratos');
+
+})->namespace('AdmiNContratos');
+/*
+|----------------------------------------------------------------- ---------
+| Web Routes Finanzas
+|--------------------------------------------------------------------------
+*/
+Route::group(['middleware' => ['auth']], function () {
+    
+    Route::get('/Finanzas', [SoloFinanzas::class, 'index'])->name(' Finanzas');
+
+})->namespace('Finanzas');
+/*
+|----------------------------------------------------------------- ---------
+| Web Routes AreaNormatica
+|--------------------------------------------------------------------------
+*/
+Route::group(['middleware' => ['auth']], function () {
+    
+    Route::get('/Anormativa', [SoloFinanzas::class, 'index'])->name(' Anormativa');
+
+})->namespace('Anormativa');

@@ -2,31 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Empleado;
 use Illuminate\Http\Request;
 
-class SoloPeticionesController extends Controller
+class SoloAreaNormativaController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-        $this->middleware('solorequirente',['only'=>['index']]);
-    }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * Display a listing of the resource.
      */
     public function index()
     {
-        return view('peticiones');
-
+        //
     }
 
     /**
@@ -34,7 +19,7 @@ class SoloPeticionesController extends Controller
      */
     public function create()
     {
-        
+        //
     }
 
     /**

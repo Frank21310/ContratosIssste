@@ -19,11 +19,23 @@ class RolSeeder extends Seeder
             'permiso_id_permisos'=>'1',
         ]);
         Rol::create([
-            'nombre_rol'=>'Peticiones',
+            'nombre_rol'=>'Requirente',
             'permiso_id_permisos'=>'2',
         ]);
         Rol::create([
-            'nombre_rol'=>'AdministradorContratos',
+            'nombre_rol'=>'Contratante',
+            'permiso_id_permisos'=>'3',
+        ]);
+        Rol::create([
+            'nombre_rol'=>'AdminContratos',
+            'permiso_id_permisos'=>'3',
+        ]);
+        Rol::create([
+            'nombre_rol'=>'finanzas',
+            'permiso_id_permisos'=>'3',
+        ]);
+        Rol::create([
+            'nombre_rol'=>'areanormativa',
             'permiso_id_permisos'=>'3',
         ]);
 

@@ -2,11 +2,12 @@
 
 namespace App\Http\Middleware;
 
+
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class SoloContratante
+class SoloRequirente
 {
     /**
      * Handle an incoming request.
@@ -20,10 +21,10 @@ class SoloContratante
                 return redirect('Administrador');//Administrador
             break;
             case ('2'):
-                return redirect('Peticiones');//Requirente
+                return $next($request);//Requirente
             break;
             case ('3'):
-                return $next($request);//Contratante
+                return redirect('Contratante');//Contratante
             break;
             case ('4'):
                 return redirect('AdminContratos');//AdministradorContratos

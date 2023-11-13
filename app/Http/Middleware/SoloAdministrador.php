@@ -18,13 +18,22 @@ class SoloAdministrador
     {
         switch(auth::user()->rol_id){
             case ('1'):
-                return $next($request);//Si es 
+                return $next($request);//Administrador
             break;
             case ('2'):
-                return redirect('Peticiones');
+                return redirect('Peticiones');//Requirente
             break;
             case ('3'):
-                return redirect('home');
+                return redirect('Contratante');//Contratante
+            break;
+            case ('4'):
+                return redirect('AdminContratos');//AdministradorContratos
+            break;
+            case ('5'):
+                return redirect('Finanzas');//Finanzas
+            break;
+            case ('6'):
+                return redirect('AreaNormativa');//Area Normativa
             break;
         }       
          

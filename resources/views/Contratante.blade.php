@@ -6,7 +6,7 @@
             <div>
                 <h2 class="display-3">Bienvenido {{ Auth::user()->empleado->nombre }}!</h2>
                 <hr>
-                <p>Bienvenido al sistema web de contratos de bienes y servicios para la representación del ISSSTE en Oaxaca, actualmente se encuentra como administrador.
+                <p>Bienvenido al sistema web de contratos de bienes y servicios para la representación del ISSSTE en Oaxaca, actualmente se encuentra en Contratante.
                 </p>
             </div>
         </div>
