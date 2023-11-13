@@ -8,6 +8,9 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RequesicionesController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\SoloAdminController;
+use App\Http\Controllers\SoloAreaNormativaController;
+use App\Http\Controllers\SoloContratanteController;
+use App\Http\Controllers\SoloFinanzasController;
 use App\Http\Controllers\SoloPeticionesController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Middleware\SoloAdminContratos;
@@ -43,7 +46,7 @@ Route::group(['middleware' => ['auth']], function () {
 })->namespace('root');
 /*
 |--------------------------------------------------------------------------
-| Web Routes peticiones
+| Web Routes Peticiones
 |--------------------------------------------------------------------------
 */
 Route::group(['middleware' => ['auth']], function () {
@@ -64,7 +67,7 @@ Route::group(['middleware' => ['auth']], function () {
 */
 Route::group(['middleware' => ['auth']], function () {
     
-    Route::get('/Contratante', [SoloContratante::class, 'index'])->name(' Contratante');
+    Route::get('/Contratante', [SoloContratanteController::class, 'index'])->name(' Contratante');
 
 })->namespace('Contratante');
 /*
@@ -74,7 +77,7 @@ Route::group(['middleware' => ['auth']], function () {
 */
 Route::group(['middleware' => ['auth']], function () {
     
-    Route::get('/AdminContratos', [SoloAdminContratos::class, 'index'])->name(' AdminContratos');
+    Route::get('/AdminContratos', [SoloAdminController::class, 'index'])->name(' AdminContratos');
 
 })->namespace('AdmiNContratos');
 /*
@@ -84,7 +87,7 @@ Route::group(['middleware' => ['auth']], function () {
 */
 Route::group(['middleware' => ['auth']], function () {
     
-    Route::get('/Finanzas', [SoloFinanzas::class, 'index'])->name(' Finanzas');
+    Route::get('/Finanzas', [SoloFinanzasController::class, 'index'])->name(' Finanzas');
 
 })->namespace('Finanzas');
 /*
@@ -94,6 +97,6 @@ Route::group(['middleware' => ['auth']], function () {
 */
 Route::group(['middleware' => ['auth']], function () {
     
-    Route::get('/Anormativa', [SoloFinanzas::class, 'index'])->name(' Anormativa');
+    Route::get('/Anormativa', [SoloAreaNormativaController::class, 'index'])->name(' Anormativa');
 
 })->namespace('Anormativa');

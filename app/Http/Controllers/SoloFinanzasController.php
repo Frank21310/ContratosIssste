@@ -7,13 +7,26 @@ use Illuminate\Http\Request;
 class SoloFinanzasController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Create a new controller instance.
+     *
+     * @return void
      */
-    public function index()
+    public function __construct()
     {
-        //
+        $this->middleware('auth');
+        $this->middleware('solofinanzas',['only'=>['index']]);
     }
 
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+
+    public function index()
+    {
+        return view('finanzas');   
+    }
     /**
      * Show the form for creating a new resource.
      */
