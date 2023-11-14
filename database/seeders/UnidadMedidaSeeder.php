@@ -15,7 +15,6 @@ class UnidadMedidaSeeder extends Seeder
     {
         Unidad_medida::create([
             'descripcion_unidad'=>'Servicio',
-
         ]);
         Unidad_medida::create([
             'descripcion_unidad'=>'Pieza',

@@ -19,5 +19,8 @@ class PaisSeeder extends Seeder
         Pais::create([
             'nombre_pais'=>'Estados Unidos',
         ]);
+        Pais::create([
+            'nombre_pais'=>'Canada',
+        ]);
     }
 }

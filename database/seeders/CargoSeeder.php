@@ -25,5 +25,6 @@ class CargoSeeder extends Seeder
         Cargo::create([
             'nombre_Cargo'=>'Administrador',
         ]);
+
     }
 }

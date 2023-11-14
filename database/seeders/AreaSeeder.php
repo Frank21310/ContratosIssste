@@ -23,9 +23,20 @@ class AreaSeeder extends Seeder
             'dependencia_id_dependencia'=>'1' 
         ]);
         Area::create([
-            'nombre_area'=>'Finanzas',
+            'nombre_area'=>'Departamento de Finanzas',
             'dependencia_id_dependencia'=>'1'
-
+        ]);
+        Area::create([
+            'nombre_area'=>'Departamento de Recursos Materiales y Obras',
+            'dependencia_id_dependencia'=>'1'
+        ]);
+        Area::create([
+            'nombre_area'=>'Almacen',
+            'dependencia_id_dependencia'=>'1'
+        ]);
+        Area::create([
+            'nombre_area'=>'Departamento de Sistemas',
+            'dependencia_id_dependencia'=>'1'
         ]);
     }
 }

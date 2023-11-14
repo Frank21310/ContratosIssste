@@ -13,5 +13,10 @@ class MetodoSeeder extends Seeder
      */
     public function run(): void
     {
+        
+        Metodo::create([
+            'nombre_metodos'=>'Ninguno',
+        ]);
+
     }
 }

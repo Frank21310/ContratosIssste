@@ -29,6 +29,9 @@ class DatabaseSeeder extends Seeder
         $this->call(PaisSeeder::class);
         $this->call(GarantiaSeeder::class);
         $this->call(CondicionSeeder::class);
+        $this->call(EstadoSeeder::class);
+
+
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
