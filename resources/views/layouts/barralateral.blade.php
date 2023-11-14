@@ -69,15 +69,30 @@
                         Inicio
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="{{ route('SeguimientoRequisicion.index') }}"
-                        class="nav-link {{ 'SeguimientoRequisicion' == request()->path() ? 'active' : '' }}">
-                        <i class="fas fa-home bi me-2 "></i>
-                        Requisiciones
-                    </a>
+                
+                <li class="nav-item" >
+                    <a href="#menurequisiciones" data-toggle="collapse" aria-expanded="true" class="nav-link" >
+                        <i class="fas fa-file-alt"></i>
+                        Requisiciones</a>
+                    <ul class="collapse list-unstyled" id="menurequisiciones">
+                        <li class="nav-item">
+                            <a href="{{ route('SeguimientoRequisicion.index') }}"
+                                class="nav-link {{ 'SeguimientoRequisicion' == request()->path() ? 'active' : '' }}">
+                                <i class="fas fa-pen"></i>
+                                Seguimiento
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('RequisicionesFinalizadas.index') }}"
+                                class="nav-link {{ 'RequisicionesFinalizadas' == request()->path() ? 'active' : '' }}">
+                                <i class="fas fa-check"></i>
+                                Finalizadas
+                            </a>
+                        </li>
+                        
+                    </ul>
                 </li>
                 
-
             @endif
         </ul>
         <hr>

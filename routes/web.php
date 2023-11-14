@@ -71,9 +71,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('SeguimientoRequisicion', SeguimientoController::class);
     Route::resource('RequisicionesFinalizadas', RequisicionesFinalizadasController::class);
 
-
-
-
 })->namespace('Contratante');
 /*
 |----------------------------------------------------------------- ---------

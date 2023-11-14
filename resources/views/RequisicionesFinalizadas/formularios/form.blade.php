@@ -12,5 +12,4 @@
             <input type="text" class="form-control" name="permiso_id_permisos" value="{{(isset($rol))?$rol->permiso_id_permisos:old('permiso_id_permisos')}}" required>
         </div>
     </div>
-
 </div>

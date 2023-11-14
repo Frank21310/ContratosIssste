@@ -21,7 +21,7 @@ class RequisicionesFinalizadasController extends Controller
                 ->orWhere('no_requesicion', 'like', '%' . $request->search . '%');
         }
         $requisiciones = $requisiciones->paginate($limit)->appends($request->all());
-        return view('SeguimientoRequisicion.index', compact('requisiciones'));
+        return view('RequisicionesFinalizadas.index', compact('requisiciones'));
     }
 
     /**

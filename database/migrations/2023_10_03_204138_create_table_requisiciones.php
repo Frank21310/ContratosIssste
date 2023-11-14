@@ -52,9 +52,10 @@ return new class extends Migration
             $table->foreignId('solicita')
             ->references('num_empleado')
             ->on('empleados');
-            $table->foreignId('autoriza')
-            ->references('num_empleado')
-            ->on('empleados');
+            $table->string('autoriza');
+            $table->foreignId('estado')
+            ->references('id_estado')
+            ->on('estado');
             $table->timestamps();
         });
     }

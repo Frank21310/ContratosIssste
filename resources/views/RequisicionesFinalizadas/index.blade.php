@@ -5,7 +5,7 @@
         <div class="card-header">
             <div class="row">
                 <div class="col">
-                    <h2 class="">Seguimiento Requisiciones</h2>
+                    <h2 class="">Requisiciones Finalizadas</h2>
                 </div>
             </div>
         </div>
@@ -13,8 +13,8 @@
         <hr>
         <div class="card-body">
             <h3>Tabla de Requisiciones </h3>
-            <p>Tabla de todas las Requisiciones pendientes</p>
-            {{--<div class="col-4">
+            <p>Tabla de todas las Requisiciones Finalizadas</p>
+            <div class="col-4">
                 <div class="form-group">
                     <a class="navbar-brand">Listar</a>
                     <select name="limit" id="limit" class="custom-select">
@@ -45,7 +45,7 @@
                     <input class="form-control mr-sm-2" type="search" id="search" placeholder="Search"
                         aria-label="Search" value="{{ isset($_GET['search']) ? $_GET['search'] : '' }}">
                 </div>
-            </div>--}}
+            </div>
         </div>
         <div class="table-responsive">
             <div class="table table-striped">
@@ -72,9 +72,8 @@
                                 <td>Pendiente</td>
                                 <td>
                                     <div class="btn-group" role="group">
-                                        <a href="{{ route('Requesiciones.show', $requisicion->id_requisicion) }}"
+                                        <a href="{{ route('RequisicionesFinalizadas.show', $requisicion->id_requisicion) }}"
                                             class="btn btn-info"><i class="fas fa-eye"></i></a>
-
                                     </div>
                                 </td>
                             </tr>
@@ -95,13 +94,13 @@
 
     <Script type="text/javascript">
         $('#limit').on('change', function() {
-            window.location.href = "{{ route('Requesiciones.index') }}?limit=" + $(this).val() + '&search=' + $(
+            window.location.href = "{{ route('RequisicionesFinalizadas.index') }}?limit=" + $(this).val() + '&search=' + $(
                 '#search').val()
         })
 
         $('#search').on('keyup', function(e) {
             if (e.keyCode == 13) {
-                window.location.href = "{{ route('Requesiciones.index') }}?limit=" + $('#limit').val() +
+                window.location.href = "{{ route('RequisicionesFinalizadas.index') }}?limit=" + $('#limit').val() +
                     '&search=' +
                     $(this).val()
             }
