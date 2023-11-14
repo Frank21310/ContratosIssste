@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContratosController;
 use App\Http\Controllers\CUCoPsController;
 use App\Http\Controllers\EmpleadosController;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +16,8 @@ use App\Http\Controllers\SoloFinanzasController;
 use App\Http\Controllers\SoloPeticionesController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\SeguimientoController;
-
+use App\Http\Controllers\SoloAdminContratosController;
+use App\Http\Middleware\SoloAdminContratos;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,6 +72,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/Contratante', [SoloContratanteController::class, 'index'])->name(' Contratante');
     Route::resource('SeguimientoRequisicion', SeguimientoController::class);
     Route::resource('RequisicionesFinalizadas', RequisicionesFinalizadasController::class);
+    Route::resource('Contratos', ContratosController::class);
+
 
 })->namespace('Contratante');
 /*
@@ -79,9 +83,9 @@ Route::group(['middleware' => ['auth']], function () {
 */
 Route::group(['middleware' => ['auth']], function () {
     
-    Route::get('/AdminContratos', [SoloAdminController::class, 'index'])->name(' AdminContratos');
+    Route::get('/AdminContratos', [SoloAdminContratosController::class, 'index'])->name(' AdminContratos');
 
-})->namespace('AdmiNContratos');
+})->namespace('admincontratos');
 /*
 |----------------------------------------------------------------- ---------
 | Web Routes Finanzas

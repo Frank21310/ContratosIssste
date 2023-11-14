@@ -39,7 +39,7 @@ class RequesicionesController extends Controller
     public function index(Request $request)
     {
 
-        $requisiciones = Requesicion::select('*')->orderBy('id_requisicion', 'DESC');
+        $requisiciones = Requesicion::where('estado', '1')->orderBy('id_requisicion', 'DESC');
         $limit = (isset($request->limit)) ? $request->limit : 5;
 
         if (isset($request->search)) {

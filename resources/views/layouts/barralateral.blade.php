@@ -92,6 +92,13 @@
                         
                     </ul>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('Contratos.index')  }}"
+                        class="nav-link {{ 'Contratos' == request()->path() ? 'active' : '' }}">
+                        <i class="fas fa-home bi me-2 "></i>
+                        Contratos
+                    </a>
+                </li>
                 
             @endif
         </ul>

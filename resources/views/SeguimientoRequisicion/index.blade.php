@@ -52,7 +52,7 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Numero de requisición</th>
+                            <th>N° Requisicion</th>
                             <th>Dependencia</th>
                             <th>Fecha de elaboracion</th>
                             <th>Solicita</th>
@@ -69,12 +69,11 @@
                                 <td>{{ $requisicion->fecha_elaboracion }}</td>
                                 <td>{{ $requisicion->solicita }}</td>
                                 <td>{{ $requisicion->autoriza }}</td>
-                                <td>Pendiente</td>
+                                <td>{{ $requisicion->estado }}</td>
                                 <td>
                                     <div class="btn-group" role="group">
-                                        <a href="{{ route('Requesiciones.show', $requisicion->id_requisicion) }}"
+                                        <a href="{{ route('RequisicionesFinalizadas.show', $requisicion->id_requisicion) }}"
                                             class="btn btn-info"><i class="fas fa-eye"></i></a>
-
                                     </div>
                                 </td>
                             </tr>

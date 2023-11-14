@@ -3,24 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Requesicion;
 
-class SeguimientoController extends Controller
+class ContratosController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $requisiciones = Requesicion::where('estado', '1')->orderBy('id_requisicion', 'DESC');
-        $limit = (isset($request->limit)) ? $request->limit : 5;
+        return view('Contratos.index');
 
-        if (isset($request->search)) {
-            $requisiciones = $requisiciones->where('id_requisicion', 'like', '%' . $request->search . '%')
-                ->orWhere('no_requesicion', 'like', '%' . $request->search . '%');
-        }
-        $requisiciones = $requisiciones->paginate($limit)->appends($request->all());
-        return view('SeguimientoRequisicion.index', compact('requisiciones'));
     }
 
     /**
