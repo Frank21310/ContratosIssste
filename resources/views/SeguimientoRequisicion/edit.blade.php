@@ -4,10 +4,10 @@
         <div class="card-header">
             <div class="row">
                 <div class="col">
-                    <h2 class="">Editar rol de {{$rol->nombre_rol}} </h2>
+                    <h2 class="">Editar requisicion</h2>
                 </div>
                 <div class="col g-col-6 d-flex justify-content-end ">
-                    <a id="BtnAgregar" href="{{ route('roles.index') }}" class="btn btn-primary ml-auto">
+                    <a id="BtnAgregar" href="{{ route('SeguimientoRequisicion.index') }}" class="btn btn-primary ml-auto">
                         <i class="fas fa-arrow-left"></i>
                         Volver
                     </a>
@@ -16,9 +16,9 @@
         </div>
         <hr>
         <div class="card-body">
-            <form action="{{ route('roles.update', $rol->id_rol) }}" method="POST" enctype="multipart/form-data" id="create">
+            <form action="{{ route('SeguimientoRequisicion.update', $requisicion->id_requisicion) }}" method="POST" enctype="multipart/form-data" id="create">
                 @method('PUT')
-                @include('roles.formularios.form')
+                @include('SeguimientoRequisicion.formularios.editableform')
             </form>
         </div>
         <hr>

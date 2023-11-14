@@ -14,7 +14,7 @@
         <div class="card-body">
             <h3>Tabla de Requisiciones </h3>
             <p>Tabla de todas las Requisiciones pendientes</p>
-            {{--<div class="col-4">
+            {{-- <div class="col-4">
                 <div class="form-group">
                     <a class="navbar-brand">Listar</a>
                     <select name="limit" id="limit" class="custom-select">
@@ -45,7 +45,7 @@
                     <input class="form-control mr-sm-2" type="search" id="search" placeholder="Search"
                         aria-label="Search" value="{{ isset($_GET['search']) ? $_GET['search'] : '' }}">
                 </div>
-            </div>--}}
+            </div> --}}
         </div>
         <div class="table-responsive">
             <div class="table table-striped">
@@ -72,8 +72,8 @@
                                 <td>{{ $requisicion->estado }}</td>
                                 <td>
                                     <div class="btn-group" role="group">
-                                        <a href="{{ route('RequisicionesFinalizadas.show', $requisicion->id_requisicion) }}"
-                                            class="btn btn-info"><i class="fas fa-eye"></i></a>
+                                        <a href="{{ route('SeguimientoRequisicion.edit', $requisicion->id_requisicion) }}"
+                                            class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>
                                     </div>
                                 </td>
                             </tr>
@@ -89,7 +89,7 @@
         </div>
     </div>
 
-    
+
     </div>
 
     <Script type="text/javascript">

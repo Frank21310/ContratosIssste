@@ -11,6 +11,7 @@ use Laravel\Ui\Presets\React;
 class DetalleRequesicion extends Model
 {
     use HasFactory;
+    protected $primaryKey = 'id';
     protected $table = 'detallerequisiciones';
     protected $fillable = [
         'requisicion_id',

@@ -73,6 +73,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('SeguimientoRequisicion', SeguimientoController::class);
     Route::resource('RequisicionesFinalizadas', RequisicionesFinalizadasController::class);
     Route::resource('Contratos', ContratosController::class);
+    Route::get('SeguimientoRequisicion/{id}/edit', [SeguimientoController::class, 'edit'])->name('SeguimientoRequisicion.edit');
+
 
 
 })->namespace('Contratante');

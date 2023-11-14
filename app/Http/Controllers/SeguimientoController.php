@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DetalleRequesicion;
 use Illuminate\Http\Request;
 use App\Models\Requesicion;
 
@@ -23,28 +24,22 @@ class SeguimientoController extends Controller
         return view('SeguimientoRequisicion.index', compact('requisiciones'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function Updatedetalle(Request $request, $detalle)
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+        if ($request->has('requisicion_id')) {
+            $detalle->requisicion_id = $request->requisicion_id;
+        }
+    
+        $detalle->num_partida = $request->num_partida;
+        $detalle->cucop = $request->cucop;
+        $detalle->descripcion = $request->descripcion;
+        $detalle->cantidad = $request->cantidad;
+        $detalle->unidad_medida = $request->unidad_medida;
+        $detalle->precio = $request->precio;
+        $detalle->importe = $request->importe;
+    
+        $detalle->save();
+        return  $detalle;
     }
 
     /**
@@ -52,7 +47,8 @@ class SeguimientoController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $requisicion = Requesicion::where('id_requisicion', $id)->firstOrFail();
+        return view('SeguimientoRequisicion.edit', compact('requisicion'));
     }
 
     /**
@@ -60,14 +56,10 @@ class SeguimientoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $detalle = DetalleRequesicion::where('id', $id)->firstOrFail();
+
+        $detalle = $this->Updatedetalle($request, $detalle);
+        return redirect()->route('SeguimientoRequisicion.edit', ['id' => $detalle->requisicion_id]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

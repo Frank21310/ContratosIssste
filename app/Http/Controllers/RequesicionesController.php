@@ -194,6 +194,7 @@ class RequesicionesController extends Controller
     public function update(Request $request, string $id)
     {
         $requisicion = Requesicion::where('id_requisicion', $id)->firstOrFail();
+        $requisicion_id = $requisicion->id_requisicion;
         $requisicion = $this->createUpdateRol($request, $requisicion);
         return redirect()
             ->route('Requesiciones.index');
