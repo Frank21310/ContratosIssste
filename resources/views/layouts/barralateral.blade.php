@@ -1,5 +1,5 @@
 <div class="wrapper">
-    
+
     <div id="sidebar" class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
         <a class="d-flex align-items-center mb-3 link-body-emphasis text-decoration-none">
             <img class="fs-4" src="{{ asset('assets/img/logo_2_issste.png') }}" alt="Logo" width="170"
@@ -9,8 +9,7 @@
         <ul class="nav nav-pills flex-column mb-auto">
             @if (Auth::user()->rol_id == 1)
                 <li class="nav-item">
-                    <a href="{{ url('/home') }}"
-                        class="nav-link  {{ 'home' == request()->path() ? 'active' : '' }}" >
+                    <a href="{{ url('/home') }}" class="nav-link  {{ 'home' == request()->path() ? 'active' : '' }}">
                         <i class="fas fa-user-tie"></i>
                         Inicio
                     </a>
@@ -41,15 +40,14 @@
             @if (Auth::user()->rol_id == 2)
                 <li class="nav-item">
                     <a href="{{ url('/home') }}"
-                        class="nav-link {{ 'Peticiones' == request()->path() ? 'active' : '' }}"
-                        >
+                        class="nav-link {{ 'Peticiones' == request()->path() ? 'active' : '' }}">
                         <i class="fas fa-home bi me-2 "></i>
                         Inicio
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('Requesiciones.index') }}"
-                        class="nav-link  {{ 'Requesiciones' == Request::is('Requesiciones*') ? 'active' : '' }}" >
+                        class="nav-link  {{ 'Requesiciones' == Request::is('Requesiciones*') ? 'active' : '' }}">
                         <i class="fas fa-plus bi me-2"></i>
                         Requisiciones
                     </a>
@@ -62,6 +60,24 @@
                         CUCop
                     </a>
                 </li>
+            @endif
+            @if (Auth::user()->rol_id == 3)
+                <li class="nav-item">
+                    <a href="{{ url('/home') }}"
+                        class="nav-link {{ 'Peticiones' == request()->path() ? 'active' : '' }}">
+                        <i class="fas fa-home bi me-2 "></i>
+                        Inicio
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('SeguimientoRequisicion.index') }}"
+                        class="nav-link {{ 'SeguimientoRequisicion' == request()->path() ? 'active' : '' }}">
+                        <i class="fas fa-home bi me-2 "></i>
+                        Requisiciones
+                    </a>
+                </li>
+                
+
             @endif
         </ul>
         <hr>
@@ -88,4 +104,3 @@
         </div>
     </div>
 </div>
-

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RequesicionesController;
+use App\Http\Controllers\RequisicionesFinalizadasController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\SoloAdminController;
 use App\Http\Controllers\SoloAreaNormativaController;
@@ -13,9 +14,8 @@ use App\Http\Controllers\SoloContratanteController;
 use App\Http\Controllers\SoloFinanzasController;
 use App\Http\Controllers\SoloPeticionesController;
 use App\Http\Controllers\UsuariosController;
-use App\Http\Middleware\SoloAdminContratos;
-use App\Http\Middleware\SoloContratante;
-use App\Http\Middleware\SoloFinanzas;
+use App\Http\Controllers\SeguimientoController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -68,6 +68,11 @@ Route::group(['middleware' => ['auth']], function () {
 Route::group(['middleware' => ['auth']], function () {
     
     Route::get('/Contratante', [SoloContratanteController::class, 'index'])->name(' Contratante');
+    Route::resource('SeguimientoRequisicion', SeguimientoController::class);
+    Route::resource('RequisicionesFinalizadas', RequisicionesFinalizadasController::class);
+
+
+
 
 })->namespace('Contratante');
 /*
