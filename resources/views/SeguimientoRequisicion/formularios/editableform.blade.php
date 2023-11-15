@@ -65,15 +65,29 @@
                 <form action="{{ route('SeguimientoRequisicion.update', $detalle->id) }}" method="POST">
                     @csrf
                     @method('PUT')
-                    <td><input type="text" name="num_partida" value="{{ $detalle->num_partida }}"></td>
-                    <td><input type="text" name="cucop" value="{{ $detalle->cucop }}"></td>
-                    <td><input type="text" name="descripcion" value="{{ $detalle->descripcion }}"></td>
-                    <td><input type="text" name="cantidad" value="{{ $detalle->cantidad }}"></td>
-                    <td><input type="text" name="unidad_medida" value="{{ $detalle->unidad_medida }}"></td>
-                    <td><input type="text" name="precio" value="{{ $detalle->precio }}"></td>
-                    <td><input type="text" name="importe" value="{{ $detalle->importe }}"></td>
+                    <td><input type="text" class="form-control" name="num_partida"
+                            value="{{ $detalle->num_partida }}"></td>
+                    <td><input type="text" class="form-control" name="cucop" value="{{ $detalle->cucop }}"></td>
+                    <td><input type="text" class="form-control" name="descripcion"
+                            value="{{ $detalle->descripcion }}"></td>
+                    <td><input type="text" class="form-control" name="cantidad" value="{{ $detalle->cantidad }}">
+                    </td>
+                    <td><input type="text" class="form-control" name="unidad_medida"
+                            value="{{ $detalle->unidad_medida }}"></td>
+                    <td><input type="text" class="form-control" name="precio" value="{{ $detalle->precio }}"></td>
+                    <td><input type="text" class="form-control" name="importe" value="{{ $detalle->importe }}"></td>
                     <td>
-                        <button type="submit">Guardar</button>
+                        <button type="submit" class="btn btn-success"><i class="fas fa-save	"></i></i></button>
+
+                        <button type="submit" class="btn btn-danger " form="detele_{{ $detalle->id }}"
+                            onclick="return confirm('¿Estas seguro de eliminar el registro?')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        <form action="{{ route('SeguimientoRequisicion.destroy', $detalle->id) }}"
+                            id="delete_{{ $detalle->id }}" method="post" enctype="multipart/form-data" hidden>
+                            @csrf
+                            @method('DELETE')
+                        </form>
                     </td>
                 </form>
             </tr>
@@ -278,7 +292,7 @@
         <span type="text" name="autoriza"
             class="form-control">{{ isset($requisicion) ? $requisicion->autoriza : old('autoriza') }}</span>
 
-    </div>  
+    </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

@@ -68,6 +68,72 @@
 
 <hr>
 
+<div >
+    <table>
+        <thead>
+            <tr>
+                <th>Partida</th>
+                <th>CUCoP</th>
+                <th>Descripción</th>
+                <th>Cantidad</th>
+                <th>Medida</th>
+                <th>Precio</th>
+                <th>Importe</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+                    <td>
+                        <label>Partida:</label>
+                        <select class="form-control select-partida" name="num_partida">
+                            <option value="">Selecciona</option>
+                            @foreach ($partidas as $partida)
+                                <option value="{{ $partida->id_partida_especifica }}" class="form-control">
+                                    {{ $partida->id_partida_especifica }} - {{ $partida->descripcion }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <label>CUCoP:</label>
+                        <input type="text" class="form-control span-cucop" name="cucop" readonly>
+                    </td>
+                    <td>
+                        <label>Descripcion:</label>
+                        <select class="form-control select-insumo" name="descripcion">
+                            <option value="">Seleccione el insumo</option>
+                        </select>
+                    </td>
+                    <td>
+                        <label>Cantidad:</label>
+                        <input type="number" name="cantidad" min="0" placeholder="1.0" step="0.01" class="form-control"
+                            value="{{ isset($detallerequisicion) ? $detallerequisicion->cantidad : old('cantidad') }}">
+                    </td>
+                    <td>
+                        <label>Medida:</label>
+                        <select class="form-control" name="unidad_medida">
+                            @foreach ($unidades as $unidad)
+                                <option value="{{ $unidad->idunidad_medida }}">
+                                    {{ $unidad->descripcion_unidad }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <label>Precio: </label>
+                        <input type="number" name="precio" min="0" placeholder="1.0" step="0.01" class="form-control"
+                            value="{{ isset($detallerequisicion) ? $detallerequisicion->precio : old('precio') }}">
+                    </td>
+                    <td>
+                        <label>Importe:</label>
+                        <input type="number" class="form-control importe" name="importe" value="{{ old('importe') }}"
+                            readonly>
+                    </td>
+
+
+        </tbody>
+    </table>
+</div>
+
 
 {{-- Div que agrega mas partidas --}}
 <div class="newData">
@@ -519,6 +585,7 @@
         });
     });
 </script>
+
 
 
 @push('scripts')

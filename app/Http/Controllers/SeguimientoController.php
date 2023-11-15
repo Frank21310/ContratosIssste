@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\DetalleRequesicion;
 use Illuminate\Http\Request;
 use App\Models\Requesicion;
+use Illuminate\Database\QueryException;
+
 
 class SeguimientoController extends Controller
 {
@@ -60,6 +62,17 @@ class SeguimientoController extends Controller
 
         $detalle = $this->Updatedetalle($request, $detalle);
         return redirect()->route('SeguimientoRequisicion.edit', ['id' => $detalle->requisicion_id]);
+    }
+
+    public function destroy(string $id)
+    {
+        $detalle = DetalleRequesicion::findOrFail($id);
+        try {
+            $detalle->delete();
+            return redirect()->route('SeguimientoRequisicion.edit', ['id' => $detalle->requisicion_id]);
+        } catch (QueryException $e) {
+            return redirect()->route('SeguimientoRequisicion.edit', ['id' => $detalle->requisicion_id]);
+        }
     }
 
 }
