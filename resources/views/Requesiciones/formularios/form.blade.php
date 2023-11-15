@@ -68,82 +68,84 @@
 
 <hr>
 
-<div >
+
+<div>
     <table>
         <thead>
             <tr>
-                <th>Partida</th>
-                <th>CUCoP</th>
-                <th>Descripción</th>
-                <th>Cantidad</th>
-                <th>Medida</th>
-                <th>Precio</th>
-                <th>Importe</th>
-                <th>Acciones</th>
+                <th class="col-1">Partida</th>
+                <th class="col-1">CUCoP</th>
+                <th class="col-5">Descripción</th>
+                <th class="col-1">Cantidad</th>
+                <th class="col-1">Medida</th>
+                <th class="col-2">Precio</th>
+                <th class="col-2">Importe</th>
+                <th class="col-1">Acciones</th>
             </tr>
         </thead>
         <tbody>
-                    <td>
-                        <label>Partida:</label>
-                        <select class="form-control select-partida" name="num_partida">
-                            <option value="">Selecciona</option>
-                            @foreach ($partidas as $partida)
-                                <option value="{{ $partida->id_partida_especifica }}" class="form-control">
-                                    {{ $partida->id_partida_especifica }} - {{ $partida->descripcion }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                        <label>CUCoP:</label>
-                        <input type="text" class="form-control span-cucop" name="cucop" readonly>
-                    </td>
-                    <td>
-                        <label>Descripcion:</label>
-                        <select class="form-control select-insumo" name="descripcion">
-                            <option value="">Seleccione el insumo</option>
-                        </select>
-                    </td>
-                    <td>
-                        <label>Cantidad:</label>
-                        <input type="number" name="cantidad" min="0" placeholder="1.0" step="0.01" class="form-control"
-                            value="{{ isset($detallerequisicion) ? $detallerequisicion->cantidad : old('cantidad') }}">
-                    </td>
-                    <td>
-                        <label>Medida:</label>
-                        <select class="form-control" name="unidad_medida">
-                            @foreach ($unidades as $unidad)
-                                <option value="{{ $unidad->idunidad_medida }}">
-                                    {{ $unidad->descripcion_unidad }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                        <label>Precio: </label>
-                        <input type="number" name="precio" min="0" placeholder="1.0" step="0.01" class="form-control"
-                            value="{{ isset($detallerequisicion) ? $detallerequisicion->precio : old('precio') }}">
-                    </td>
-                    <td>
-                        <label>Importe:</label>
-                        <input type="number" class="form-control importe" name="importe" value="{{ old('importe') }}"
-                            readonly>
-                    </td>
-
-
+            <tr id="filaEjemplo">
+            <td>
+                <label>Partida:</label>
+                <select class="form-control select-partida " name="num_partida">
+                    <option value="">Selecciona</option>
+                    @foreach ($partidas as $partida)
+                        <option value="{{ $partida->id_partida_especifica }}" class="form-control">
+                            {{ $partida->id_partida_especifica }} - {{ $partida->descripcion }}
+                        </option>
+                    @endforeach
+                </select>
+            </td>
+            <td>
+                <label>CUCoP:</label>
+                <input type="text" class="form-control span-cucop" name="cucop" readonly>
+            </td>
+            <td>
+                <label>Descripcion:</label>
+                <select class="form-control select-insumo" name="descripcion">
+                    <option value="">Seleccione el insumo</option>
+                </select>
+            </td>
+            <td>
+                <label>Cantidad:</label>
+                <input type="number" name="cantidad" min="0" placeholder="1.0" step="0.01"
+                    class="form-control" value="{{ old('cantidad') }}">
+            </td>
+            <td>
+                <label>Medida:</label>
+                <select class="form-control" name="unidad_medida">
+                    @foreach ($unidades as $unidad)
+                        <option value="{{ $unidad->idunidad_medida }}">
+                            {{ $unidad->descripcion_unidad }}</option>
+                    @endforeach
+                </select>
+            </td>
+            <td>
+                <label>Precio: </label>
+                <input type="number" name="precio" min="0" placeholder="1.0" step="0.01"
+                    class="form-control" value="{{ old('precio') }}">
+            </td>
+            <td>
+                <label>Importe:</label>
+                <input type="number" class="form-control importe" name="importe" readonly>
+            </td>
+            <td>
+                <button type="button" class="btn btn-danger borrarFila"><i class="fas fa-trash "></i></button>
+            </td>
+        </tr>
         </tbody>
+
+
     </table>
+    <div class="d-grid gap-2 p-4 col-3 mx-auto">
+        <button type="button" id="agregarFila" class="btn btn-primary">Agregar Fila</button>
+
+      </div>
+
 </div>
 
-
-{{-- Div que agrega mas partidas --}}
-<div class="newData">
-
 </div>
 
-{{-- Boton de agregar --}}
-<div class=" col d-flex align-items-center justify-content-md-end">
-    <a href="" class="btn add-btn btn-info me-md-2 mt-2"><i class="fas fa-plus"></i></a>
-</div>
 <hr>
 
 {{-- Sub Total --}}
@@ -393,198 +395,72 @@
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-
-{{-- Agregar más campos --}}
-<script type="text/javascript">
-    $(function() {
-        var i = 1;
-
-        function addNewRow() {
-            return `
-            <div id="newRow${i}" class="row">
-                <div class="col-1 d-flex align-items-center flex-column">
-                    <div class="row">
-                        <label>Partida:</label>
-                    </div>
-                    <div class="row">
-                        <select class="form-control select-partida" name="num_partida">
-                            <option value="">Selecciona</option>
-                            @foreach ($partidas as $partida)
-                                <option value="{{ $partida->id_partida_especifica }}" class="form-control">
-                                    {{ $partida->id_partida_especifica }} - {{ $partida->descripcion }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="col-1 d-flex align-items-center flex-column">
-                    <div class="row">
-                        <label>CUCoP:</label>
-                    </div>
-                    <div class="row">
-                        <input type="text" class="form-control span-cucop" name="cucop"  readonly>
-                    </div>
-                </div>
-                <div class="col-5 align-items-center">
-                    <div class="row">
-                        <label>Descripcion:</label>
-                    </div>
-                    <div class="row">
-                        <select class="form-control select-insumo" name="descripcion">
-                            <option value="">Seleccione el insumo</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-1 d-flex align-items-center flex-column">
-                    <div class="row">
-                        <label>Cantidad:</label>
-                    </div>
-                    <div class="row">
-                        <input type="number" name="cantidad" min="0" placeholder="1.0" step="0.01" class="form-control"
-                            value="{{ isset($detallerequisicion) ? $detallerequisicion->cantidad : old('cantidad') }}">
-                    </div>
-
-                </div>
-                <div class="col-1 d-flex align-items-center flex-column">
-                    <div class="row">
-                        <label>Medida:</label>
-                    </div>
-                    <div class="row">
-                        <select class="form-control" name="unidad_medida">
-                            @foreach ($unidades as $unidad)
-                                <option value="{{ $unidad->idunidad_medida }}">
-                                    {{ $unidad->descripcion_unidad }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="col-1 d-flex align-items-center flex-column">
-                    <div class="row">
-                        <label>Precio: </label>
-                    </div>
-                    <div class="row">
-                        <input type="number" name="precio" min="0" placeholder="1.0" step="0.01" class="form-control"
-                            name="precio" value="{{ isset($detallerequisicion) ? $detallerequisicion->precio : old('precio') }}">
-                    </div>
-                </div>
-                <div class="col-1 d-flex align-items-center flex-column">
-                    <div class="row">
-                        <label>Importe:</label>
-                    </div>
-                    <div class="row">
-                        <input type="number" class="form-control importe" name="importe" name="importe"
-                            value="{{ old('importe') }}" readonly>
-                    </div>
-                </div>
-                <div class="col-1 d-flex align-items-center flex-column">
-                <a href="" id="${i}" class="btn remove-lnk btn-danger me-md-2 mt-4"><i class="fas fa-trash"></i></a>
-                </div>
-            </div>`;
-        }
-        $('.newData').on('input', 'input[name="cantidad"], input[name="precio"]', function() {
-                calcularMultiplicacion();
-                calcularSubTotal(); // Agrega esta línea
-            });
-
-
-        // Función para calcular la multiplicación y mostrar el resultado.
-        function calcularMultiplicacion() {
-            const inputCantidad = $('input[name="cantidad"]');
-            const inputPrecio = $('input[name="precio"]');
-            const resultado = $('.importe');
-
-            const numCantidad = parseFloat(inputCantidad.val()) || 0;
-            const numPrecio = parseFloat(inputPrecio.val()) || 0;
-
-            const multiplicacion = numCantidad * numPrecio;
-            resultado.val(multiplicacion.toFixed(2));
-            calcularSubTotal();
-
-            
-        }
-
-        // Función para calcular el subtotal a partir de los elementos de importe.
-        function calcularSubTotal() {
-            let subtotal = 0;
-            let iva = 0;
-            const gravamiento = parseFloat($('.input-otros-grav').val()) || 0; // Convierte el valor a número
-                0; // Obtén el valor de los gravámenos
-            const importeElements = $('.importe');
-
-            importeElements.each(function(index, element) {
-                subtotal += parseFloat($(element).val()) || 0;
-            });
-
-            $('#subtotal').text(subtotal.toFixed(2));
-
-            // Calcula el IVA (puedes personalizar esta parte según tu tasa de IVA).
-            iva = subtotal * 0.16; // Ejemplo: IVA al 16%.
-            $('#iva').text(iva.toFixed(2));
-
-            // Calcula el total sumando el subtotal, el IVA y los gravámenos.
-            total = subtotal + iva + gravamiento;
-            $('#total').val(total.toFixed(2));
-        }
-
-
-
-        // Manejar el evento de clic en el botón "Agregar Campo"
-        $('.add-btn').click(function(e) {
-            e.preventDefault();
-            i++;
-            $('.newData').append(addNewRow());
+<script>
+    $(document).ready(function () {
+        // Agregar fila
+        $("#agregarFila").click(function () {
+            var fila = $("#filaEjemplo").clone();
+            fila.removeAttr("id");
+            fila.find("input, select").val("");
+            fila.find(".importe").val("0");
+            fila.appendTo("tbody");
         });
 
-        // Manejar el evento de clic en el botón "Eliminar Campo"
-        $(document).on('click', '.remove-lnk', function(e) {
-            e.preventDefault();
-            var id = $(this).attr("id");
-            $('#newRow' + id).remove();
-            calcularSubTotal();
+        // Borrar fila
+        $("tbody").on("click", ".borrarFila", function () {
+            $(this).closest("tr").remove();
         });
 
-        // Inicializar el botón para agregar campos
-        $('.newData').append(addNewRow());
-
-        // Script para buscar el insumo con la descripción
-        $('.select-partida').on('change', function() {
-            var partidaId = $(this).val();
-
-            if (partidaId) {
-                $.ajax({
-                    url: "{{ route('fclaveCucop') }}",
-                    method: 'get',
-                    data: {
-                        nPartida: partidaId
-                    },
-                    success: function(data) {
-                        var select = $('.select-insumo');
-
-                        select.empty();
-                        select.append(
-                            '<option id="datacucop" value="">Selecciona un insumo</option>'
-                        );
-
-                        $.each(data, function(index, item) {
-                            select.append('<option value="' + item.id_cucop +
-                                '">' + item.descripcion_insumo + '</option>');
-                        });
-                    }
-                });
-            } else {
-                $('.select-insumo').empty();
-                $('.select-insumo').append('<option value="">Sin valores</option>');
-            }
-        });
-
-        // Script para mostrar la Clave Cucop
-        $('.select-insumo').on('change', function() {
-            var selectedOption = $(this).val();
-            $('.span-cucop').val(selectedOption);
+        // Calcular importe al cambiar cantidad o precio
+        $("tbody").on("change", "input[name='cantidad'], input[name='precio']", function () {
+            var cantidad = $(this).closest("tr").find("input[name='cantidad']").val() || 0;
+            var precio = $(this).closest("tr").find("input[name='precio']").val() || 0;
+            var importe = cantidad * precio;
+            $(this).closest("tr").find(".importe").val(importe.toFixed(2));
         });
     });
 </script>
+
+
+<script type="text/javascript">
+    // Script para buscar el insumo con la descripción
+    $(document).on('change', '.select-partida', function() {
+        var partidaId = $(this).val();
+
+        if (partidaId) {
+            $.ajax({
+                url: "{{ route('fclaveCucop') }}",
+                method: 'get',
+                data: {
+                    nPartida: partidaId
+                },
+                success: function(data) {
+                    var select = $('.select-insumo');
+
+                    select.empty();
+                    select.append('<option id="datacucop" value="">Selecciona un insumo</option>');
+
+                    $.each(data, function(index, item) {
+                        select.append('<option value="' + item.id_cucop + '">' + item
+                            .descripcion_insumo + '</option>');
+                    });
+                }
+            });
+        } else {
+            $('.select-insumo').empty();
+            $('.select-insumo').append('<option value="">Sin valores</option>');
+        }
+    });
+
+    // Script para mostrar la Clave Cucop
+    $(document).on('change', '.select-insumo', function() {
+        var selectedOption = $(this).val();
+        $('.span-cucop').val(selectedOption);
+    });
+
+
+</script>
+
 
 
 
