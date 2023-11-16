@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DetalleRequesicion;
 use Illuminate\Http\Request;
 use App\Models\Requesicion;
+use App\Models\Requisicion;
 use Illuminate\Database\QueryException;
 
 
@@ -15,7 +16,7 @@ class SeguimientoController extends Controller
      */
     public function index(Request $request)
     {
-        $requisiciones = Requesicion::where('estado', '1')->orderBy('id_requisicion', 'DESC');
+        $requisiciones = Requisicion::where('estado', '1')->orderBy('id_requisicion', 'DESC');
         $limit = (isset($request->limit)) ? $request->limit : 5;
 
         if (isset($request->search)) {
@@ -49,7 +50,7 @@ class SeguimientoController extends Controller
      */
     public function edit(string $id)
     {
-        $requisicion = Requesicion::where('id_requisicion', $id)->firstOrFail();
+        $requisicion = Requisicion::where('id_requisicion', $id)->firstOrFail();
         return view('SeguimientoRequisicion.edit', compact('requisicion'));
     }
 

@@ -17,7 +17,6 @@ use App\Http\Controllers\SoloPeticionesController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\SeguimientoController;
 use App\Http\Controllers\SoloAdminContratosController;
-use App\Http\Middleware\SoloAdminContratos;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,7 +58,6 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('Requesiciones', RequesicionesController::class);
     Route::resource('CUCop', CUCoPsController::class);
-
 
 })->namespace('Peticiones');
 /*

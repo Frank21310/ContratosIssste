@@ -68,8 +68,9 @@
 
 <hr>
 
+
 <div>
-    <table>
+    <table id="tablaDetalles">
         <thead>
             <tr>
                 <th class="col-1">Partida</th>
@@ -86,7 +87,7 @@
             <tr id="filaEjemplo">
                 <td>
                     <label>Partida:</label>
-                    <select class="form-control select-partida " name="num_partida">
+                    <select class="form-control select-partida " name="detalles[0][num_partida]">
                         <option value="">Selecciona</option>
                         @foreach ($partidas as $partida)
                             <option value="{{ $partida->id_partida_especifica }}" class="form-control">
@@ -97,22 +98,22 @@
                 </td>
                 <td>
                     <label>CUCoP:</label>
-                    <input type="text" class="form-control span-cucop" name="cucop" readonly>
+                    <input type="text" class="form-control span-cucop" name="detalles[0][cucop]" readonly>
                 </td>
                 <td>
                     <label>Descripcion:</label>
-                    <select class="form-control select-insumo" name="descripcion">
+                    <select class="form-control select-insumo" name="detalles[0][descripcion]">
                         <option value="">Seleccione el insumo</option>
                     </select>
                 </td>
                 <td>
                     <label>Cantidad:</label>
-                    <input type="number" name="cantidad" min="0" placeholder="1.0" step="0.01"
+                    <input type="number" name="detalles[0][cantidad]" min="0" placeholder="1.0" step="0.01"
                         class="form-control" value="{{ old('cantidad') }}">
                 </td>
                 <td>
                     <label>Medida:</label>
-                    <select class="form-control" name="unidad_medida">
+                    <select class="form-control" name="detalles[0][unidad_medida]">
                         @foreach ($unidades as $unidad)
                             <option value="{{ $unidad->idunidad_medida }}">
                                 {{ $unidad->descripcion_unidad }}</option>
@@ -121,12 +122,12 @@
                 </td>
                 <td>
                     <label>Precio: </label>
-                    <input type="number" name="precio" min="0" placeholder="1.0" step="0.01"
+                    <input type="number" name="detalles[0][precio]" min="0" placeholder="1.0" step="0.01"
                         class="form-control" value="{{ old('precio') }}">
                 </td>
                 <td>
                     <label>Importe:</label>
-                    <input type="number" class="form-control importe" name="importe" readonly>
+                    <input type="number" class="form-control importe" name="detalles[0][importe]" readonly>
                 </td>
                 <td>
                     <button type="button" class="btn btn-danger borrarFila"><i class="fas fa-trash "></i></button>
@@ -135,7 +136,7 @@
         </tbody>
     </table>
     <div class="d-grid gap-2 p-4 col-3 mx-auto">
-        <button type="button" id="agregarFila" class="btn btn-primary">Agregar Fila</button>
+        <button type="button" id="agregarFila" class="btn btn-primary">Añadir Fila</button>
     </div>
 </div>
 
@@ -168,8 +169,9 @@
         <label>Otros Gravamientos: </label>
     </div>
     <div class="col-4  mx-auto p-2  d-flex align-items-end flex-column">
-        <input name="otros_gravamientos" class="form-control input-otros-grav " id="otros_gravamientos" min="0"
-            placeholder="0.00" step="0.01" type="text" value="{{ old('otros_gravamientos') }}">
+        <input name="otros_gravamientos" class="form-control input-otros-grav " id="otros_gravamientos"
+            min="0" placeholder="0.00" step="0.01" type="text"
+            value="{{ old('otros_gravamientos') }}">
 
     </div>
 </div>
@@ -216,7 +218,7 @@
     {{-- Existencia en almacen --}}
     <div class="col-2 mx-auto p-2">
         <label>Existencia en almacen: </label>
-        <select name="existencia_almacen" class="form-control" id="condiciones">
+        <select name="existencia_almacen" class="form-control">
             <option value="1">Si
             </option>
             <option value="0">No
@@ -254,7 +256,7 @@
     {{-- Capacitacion --}}
     <div class="col mx-auto p-2">
         <label>Capacitacion: </label>
-        <select name="capacitacion" class="form-control" id="condiciones">
+        <select name="capacitacion" class="form-control">
             <option value="{{ 1 }}">Si</option>
             <option value="{{ 0 }}">No</option>
         </select>
@@ -380,43 +382,68 @@
     {{-- Autoriza --}}
     <div class="col">
         <label>Autoriza: </label>
-        <input type="text" name="autoriza" value="{{ Auth::user()->empleado->num_empleado }}"
-            class="form-control" hidden>
-        <input type="text"
-            value="{{ Auth::user()->empleado->nombre }}{{ Auth::user()->empleado->apellido_paterno }}{{ Auth::user()->empleado->apellido_materno }}"
-            class="form-control" readonly>
+        <input type="text" name="autoriza" class="form-control">
+        <input type="text" name="estado" class="form-control" value="1" hidden>
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
     $(document).ready(function() {
-        // Agregar fila
+        function calcularTotales() {
+            var subtotal = 0;
+
+            // Iterar sobre cada fila
+            $("#tablaDetalles tbody tr").each(function(index) {
+                var importe = parseFloat($(this).find(".importe").val()) || 0;
+                subtotal += importe;
+            });
+
+            var iva = subtotal * 0.16;
+            var otrosGravamientos = parseFloat($("#otros_gravamientos").val()) || 0;
+            var total = subtotal + iva + otrosGravamientos;
+
+            $("#subtotal").text(subtotal.toFixed(2));
+            $("#iva").text(iva.toFixed(2));
+            $("#total").val(total.toFixed(2));
+        }
+
         $("#agregarFila").click(function() {
             var fila = $("#filaEjemplo").clone();
-            var nuevaId = Date.now(); // Crear un identificador único para la nueva fila
-            fila.removeAttr("id");
-            fila.attr("data-fila-id", nuevaId); // Asignar el identificador único a la fila
-            fila.find("input, select").val("");
-            fila.find(".importe").val("0");
-            fila.appendTo("tbody");
+            var rowCount = $("#tablaDetalles tbody tr").length; // Obtener cantidad de filas
+            fila.find("input, select").val(""); // Limpiar valores
+
+            // Asignar un nuevo nombre a los campos de la nueva fila
+            fila.find("input, select").each(function() {
+                var newName = $(this).attr("name").replace(/\[\d+\]/, "[" + rowCount + "]");
+                $(this).attr("name", newName);
+            });
+
+            fila.appendTo("#tablaDetalles tbody");
+            calcularTotales();
         });
 
         // Borrar fila
-        $("tbody").on("click", ".borrarFila", function() {
+        $("#tablaDetalles").on("click", ".borrarFila", function() {
             $(this).closest("tr").remove();
+            calcularTotales();
         });
+
 
         // Calcular importe al cambiar cantidad o precio
-        $("tbody").on("change", "input[name='cantidad'], input[name='precio']", function() {
-            var cantidad = $(this).closest("tr").find("input[name='cantidad']").val() || 0;
-            var precio = $(this).closest("tr").find("input[name='precio']").val() || 0;
-            var importe = cantidad * precio;
-            $(this).closest("tr").find(".importe").val(importe.toFixed(2));
-        });
+        $("tbody").on("change",
+            "input[name^='detalles'][name$='[cantidad]'], input[name^='detalles'][name$='[precio]']",
+            function() {
+                var cantidad = $(this).closest("tr").find("input[name$='[cantidad]']").val() || 0;
+                var precio = $(this).closest("tr").find("input[name$='[precio]']").val() || 0;
+                var importe = cantidad * precio;
+                $(this).closest("tr").find(".importe").val(importe.toFixed(2));
+                calcularTotales(); // Actualizar totales al cambiar un importe
+            });
+
 
         // Filtrar descripciones al cambiar la partida
-        $("tbody").on("change", "select[name='num_partida']", function() {
+        $("tbody").on("change", "select[name^='detalles'][name$='[num_partida]']", function() {
             var row = $(this).closest("tr");
             var idPartida = $(this).val();
 
@@ -424,15 +451,22 @@
                 $.ajax({
                     url: "{{ route('fclaveCucop') }}",
                     method: 'get',
-                    data: { nPartida: idPartida },
+                    data: {
+                        nPartida: idPartida
+                    },
                     success: function(data) {
-                        var select = row.find('.select-insumo'); // Utilizar 'row' para limitar al elemento de la fila actual
+                        var select = row.find(
+                            '.select-insumo'
+                        ); // Utilizar 'row' para limitar al elemento de la fila actual
 
                         select.empty();
-                        select.append('<option id="datacucop" value="">Selecciona un insumo</option>');
+                        select.append(
+                            '<option id="datacucop" value="">Selecciona un insumo</option>'
+                        );
 
                         $.each(data, function(index, item) {
-                            select.append('<option value="' + item.id_cucop + '">' + item.descripcion_insumo + '</option>');
+                            select.append('<option value="' + item.descripcion_insumo + '">' +
+                                item.descripcion_insumo + '</option>');
                         });
                     }
                 });
@@ -448,8 +482,14 @@
             var row = $(this).closest("tr");
             row.find('.span-cucop').val(selectedOption);
         });
+
+        // Calcular totales al cambiar otros gravamientos
+        $("#otros_gravamientos").on("change", function() {
+            calcularTotales();
+        });
     });
 </script>
+
 
 
 

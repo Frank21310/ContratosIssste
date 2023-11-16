@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 
-class Requesicion extends Model
+class Requisicion extends Model
 {
     use HasFactory;
     protected $primaryKey = 'id_requisicion';
@@ -39,6 +39,7 @@ class Requesicion extends Model
         'condicion_id_condicion',
         'solicita',
         'autoriza',
+        'estado',
     ];
     public function detalles()
     {
@@ -63,6 +64,10 @@ class Requesicion extends Model
     public function condicionrequesicion(): HasOne
     {
         return $this->hasOne(Condicion::class, 'id_condicion','condicion_id_condicion' );
+    }
+    public function estadorequisicion(): HasOne
+    {
+        return $this->hasOne(Estado::class, 'id_estado','estado' );
     }
     
 }

@@ -11,7 +11,7 @@ use App\Models\Insumos_cucop;
 use App\Models\Metodo;
 use App\Models\Pais;
 use App\Models\Partidas_cucop;
-use App\Models\Requesicion;
+use App\Models\Requisicion;
 use App\Models\Unidad_medida;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
@@ -39,7 +39,7 @@ class RequesicionesController extends Controller
     public function index(Request $request)
     {
 
-        $requisiciones = Requesicion::where('estado', '1')->orderBy('id_requisicion', 'DESC');
+        $requisiciones = Requisicion::where('estado', '1')->orderBy('id_requisicion', 'DESC');
         $limit = (isset($request->limit)) ? $request->limit : 5;
 
         if (isset($request->search)) {
@@ -78,22 +78,22 @@ class RequesicionesController extends Controller
     }
 
     public function fclaveCucop(Request $request)
-    {
+{
+    $partidaId = $request->input('nPartida');
+    $data = Insumos_cucop::where('id_partida_especifica_id', $partidaId)->get();
 
-        $partidaId  = $request->input('nPartida');
-        $data = Insumos_cucop::where('id_partida_especifica_id', $partidaId)->get();
-        $datacucopid  = $request->input('datacucop');
+    return response()->json($data);
+}
 
-        return response()->json($data);
-    }
+    
 
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(Request $request)
     {
         $this->validate($request, [
-
             'area_id_area' => 'required',
             'fecha_elaboracion' => 'required',
             'fecha_requerida'  => 'required',
@@ -112,10 +112,16 @@ class RequesicionesController extends Controller
             'pluralidad'  => 'required',
             'tiempo_fabricacion'  => 'required',
             'condicion_id_condicion'  => 'required',
-
+            'detalles.*.num_partida' => 'required',
+            'detalles.*.cucop' => 'required',
+            'detalles.*.descripcion' => 'required',
+            'detalles.*.cantidad' => 'required|numeric|min:1',
+            'detalles.*.unidad_medida' => 'required',
+            'detalles.*.precio' => 'required|numeric|min:0',
+            'detalles.*.importe' => 'required|numeric|min:0',
         ]);
 
-        $requisicion = Requesicion::create([
+        $requisicion = Requisicion::create([
 
             'dependencia_id_dependencia' => $request->dependencia_id_dependencia,
             'area_id_area' => $request->area_id_area,
@@ -143,30 +149,35 @@ class RequesicionesController extends Controller
             'condicion_id_condicion' => $request->condicion_id_condicion,
             'solicita' => $request->solicita,
             'autoriza' => $request->autoriza,
+            'estado' => $request->estado,
 
         ]);
 
-        if ($requisicion && $request->filled('cucop')) {
-            $requisicion_id = $requisicion->id_requisicion;
-        
-            $detallerequisicion = DetalleRequesicion::create([
-                'requisicion_id' => $requisicion_id,
-                'num_partida' => $request->num_partida,
-                'cucop' => $request->cucop,
-                'descripcion' => $request->descripcion,
-                'cantidad' => $request->cantidad,
-                'unidad_medida' => $request->unidad_medida,
-                'precio' => $request->precio,
-                'importe' => $request->importe,
-            ]);
 
-            return redirect()
-                ->route('Requesiciones.index');
+        if ($requisicion && $request->filled('detalles') && is_array($request->detalles)) {
+            $requisicion_id = $requisicion->id_requisicion;
+
+            $detalles = [];
+            foreach ($request->detalles as $detalle) {
+                $detalles[] = new DetalleRequesicion([
+                    'requisicion_id' => $requisicion_id,
+                    'num_partida' => $detalle['num_partida'],
+                    'cucop' => $detalle['cucop'],
+                    'descripcion' => $detalle['descripcion'],
+                    'cantidad' => $detalle['cantidad'],
+                    'unidad_medida' => $detalle['unidad_medida'],
+                    'precio' => $detalle['precio'],
+                    'importe' => $detalle['importe'],
+                ]);
+            }
+
+            $requisicion->detalles()->saveMany($detalles);
+
+            // Redirección a la lista de requisiciones después de guardar exitosamente
+            return redirect()->route('Requesiciones.index')->with('success', 'Requisición creada exitosamente!');
         } else {
-            return redirect()->route('Requesiciones.create');
+            return redirect()->back()->with('error', 'Hubo un error al crear la requisición. Por favor, inténtalo de nuevo.');
         }
-        return redirect()
-            ->route('Requesiciones.index');
     }
 
     /**
@@ -174,7 +185,7 @@ class RequesicionesController extends Controller
      */
     public function show(string $id)
     {
-        $requisicion = Requesicion::with('detalles')->where('id_requisicion', $id)->firstOrFail();
+        $requisicion = Requisicion::with('detalles')->where('id_requisicion', $id)->firstOrFail();
 
         return view('Requesiciones.show', compact('requisicion'));
     }
@@ -184,7 +195,7 @@ class RequesicionesController extends Controller
      */
     public function edit(string $id)
     {
-        $requisicion = Requesicion::where('id_requisicion', $id)->firstOrFail();
+        $requisicion = Requisicion::where('id_requisicion', $id)->firstOrFail();
         return view('Requesiciones.edit', compact('requisicion'));
     }
 
@@ -193,7 +204,7 @@ class RequesicionesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $requisicion = Requesicion::where('id_requisicion', $id)->firstOrFail();
+        $requisicion = Requisicion::where('id_requisicion', $id)->firstOrFail();
         $requisicion_id = $requisicion->id_requisicion;
         $requisicion = $this->createUpdateRol($request, $requisicion);
         return redirect()
@@ -205,7 +216,7 @@ class RequesicionesController extends Controller
      */
     public function destroy(string $id)
     {
-        $requisicion = Requesicion::findOrFail($id);
+        $requisicion = Requisicion::findOrFail($id);
         try {
             $requisicion->delete();
             return redirect()
