@@ -52,25 +52,26 @@
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h3 mb-3">Bienvenido</h1>
-                                        <h3 class="h5 mb-2">Sistema web de contratos
-                                            <p class="h5 mb-2">Bienes y Servicios</p>
+                                        <h1 class="h3 mb-3 fw-bold ">Bienvenido</h1>
+                                        <h3 class="h5 mb-2 ">Sistema web de contratos
+                                            <p class="h5 mb-2 text-body-secondary">Bienes y Servicios</p>
                                         </h3>
                                     </div>
                                     <form class="py-5">
                                         @auth
-                                            <a href="{{ url('/home') }}" class="btn btn-outline-dark" role="button"
+                                        <div class="d-grid gap-2 col-6 mx-auto">
+                                            <a href="{{ url('/home') }}" class="btn btn-outline-dark fw-bold" role="button"
                                                 aria-disabled="true">Inicio</a>
                                             <br>
+                                          </div>
+                                            
                                         @else
                                             <div class="d-grid gap-4 col-6 mx-auto">
-                                                <a href="{{ route('login') }}" class="btn btn-outline-dark" role="button"
+                                                <a href="{{ route('login') }}" class="btn btn-outline-dark fw-bold " role="button"
                                                     aria-disabled="true">Iniciar
                                                     Sesion</a>
-                                                @if (Route::has('register'))
-                                                    <a href="{{ route('register') }}" class="btn btn-outline-dark"
+                                                    <a href="{{ route('Registro') }}" class="btn btn-outline-dark fw-bold "
                                                         tabindex="-1" role="button" aria-disabled="true">Registrarse</a>
-                                                @endif
                                             </div>
                                         @endauth
                                     </form>

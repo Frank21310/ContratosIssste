@@ -55,7 +55,7 @@
                                                 </span>
                                             @enderror
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group p-2">
                                             <div class="custom-control custom-checkbox small">
                                                 <input class="custom-control-input" type="checkbox" name="remember"
                                                     id="remember" {{ old('remember') ? 'checked' : '' }}>
@@ -66,7 +66,7 @@
                                             </div>
                                         </div>
                                         <div class="d-grid gap-4 col-6 mx-auto py-3">
-                                            <button type="submit" class="btn btn-outline-dark">
+                                            <button type="submit" class="btn btn-outline-dark ">
                                                 {{ __('Iniciar Sesion') }}
                                             </button>
                                     </form>

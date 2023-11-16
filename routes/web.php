@@ -32,6 +32,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/Registro',function () {
+    return view('Registro');
+} )->name('Registro');
+
+
 Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 /*
