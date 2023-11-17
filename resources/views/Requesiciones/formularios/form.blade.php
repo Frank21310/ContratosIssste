@@ -15,8 +15,8 @@
     <div class="col">
         <label>Nombre de la dependencia o entidad:</label>
         <input type="text" name="dependencia_id_dependencia"
-            value="{{ Auth::user()->empleado->dependenciaempleado->id_dependencia }}" class="form-control" hidden>
-        <input type="text" value="{{ Auth::user()->empleado->dependenciaempleado->nombre }}" class="form-control"
+            value="{{ Auth::user()->empleado->dependencia->id_dependencia }}" class="form-control" hidden>
+        <input type="text" value="{{ Auth::user()->empleado->dependencia->nombre }}" class="form-control"
             readonly>
     </div>
     {{-- Area Requeriente  --}}

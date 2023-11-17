@@ -45,7 +45,9 @@ class RequisicionesFinalizadasController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $requisicion = Requisicion::with('detalles')->where('id_requisicion', $id)->firstOrFail();
+
+        return view('Requesiciones.show', compact('requisicion'));
     }
 
     /**
