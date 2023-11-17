@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 
 
 class User extends Authenticatable
@@ -28,8 +30,13 @@ class User extends Authenticatable
     ];
     public function empleado(): HasOne
     {
-        return $this->hasOne(Empleado::class, 'num_empleado','empleado_num' );
+        return $this->hasOne(Empleado::class, 'num_empleado', 'empleado_num');
     }
+    public function rol(): BelongsTo
+    {
+        return $this->belongsTo(Rol::class, 'rol_id', 'id_rol');
+    }
+    
 
 
     /**

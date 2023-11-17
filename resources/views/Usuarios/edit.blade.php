@@ -4,10 +4,10 @@
         <div class="card-header">
             <div class="row">
                 <div class="col">
-                    <h2 class="">Editar empleado {{$Empleado->num_empleado}} </h2>
+                    <h2 class="">Editar rol de {{$User->empleado_num}} </h2>
                 </div>
                 <div class="col g-col-6 d-flex justify-content-end ">
-                    <a id="BtnAgregar" href="{{ route('Empleados.index') }}" class="btn btn-primary ml-auto">
+                    <a id="BtnAgregar" href="{{ route('Usuarios.index') }}" class="btn btn-primary ml-auto">
                         <i class="fas fa-arrow-left"></i>
                         Volver
                     </a>
@@ -16,9 +16,9 @@
         </div>
         <hr>
         <div class="card-body">
-            <form action="{{ route('Empleados.update', $Empleado->num_empleado) }}" method="POST" enctype="multipart/form-data" id="create">
+            <form action="{{ route('Usuarios.update', $User->empleado_num) }}" method="POST" enctype="multipart/form-data" id="create">
                 @method('PUT')
-                @include('Empleados.formularios.form')
+                @include('Usuarios.formularios.editform')
             </form>
         </div>
         <hr>

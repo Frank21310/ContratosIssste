@@ -95,13 +95,13 @@
                     </table>
                 </div>
             </div>
-
         </div>
         <div class="card-footer">
             @if ($rols->total() > 10)
                 {{ $rols->links() }}
             @endif
         </div>
+        
     </div>
 
     <Script type="text/javascript">

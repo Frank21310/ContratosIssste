@@ -76,26 +76,27 @@
                                     <td>{{ $Empleado->nombre }}</td>
                                     <td>{{ $Empleado->apellido_paterno }}</td>
                                     <td>{{ $Empleado->apellido_materno }}</td>
-                                    <td>{{ $Empleado->cargo_id_cargo }}</td>
-                                    <td>{{ $Empleado->dependencia_id_dependencia }}</td>
-                                    <td>
-                                        <div class="btn-group" role="group">
-                                            <a href="{{ route('Empleados.show', $Empleado->num_empleado) }}" class="btn btn-info"><i
-                                                    class="fas fa-eye"></i></a>
-                                            <a href="{{ route('Empleados.edit', $Empleado->num_empleado) }}" class="btn btn-primary"><i
-                                                    class="fas fa-pencil-alt"></i></a>
-                                            <button type="submit" class="btn btn-danger " form="detele_{{ $Empleado->num_empleado }}"
-                                                onclick="return confirm('¿Estas seguro de eliminar el registro?')">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                            <form action="{{ route('Empleados.destroy', $Empleado->num_empleado) }}"
-                                                id="delete_{{ $Empleado->id_rol }}" method="post"
-                                                enctype="multipart/form-data" hidden>
-                                                @csrf
-                                                @method('DELETE')
-                                            </form>
-                                        </div>
-                                    </td>
+                                    <td>{{ $Empleado->cargo->nombre_cargo }}</td>
+                                        <td>{{ $Empleado->dependencia->nombre }}</td>
+                                        <td>
+                                            <div class="btn-group" role="group">
+                                                <a href="{{ route('Empleados.show', $Empleado->num_empleado) }}"
+                                                    class="btn btn-info"><i class="fas fa-eye"></i></a>
+                                                <a href="{{ route('Empleados.edit', $Empleado->num_empleado) }}"
+                                                    class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>
+                                                <button type="submit" class="btn btn-danger "
+                                                    form="detele_{{ $Empleado->num_empleado }}"
+                                                    onclick="return confirm('¿Estas seguro de eliminar el registro?')">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                                <form action="{{ route('Empleados.destroy', $Empleado->num_empleado) }}"
+                                                    id="delete_{{ $Empleado->num_empleado }}" method="post"
+                                                    enctype="multipart/form-data" hidden>
+                                                    @csrf
+                                                    @method('DELETE')
+                                                </form>
+                                            </div>
+                                        </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -103,7 +104,6 @@
                 </div>
             </div>
         </div>
-
         <div class="card-footer">
             @if ($Empleados->total() > 10)
                 {{ $Empleados->links() }}

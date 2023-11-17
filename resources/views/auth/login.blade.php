@@ -11,17 +11,14 @@
                                 <div class="text-center">
                                     <img src="{{ asset('assets/img/logo_gob.png') }}" alt="Logo" width="240"
                                         height="auto" class="my-5 mb-1">
-
                                 </div>
                                 <div class="text-center">
                                     <img src="{{ asset('assets/img/logo_issste_nuevo.png') }}" alt="Logo" width="245"
                                         height="auto" class="mb-5 ">
                                 </div>
-
                             </div>
                             <div class="col-lg-6">
                                 <div class="p-5">
-
                                     <div class="text-center">
                                         <h1 class="h3 mb-3">Iniciar Sesion</h1>
                                     </div>
@@ -30,12 +27,10 @@
                                         <div class="form-group">
                                             <label for="email"
                                                 class=" col-form-label text-md-end">{{ __('Corrreo Innstitucional') }}</label>
-
                                             <input id="email" type="email" placeholder="correo@correo.com"
                                                 class="form-control form-control-user @error('email') is-invalid @enderror"
                                                 name="email" value="{{ old('email') }}" required autocomplete="email"
                                                 autofocus>
-
                                             @error('email')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -48,7 +43,6 @@
                                             <input id="password" placeholder="Contraseña.." type="password"
                                                 class="form-control form-control-user @error('password') is-invalid @enderror"
                                                 name="password" required autocomplete="current-password">
-
                                             @error('password')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -70,7 +64,6 @@
                                                 {{ __('Iniciar Sesion') }}
                                             </button>
                                     </form>
-
                                 </div>
                             </div>
                         </div>

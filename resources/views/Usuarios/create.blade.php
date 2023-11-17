@@ -17,7 +17,7 @@
         <hr>
         <div class="card-body">
             <form action="{{ route('Usuarios.store') }}" method="POST" enctype="multipart/form-data" id="create">
-                @include('auth.register')
+                @include('Usuarios.formularios.form')
             </form>
         </div>
         <hr>

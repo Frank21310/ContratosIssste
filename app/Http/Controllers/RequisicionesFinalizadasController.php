@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Requesicion;
+use App\Models\Requisicion;
 
 
 class RequisicionesFinalizadasController extends Controller
@@ -13,7 +13,7 @@ class RequisicionesFinalizadasController extends Controller
      */
     public function index(Request $request)
     {
-        $requisiciones = Requesicion::where('estado', '3')->orderBy('id_requisicion', 'DESC');
+        $requisiciones = Requisicion::where('estado', '3')->orderBy('id_requisicion', 'DESC');
         $limit = (isset($request->limit)) ? $request->limit : 5;
 
         if (isset($request->search)) {

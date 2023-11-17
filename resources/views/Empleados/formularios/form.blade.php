@@ -27,13 +27,29 @@
     <div class="col-12">
         <div class="form-group">
             <label for="">Cargo</label>
-            <input type="text" class="form-control" name="cargo_id_cargo" value="{{(isset($Empleado))?$Empleado->cargo_id_cargo:old('cargo_id_cargo')}}" required>
+            <select class="form-control" name="cargo_id_cargo" value="{{(isset($Empleado))?$Empleado->cargo_id_cargo:old('cargo_id_cargo')}}" required>
+                <option value="">Seleccione un permiso</option>
+                @foreach ($cargos as $cargo)
+                    <option value="{{ $cargo->id_cargo}}" class="form-control">
+                         {{ $cargo->nombre_cargo }}
+                    </option>
+                @endforeach
+
+            </select>
         </div>
     </div>
     <div class="col-12">
         <div class="form-group">
             <label for="">Dependencia</label>
-            <input type="text" class="form-control" name="dependencia_id_dependencia" value="{{(isset($Empleado))?$Empleado->dependencia_id_dependencia:old('dependencia_id_dependencia')}}" required>
+            <select class="form-control" name="dependencia_id_dependencia" value="{{(isset($Empleado))?$Empleado->dependencia_id_dependencia:old('dependencia_id_dependencia')}}"  required>
+                <option value="">Seleccione un permiso</option>
+                @foreach ($dependecias as $dependecia)
+                    <option value="{{ $dependecia->id_dependencia}}" class="form-control">
+                         {{ $dependecia->nombre }}
+                    </option>
+                @endforeach
+
+            </select>
         </div>
     </div>
 

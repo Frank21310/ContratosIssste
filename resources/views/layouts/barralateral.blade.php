@@ -69,7 +69,6 @@
                         Inicio
                     </a>
                 </li>
-                
                 <li class="nav-item" >
                     <a href="#menurequisiciones" data-toggle="collapse" aria-expanded="true" class="nav-link" >
                         <i class="fas fa-file-alt"></i>
@@ -89,7 +88,6 @@
                                 Finalizadas
                             </a>
                         </li>
-                        
                     </ul>
                 </li>
                 <li class="nav-item">

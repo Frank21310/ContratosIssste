@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Permisos;
 use App\Models\Rol;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 
@@ -43,7 +45,9 @@ class RolesController extends Controller
      */
     public function create()
     {
-        return view('roles.create');
+        $permisos = Permisos::all();
+
+        return view('roles.create', compact('permisos'));
     }
 
     /**
@@ -70,8 +74,9 @@ class RolesController extends Controller
      */
     public function show(string $id)
     {
+        $permisos = Permisos::all();
         $rol = Rol::where('id_rol', $id)->firstOrFail();
-        return view('roles.show', compact('rol'));
+        return view('roles.show', compact('rol', 'permisos'));
     }
 
     /**
@@ -79,8 +84,9 @@ class RolesController extends Controller
      */
     public function edit(string $id)
     {
+        $permisos = Permisos::all();
         $rol = Rol::where('id_rol', $id)->firstOrFail();
-        return view('roles.edit', compact('rol'));
+        return view('roles.edit', compact('rol','permisos'));
     }
 
     /**

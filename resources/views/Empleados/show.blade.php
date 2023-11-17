@@ -17,7 +17,7 @@
         <hr>
         <div class="card-body">
             <form action="{{ route('Empleados.store') }}" method="POST" enctype="multipart/form-data" id="create">
-                @include('Empleados.formularios.form')
+                @include('Empleados.formularios.vistaform')
             </form>
         </div>
         <hr>

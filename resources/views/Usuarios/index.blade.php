@@ -70,12 +70,23 @@
                                 <tr>
                                     <td>{{ $User->empleado_num }}</td>
                                     <td>{{ $User->email }}</td>
-                                    <td>{{ $User->rol_id }}</td>
+                                    <td>{{ $User->rol->nombre_rol }}</td>
                                     <td>
                                         <div class="btn-group" role="group">
-                                            <a href="" class="btn btn-info"><i class="fas fa-eye"></i></a>
-                                            <a href="" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>
-                                            <a href="" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                            <a href="{{ route('Usuarios.show', $User->empleado_num) }}" class="btn btn-info"><i
+                                                    class="fas fa-eye"></i></a>
+                                            <a href="{{ route('Usuarios.edit', $User->empleado_num) }}" class="btn btn-primary"><i
+                                                    class="fas fa-pencil-alt"></i></a>
+                                            <button type="submit" class="btn btn-danger " form="detele_{{ $User->empleado_num }}"
+                                                onclick="return confirm('¿Estas seguro de eliminar el registro? {{ $User->empleado_num }}')">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                            <form action="{{ route('Usuarios.destroy', $User->empleado_num) }}"
+                                                id="delete_{{ $User->empleado_num }}" method="post"
+                                                enctype="multipart/form-data" hidden>
+                                                @csrf
+                                                @method('DELETE')
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>
@@ -87,7 +98,7 @@
         </div>
         <div class="card-footer">
             @if ($Users->total() > 10)
-                {{ $users->links() }}
+                {{ $Users->links() }}
             @endif
         </div>
 

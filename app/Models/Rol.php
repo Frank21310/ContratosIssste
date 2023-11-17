@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 
 class Rol extends Model
 {
@@ -16,4 +18,8 @@ class Rol extends Model
         'permiso_id_permisos',
 
     ];
+    public function permisorol(): BelongsTo
+    {
+        return $this->belongsTo(Permisos::class, 'permiso_id_permisos', 'id_permisos');
+    }
 }

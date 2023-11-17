@@ -28,6 +28,11 @@ use App\Http\Controllers\SoloAdminContratosController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+/*
+|--------------------------------------------------------------------------
+| Web Routes pages of Login and welcome home
+|--------------------------------------------------------------------------
+*/
 Route::get('/', function () {
     return view('welcome');
 });
@@ -36,9 +41,14 @@ Route::get('/Registro',function () {
     return view('Registro');
 } )->name('Registro');
 
-
+/*
+|--------------------------------------------------------------------------
+| Web Routes auth
+|--------------------------------------------------------------------------
+*/
 Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes Administrador

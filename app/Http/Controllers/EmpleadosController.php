@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cargo;
+use App\Models\Dependencia;
 use App\Models\Empleado;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
@@ -47,7 +49,9 @@ class EmpleadosController extends Controller
      */
     public function create()
     {
-        return view('Empleados.create');
+        $cargos = Cargo::all();
+        $dependecias = Dependencia::all();
+        return view('Empleados.create', compact('cargos','dependecias'));
     }
 
     /**
@@ -76,8 +80,10 @@ class EmpleadosController extends Controller
      */
     public function show(string $id)
     {
+        $cargos = Cargo::all();
+        $dependecias = Dependencia::all();
         $Empleado = Empleado::where('num_empleado', $id)->firstOrFail();
-        return view('Empleados.show', compact('Empleado'));
+        return view('Empleados.show', compact('Empleado','cargos','dependecias'));
     }
 
     /**
@@ -85,8 +91,10 @@ class EmpleadosController extends Controller
      */
     public function edit(string $id)
     {
+        $cargos = Cargo::all();
+        $dependecias = Dependencia::all();
         $Empleado = Empleado::where('num_empleado', $id)->firstOrFail();
-        return view('Empleados.show', compact('Empleado'));
+        return view('Empleados.edit', compact('Empleado','cargos','dependecias'));
     }
 
     /**
