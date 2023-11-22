@@ -5,13 +5,13 @@
     <div class="col">
         <label>Nombre de la dependencia o entidad:</label>
         <span type="text" name="dependencia_id_dependencia"
-            class="form-control">{{ isset($requisicion) ? $requisicion->dependencia_id_dependencia : old('dependencia_id_dependencia') }}</span>
+            class="form-control">{{ isset($requisicion) ? $requisicion->dependenciarequesicion->nombre : old('nombre') }}</span>
     </div>
     {{-- Area Requeriente  --}}
     <div class="col">
         <label>Area requirente:</label>
         <span type="text" name="area_id_area"
-            class="form-control">{{ isset($requisicion) ? $requisicion->area_id_area : old('area_id_area') }}</span>
+            class="form-control">{{ isset($requisicion) ? $requisicion->arearequesicion->nombre_area : old('area_id_area') }}</span>
     </div>
 </div>
 
@@ -25,8 +25,8 @@
     {{-- Numero de requisicion --}}
     <div class="col">
         <label>No. requisicion: </label>
-        <span type="text" name="no_requesicion"
-            class="form-control">{{ isset($requisicion) ? $requisicion->no_requesicion : old('no_requesicion') }}</span>
+        <input type="text" name="no_requesicion" class="form-control"
+            value="{{ isset($requisicion) ? $requisicion->no_requesicion : old('no_requesicion') }}">
     </div>
     {{-- Fecha requerida --}}
     <div class="col">
@@ -46,54 +46,106 @@
 
 <hr>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Partida</th>
-            <th>CUCoP</th>
-            <th>Descripcion</th>
-            <th>Cantidad</th>
-            <th>Unidad Medida</th>
-            <th>Precio</th>
-            <th>Importe</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($requisicion->detalles as $detalle)
+<div>
+    <table id="tablaDetalles">
+        <thead>
             <tr>
-                <form action="{{ route('SeguimientoRequisicion.update', $detalle->id) }}" method="POST">
-                    @csrf
-                    @method('PUT')
-                    <td><input type="text" class="form-control" name="num_partida"
-                            value="{{ $detalle->num_partida }}"></td>
-                    <td><input type="text" class="form-control" name="cucop" value="{{ $detalle->cucop }}"></td>
-                    <td><input type="text" class="form-control" name="descripcion"
-                            value="{{ $detalle->descripcion }}"></td>
-                    <td><input type="text" class="form-control" name="cantidad" value="{{ $detalle->cantidad }}">
-                    </td>
-                    <td><input type="text" class="form-control" name="unidad_medida"
-                            value="{{ $detalle->unidad_medida }}"></td>
-                    <td><input type="text" class="form-control" name="precio" value="{{ $detalle->precio }}"></td>
-                    <td><input type="text" class="form-control" name="importe" value="{{ $detalle->importe }}"></td>
-                    <td>
-                        <button type="submit" class="btn btn-success"><i class="fas fa-save	"></i></i></button>
-
-                        <button type="submit" class="btn btn-danger " form="detele_{{ $detalle->id }}"
-                            onclick="return confirm('¿Estas seguro de eliminar el registro?')">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                        <form action="{{ route('SeguimientoRequisicion.destroy', $detalle->id) }}"
-                            id="delete_{{ $detalle->id }}" method="post" enctype="multipart/form-data" hidden>
-                            @csrf
-                            @method('DELETE')
-                        </form>
-                    </td>
-                </form>
+                <th class="col-1">Partida</th>
+                <th class="col-1">CUCoP</th>
+                <th class="col-5">Descripción</th>
+                <th class="col-1">Cantidad</th>
+                <th class="col-1">Medida</th>
+                <th class="col-2">Precio</th>
+                <th class="col-2">Importe</th>
+                <th class="col-1">Acciones</th>
             </tr>
-        @endforeach
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach ($requisicion->detalles as $detalle)
+                <tr id="filaEjemplo">
+                    <form action="{{ route('SeguimientoRequisicion.update', $detalle->id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <td>
+                            <label>Partida:</label>
+                            <select class="form-control select-partida" name="detalles[0][num_partida]" readonly>
+                                <option value="">Selecciona</option>
+                                @foreach ($partidas as $partida)
+                                    <option value="{{ $partida->id_partida_especifica }}" class="form-control"
+                                        @if ($detalle->num_partida == $partida->id_partida_especifica) selected @endif>
+                                        {{ $partida->id_partida_especifica }} - {{ $partida->descripcion }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </td>
+
+                        <td>
+                            <label>CUCoP:</label>
+                            <input type="text" class="form-control span-cucop" name="detalles[0][cucop]"
+                                value="{{ $detalle->cucop }}" readonly>
+                        </td>
+
+                        <td>
+                            <label>Descripcion:</label>
+                            <input type="text" class="form-control" name="descripcion"
+                                value="{{ $detalle->insumo->descripcion_insumo }}">
+                        </td>
+
+                        <td>
+                            <label>Cantidad:</label>
+                            <input type="number" name="detalles[0][cantidad]" min="0" placeholder="1.0"
+                                step="0.01" class="form-control" value="{{ $detalle->cantidad }}">
+
+                        </td>
+
+                        <td>
+                            <label>Medida:</label>
+                            <select class="form-control" name="detalles[0][unidad_medida]">
+                                @foreach ($unidades as $unidad)
+                                    <option value="{{ $unidad->idunidad_medida }}" class="form-control"
+                                        @if ($detalle->num_partida == $unidad->idunidad_medida) selected @endif>
+                                        {{ $unidad->descripcion_unidad }}
+                                    </option>
+                                @endforeach
+
+                            </select>
+                        </td>
+
+                        <td>
+                            <label>Precio: </label>
+                            <input type="number" name="detalles[0][precio]" min="0" placeholder="1.0"
+                                step="0.01" class="form-control" value="{{ $detalle->precio }}">
+                        </td>
+
+                        <td>
+                            <label>Importe:</label>
+                            <input type="number" class="form-control importe" name="detalles[0][importe]"
+                                value="{{ $detalle->importe }}" readonly>
+                        </td>
+
+                        <td>
+                            <button type="submit" class="btn btn-success"><i class="fas fa-save	"></i></i></button>
+                            <button type="button" class="btn btn-danger borrarFila"><i class="fas fa-trash "></i></button>
+                            {{--<button type="submit" class="btn btn-danger " form="detele_{{ $detalle->id }}"
+                                onclick="return confirm('¿Estas seguro de eliminar el registro?')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            <form action="{{ route('SeguimientoRequisicion.destroy', $detalle->id) }}"
+                                id="delete_{{ $detalle->id }}" method="post" enctype="multipart/form-data" hidden>
+                                @csrf
+                                @method('DELETE')
+                            </form>--}}
+                        </td>
+                    </form>
+                </tr>
+            @endforeach
+
+        </tbody>
+    </table>
+    <div class="d-grid gap-2 p-4 col-3 mx-auto">
+        <button type="button" id="agregarFila" class="btn btn-primary">Añadir Fila</button>
+    </div>
+</div>
 
 
 
@@ -296,6 +348,109 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        function calcularTotales() {
+            var subtotal = 0;
+
+            // Iterar sobre cada fila
+            $("#tablaDetalles tbody tr").each(function(index) {
+                var importe = parseFloat($(this).find(".importe").val()) || 0;
+                subtotal += importe;
+            });
+
+            var iva = subtotal * 0.16;
+            var otrosGravamientos = parseFloat($("#otros_gravamientos").val()) || 0;
+            var total = subtotal + iva + otrosGravamientos;
+
+            $("#subtotal").text(subtotal.toFixed(2));
+            $("#iva").text(iva.toFixed(2));
+            $("#total").val(total.toFixed(2));
+        }
+
+        $("#agregarFila").click(function() {
+            var fila = $("#filaEjemplo").clone();
+            var rowCount = $("#tablaDetalles tbody tr").length; // Obtener cantidad de filas
+            fila.find("input, select").val(""); // Limpiar valores
+
+            // Asignar un nuevo nombre a los campos de la nueva fila
+            fila.find("input, select").each(function() {
+                var newName = $(this).attr("name").replace(/\[\d+\]/, "[" + rowCount + "]");
+                $(this).attr("name", newName);
+            });
+
+            fila.appendTo("#tablaDetalles tbody");
+            calcularTotales();
+        });
+
+        // Borrar fila
+        $("#tablaDetalles").on("click", ".borrarFila", function() {
+            $(this).closest("tr").remove();
+            calcularTotales();
+        });
+
+
+        // Calcular importe al cambiar cantidad o precio
+        $("tbody").on("change",
+            "input[name^='detalles'][name$='[cantidad]'], input[name^='detalles'][name$='[precio]']",
+            function() {
+                var cantidad = $(this).closest("tr").find("input[name$='[cantidad]']").val() || 0;
+                var precio = $(this).closest("tr").find("input[name$='[precio]']").val() || 0;
+                var importe = cantidad * precio;
+                $(this).closest("tr").find(".importe").val(importe.toFixed(2));
+                calcularTotales(); // Actualizar totales al cambiar un importe
+            });
+
+
+        // Filtrar descripciones al cambiar la partida
+        $("tbody").on("change", "select[name^='detalles'][name$='[num_partida]']", function() {
+            var row = $(this).closest("tr");
+            var idPartida = $(this).val();
+
+            if (idPartida) {
+                $.ajax({
+                    url: "{{ route('fclaveCucop') }}",
+                    method: 'get',
+                    data: {
+                        nPartida: idPartida
+                    },
+                    success: function(data) {
+                        var select = row.find(
+                            '.select-insumo'
+                        ); // Utilizar 'row' para limitar al elemento de la fila actual
+
+                        select.empty();
+                        select.append(
+                            '<option id="datacucop" value="">Selecciona un insumo</option>'
+                        );
+
+                        $.each(data, function(index, item) {
+                            select.append('<option value="' + item
+                                .descripcion_insumo + '">' +
+                                item.descripcion_insumo + '</option>');
+                        });
+                    }
+                });
+            } else {
+                row.find('.select-insumo').empty();
+                row.find('.select-insumo').append('<option value="">Sin valores</option>');
+            }
+        });
+
+        // Mostrar el ID en el campo CUCoP
+        $("tbody").on("change", ".select-insumo", function() {
+            var selectedOption = $(this).val();
+            var row = $(this).closest("tr");
+            row.find('.span-cucop').val(selectedOption);
+        });
+
+        // Calcular totales al cambiar otros gravamientos
+        $("#otros_gravamientos").on("change", function() {
+            calcularTotales();
+        });
+    });
+</script>
 
 @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>

@@ -465,7 +465,7 @@
                         );
 
                         $.each(data, function(index, item) {
-                            select.append('<option value="' + item.descripcion_insumo + '">' +
+                            select.append('<option value="' + item.id_cucop + '">' +
                                 item.descripcion_insumo + '</option>');
                         });
                     }

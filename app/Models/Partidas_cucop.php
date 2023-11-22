@@ -16,8 +16,5 @@ class Partidas_cucop extends Model
         'id_capitulo_id',
         'descripcion',
     ];
-    public function CapituloPartida(): HasOne
-    {
-        return $this->hasOne(Dependencia::class, 'id_capitulo','id_capitulo_id' );
-    }
+    
 }

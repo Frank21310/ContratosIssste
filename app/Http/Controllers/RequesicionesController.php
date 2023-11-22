@@ -174,7 +174,8 @@ class RequesicionesController extends Controller
             $requisicion->detalles()->saveMany($detalles);
 
             // Redirección a la lista de requisiciones después de guardar exitosamente
-            return redirect()->route('Requesiciones.index')->with('success', 'Requisición creada exitosamente!');
+            return view('Requesiciones.formularios.subirarchivos');
+
         } else {
             return redirect()->back()->with('error', 'Hubo un error al crear la requisición. Por favor, inténtalo de nuevo.');
         }

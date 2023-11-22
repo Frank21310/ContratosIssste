@@ -10,9 +10,10 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Insumos_cucop extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'clave_cucop';
+    protected $primaryKey = 'id_cucop';
     protected $table = 'insumos_cucop';
     protected $fillable = [
+        'clave_cucop',
         'id_partida_especifica_id',
         'descripcion_insumo',
         'CABM',

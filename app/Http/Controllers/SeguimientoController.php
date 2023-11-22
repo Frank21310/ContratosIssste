@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\DetalleRequesicion;
+use App\Models\Insumos_cucop;
+use App\Models\Partidas_cucop;
 use Illuminate\Http\Request;
 use App\Models\Requesicion;
 use App\Models\Requisicion;
+use App\Models\Unidad_medida;
+use Database\Seeders\PartidaSeeder;
 use Illuminate\Database\QueryException;
 
 
@@ -50,8 +54,12 @@ class SeguimientoController extends Controller
      */
     public function edit(string $id)
     {
+        $unidades = Unidad_medida::all();
+
+        $partidas = Partidas_cucop::all();
+        $cucops = Insumos_cucop::all();
         $requisicion = Requisicion::where('id_requisicion', $id)->firstOrFail();
-        return view('SeguimientoRequisicion.edit', compact('requisicion'));
+        return view('SeguimientoRequisicion.edit', compact('requisicion', 'partidas','cucops','unidades'));
     }
 
     /**

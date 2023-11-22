@@ -17,6 +17,7 @@ use App\Http\Controllers\SoloPeticionesController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\SeguimientoController;
 use App\Http\Controllers\SoloAdminContratosController;
+use App\Http\Controllers\SubirArchivosController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,6 +74,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('Requesiciones', RequesicionesController::class);
     Route::resource('CUCop', CUCoPsController::class);
+
+    Route::post('/subir-archivos', [SubirArchivosController::class, 'subir']);
 
 })->namespace('Peticiones');
 /*

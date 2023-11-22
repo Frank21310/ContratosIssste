@@ -26,16 +26,19 @@ class DetalleRequesicion extends Model
     
     public function requisicion()
     {
-        return $this->belongsTo(Requesicion::class, 'requisicion_id');
+        return $this->belongsTo(Requisicion::class, 'requisicion_id');
     }
-
+    public function partidas()
+    {
+        return $this->belongsTo(Partidas_cucop::class, 'num_partida');
+    }
     
-    public function CucopsDetalle(): HasOne
+    public function insumo()
     {
-        return $this->hasOne(Cucops::class, 'id_cucop', 'cucop');
+        return $this->belongsTo(Insumos_cucop::class, 'cucop');
     }
-    public function UnidadMedida(): HasOne
+    public function UnidadMedida()
     {
-        return $this->hasOne(Cucops::class, 'idunidad_medida', 'unidad_medida');
+        return $this->belongsTo(Cucops::class, 'unidad_medida');
     }
 }
