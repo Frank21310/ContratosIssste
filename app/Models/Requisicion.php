@@ -45,10 +45,6 @@ class Requisicion extends Model
     {
         return $this->hasMany(DetalleRequesicion::class, 'requisicion_id');
     }
-    public function archivo()
-    {
-        return $this->hasMany(ArchivosRequisicion::class);
-    }
 
     public function dependenciarequesicion(): HasOne
     {

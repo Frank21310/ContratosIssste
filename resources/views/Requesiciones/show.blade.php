@@ -7,7 +7,7 @@
                     <h2 class="">Vista de la solicitud</h2>
                 </div>
                 <div class="col g-col-6 d-flex justify-content-end ">
-                    <a id="BtnAgregar" href="{{ route('Requesiciones.index') }}" class="btn btn-primary ml-auto">
+                    <a id="BtnAgregar" href="{{ route('Requesiciones.index') }}" class="btn btn-primary ml-auto BotonRojo">
                         <i class="fas fa-arrow-left"></i>
                         Volver
                     </a>
