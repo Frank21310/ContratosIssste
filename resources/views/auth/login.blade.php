@@ -26,7 +26,7 @@
                                         @csrf
                                         <div class="form-group">
                                             <label for="email"
-                                                class=" col-form-label text-md-end">{{ __('Corrreo Innstitucional') }}</label>
+                                                class=" col-form-label text-md-end">{{ __('Corrreo Institucional') }}</label>
                                             <input id="email" type="email" placeholder="correo@correo.com"
                                                 class="form-control form-control-user @error('email') is-invalid @enderror"
                                                 name="email" value="{{ old('email') }}" required autocomplete="email"
@@ -60,7 +60,7 @@
                                             </div>
                                         </div>
                                         <div class="d-grid gap-4 col-6 mx-auto py-3">
-                                            <button type="submit" class="btn btn-outline-dark ">
+                                            <button type="submit" class="btn btn-outline-dark BotonRojo ">
                                                 {{ __('Iniciar Sesion') }}
                                             </button>
                                     </form>

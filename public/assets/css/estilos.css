@@ -9,12 +9,17 @@
     font-family: 'Montserrat', sans-serif;
     transform: translatex(0px) translatey(0px);
 }
+.card-body{
+    background-color:#ffffff;
+   }
 
 /* ---------------------------------------------------
     Navigation
 ----------------------------------------------------- */
 #Topbar {
     background-color: #10312b !important;
+    box-shadow:0px 0px 5px 0px #7c7c7c;
+
 }
 /* ---------------------------------------------------
     SIDEBAR STYLE
@@ -22,7 +27,7 @@
 .wrapper {
     display: flex;
     align-items: stretch;
-}
+}   
 
 #sidebar {
     min-width: 250px;
@@ -31,6 +36,8 @@
     box-shadow: 0px 0px 6px -2px #212529;
     transition: all 0.3s;
     background-color: #f8f4eb !important;
+    border-right-width:1px;
+    z-index:115;
 }
 
 #sidebar.active {
@@ -61,7 +68,11 @@ a[data-toggle="collapse"] {
     transform: translateY(-50%);
 }
 
-
+ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: #0b30d4;
+}
 
 ul.CTAs {
     padding: 20px;
@@ -78,21 +89,21 @@ ul.CTAs a {
 /* ---------------------------------------------------
     CONTENT
 ----------------------------------------------------- */
-.container {
-    max-width: 90%;
-}
 
 #content {
+    background-color:#ffffff;
     width: 100%;
     height: 100%;
     min-height: 100vh;
     transition: all 0.3s;
+
 }
 
 #content main {
     padding-top: 15px;
     padding-bottom: 12px;
 }
+
 /* Button */
 .BotonRojo {
     background-color: #9f2241;
@@ -102,7 +113,13 @@ ul.CTAs a {
     font-size: .9rem;
     margin-bottom: 12px;
     color: #ffffff;
+    transition: background-color 0.3s ease; /* Transición suave */
 }
+/* Cambio al pasar el cursor */
+.BotonRojo:hover {
+    background-color: #691c32;
+}
+
 /* Button */
 .BotonGris {
     background-color: #98989a;
@@ -111,6 +128,9 @@ ul.CTAs a {
     font-size: .9rem;
     margin-bottom: 12px;
     color: #ffffff;
+}
+.BotonGris:hover {
+    background-color: #6f7271;
 }
 
 .custom-span {
@@ -121,6 +141,7 @@ ul.CTAs a {
 .custom-input {
     background-color: #faf7f2;
     border-color: #c9a46e;
+    
 }
 
 .custom-select {
@@ -128,27 +149,34 @@ ul.CTAs a {
     border-color: #c9a46e;
 }
 
-/* Table Data */
-.table-striped tr td {
-    color: #000000;
-    background-size: auto;
-    background-position-x: 0%;
-    background-repeat: repeat;
-    border-color: #98989a;
-    border-right-width: 1px;
-    border-right-color: #e0e0e0;
-    border-right-style: solid;
-}
+/* Custom */
+.custom-table tr .custom-th{
+    background-color:#c9a56e;
+    color:#ffffff;
+    box-shadow:none;
+   }
+   
+   /* Custom */
+   .custom-table tr .custom-td{
+    background-color:#f9f6f0;
+    border-color:#c9a56e;
+   }
+   
+   /* Span Tag */
+.pagination .active span{
+    background-color:#af7946;
+    border-color:#f4efe1;
+   }
+   
+   /* Page link */
+   .pagination li a.page-link{
+    background-color:#f4efe1;
+    color:#000000;
+   }
+   
+   
 
-/* Card body */
-.col-md-9 .card .card-body {
-    background-color: hsl(0, 0%, 100%);
-}
 
-.table-striped tr th {
-    border-color: #000000;
-    border-style: solid;
-}
 
 /* ---------------------------------------------------
     MEDIAQUERIES
