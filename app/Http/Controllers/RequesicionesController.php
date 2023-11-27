@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ArchivosRequisicion;
 use App\Models\Area;
 use App\Models\Condicion;
 use App\Models\Dependencia;
@@ -15,7 +16,7 @@ use App\Models\Requisicion;
 use App\Models\Unidad_medida;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
-
+use Illuminate\Support\Facades\Storage;
 
 class RequesicionesController extends Controller
 {
@@ -78,14 +79,14 @@ class RequesicionesController extends Controller
     }
 
     public function fclaveCucop(Request $request)
-{
-    $partidaId = $request->input('nPartida');
-    $data = Insumos_cucop::where('id_partida_especifica_id', $partidaId)->get();
+    {
+        $partidaId = $request->input('nPartida');
+        $data = Insumos_cucop::where('id_partida_especifica_id', $partidaId)->get();
 
-    return response()->json($data);
-}
+        return response()->json($data);
+    }
 
-    
+
 
     /**
      * Store a newly created resource in storage.
@@ -153,7 +154,6 @@ class RequesicionesController extends Controller
 
         ]);
 
-
         if ($requisicion && $request->filled('detalles') && is_array($request->detalles)) {
             $requisicion_id = $requisicion->id_requisicion;
 
@@ -172,14 +172,26 @@ class RequesicionesController extends Controller
             }
 
             $requisicion->detalles()->saveMany($detalles);
-
-            // Redirección a la lista de requisiciones después de guardar exitosamente
-            return view('Requesiciones.formularios.subirarchivos');
-
         } else {
             return redirect()->back()->with('error', 'Hubo un error al crear la requisición. Por favor, inténtalo de nuevo.');
         }
-    }
+
+
+        $requisitionFolder = 'requisicion/' . $requisicion->id_requisicion;
+        Storage::disk('s3')->makeDirectory($requisitionFolder);
+
+        // Subir los archivos a la carpeta en S3
+        if ($request->hasFile('archivos')) {
+            foreach ($request->file('archivos') as $archivo) {
+                $fileName = $archivo->getClientOriginalName();
+                $path = $archivo->storeAs($requisitionFolder, $fileName, 's3');
+            }
+        }
+        return redirect()
+                ->route('Requesiciones.index');
+
+    }   
+
 
     /**
      * Display the specified resource.

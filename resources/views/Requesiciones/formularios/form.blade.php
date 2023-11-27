@@ -15,14 +15,13 @@
     <div class="col">
         <label>Nombre de la dependencia o entidad:</label>
         <input type="text" name="dependencia_id_dependencia"
-            value="{{ Auth::user()->empleado->dependencia->id_dependencia }}" class="form-control" hidden>
-        <input type="text" value="{{ Auth::user()->empleado->dependencia->nombre }}" class="form-control"
-            readonly>
+            value="{{ Auth::user()->empleado->dependencia->id_dependencia }}" class="form-control custom-input" hidden>
+        <span type="text" class="form-control custom-span">{{ Auth::user()->empleado->dependencia->nombre }}</span>
     </div>
     {{-- Area Requeriente  --}}
     <div class="col">
         <label>Area requirente:</label>
-        <select name="area_id_area" class="form-control">
+        <select name="area_id_area" class="form-control custom-select">
             <option value="">Seleccione el area</option>
             @foreach ($areas as $area)
                 <option value="{{ $area->id_area }}">
@@ -31,44 +30,34 @@
         </select>
     </div>
 </div>
-
 <div class="row">
     {{-- Fecha de elaboracion --}}
     <div class="col">
         <label>Fecha de elaboracion:</label>
-        <input type="date" name="fecha_elaboracion" class="form-control">
+        <input type="date" name="fecha_elaboracion" class="form-control custom-input">
     </div>
     {{-- Numero de requisicion --}}
     <div class="col">
         <label>No. requisicion: </label>
-        <input type="text" name="no_requesicion" class="form-control" placeholder="100XXXX"
+        <input type="text" name="no_requesicion" class="form-control custom-input" placeholder="100XXXX"
             value="{{ old('no_requesicion') }}">
     </div>
     {{-- Fecha requerida --}}
     <div class="col">
         <label>Fecha requerida: </label>
-        <input type="date" class="form-control" name="fecha_requerida" value="{{ old('fecha_requerida') }}">
+        <input type="date" class="form-control custom-input" name="fecha_requerida"
+            value="{{ old('fecha_requerida') }}">
     </div>
 </div>
 <div class="row">
     {{-- Lugar de entrega --}}
     <div class="col">
         <label>Lugar de entrega: </label>
-        {{-- <select name="area_id_area" class="form-control" id="area_id_area">
-            <option value="">Seleccione el area</option>
-            @foreach ($entregas as $entrega)
-                <option value="{{ $entrega->nombre }}">
-                    {{ $entrega['nombre'] }}</option>
-            @endforeach
-        </select> --}}
-        <input type="text" name="lugar_entrega" class="form-control"
+        <input type="text" name="lugar_entrega" class="form-control custom-input"
             placeholder="Escriba la direccion del lugar de entrega...." value="{{ old('lugar_entrega') }}">
     </div>
 </div>
-
 <hr>
-
-
 <div>
     <table id="tablaDetalles">
         <thead>
@@ -87,10 +76,10 @@
             <tr id="filaEjemplo">
                 <td>
                     <label>Partida:</label>
-                    <select class="form-control select-partida " name="detalles[0][num_partida]">
+                    <select class="form-control custom-select select-partida" name="detalles[0][num_partida]">
                         <option value="">Selecciona</option>
                         @foreach ($partidas as $partida)
-                            <option value="{{ $partida->id_partida_especifica }}" class="form-control">
+                            <option value="{{ $partida->id_partida_especifica }}">
                                 {{ $partida->id_partida_especifica }} - {{ $partida->descripcion }}
                             </option>
                         @endforeach
@@ -98,36 +87,39 @@
                 </td>
                 <td>
                     <label>CUCoP:</label>
-                    <input type="text" class="form-control span-cucop" name="detalles[0][cucop]" readonly>
+                    <input type="text" class="form-control custom-input span-cucop" name="detalles[0][cucop]"
+                        readonly>
                 </td>
                 <td>
                     <label>Descripcion:</label>
-                    <select class="form-control select-insumo" name="detalles[0][descripcion]">
+                    <select class="form-control custom-select select-insumo" name="detalles[0][descripcion]">
                         <option value="">Seleccione el insumo</option>
                     </select>
                 </td>
                 <td>
                     <label>Cantidad:</label>
                     <input type="number" name="detalles[0][cantidad]" min="0" placeholder="1.0" step="0.01"
-                        class="form-control" value="{{ old('cantidad') }}">
+                        class="form-control custom-input" value="{{ old('cantidad') }}">
                 </td>
                 <td>
                     <label>Medida:</label>
-                    <select class="form-control" name="detalles[0][unidad_medida]">
+                    <select class="form-control custom-select" name="detalles[0][unidad_medida]">
                         @foreach ($unidades as $unidad)
                             <option value="{{ $unidad->idunidad_medida }}">
-                                {{ $unidad->descripcion_unidad }}</option>
+                                {{ $unidad->descripcion_unidad }}
+                            </option>
                         @endforeach
                     </select>
                 </td>
                 <td>
                     <label>Precio: </label>
                     <input type="number" name="detalles[0][precio]" min="0" placeholder="1.0" step="0.01"
-                        class="form-control" value="{{ old('precio') }}">
+                        class="form-control custom-input" value="{{ old('precio') }}">
                 </td>
                 <td>
                     <label>Importe:</label>
-                    <input type="number" class="form-control importe" name="detalles[0][importe]" readonly>
+                    <input type="number" class="form-control custom-input importe" name="detalles[0][importe]"
+                        readonly>
                 </td>
                 <td>
                     <button type="button" class="btn btn-danger borrarFila"><i class="fas fa-trash "></i></button>
@@ -148,8 +140,7 @@
         <label>Sub Total: </label>
     </div>
     <div class="col-4 mx-auto p-2  d-flex align-items-end flex-column">
-        <span class="form-control subtotal" id="subtotal">0</span>
-
+        <span class="form-control subtotal custom-span" id="subtotal">0</span>
     </div>
 </div>
 
@@ -159,7 +150,7 @@
         <label>I.V.A: </label>
     </div>
     <div class="col-4  mx-auto p-2  d-flex align-items-end flex-column">
-        <span class="form-control iva" id="iva">0</span>
+        <span class="form-control iva custom-span" id="iva">0</span>
     </div>
 </div>
 
@@ -169,10 +160,8 @@
         <label>Otros Gravamientos: </label>
     </div>
     <div class="col-4  mx-auto p-2  d-flex align-items-end flex-column">
-        <input name="otros_gravamientos" class="form-control input-otros-grav " id="otros_gravamientos"
-            min="0" placeholder="0.00" step="0.01" type="text"
-            value="{{ old('otros_gravamientos') }}">
-
+        <input name="otros_gravamientos" class="form-control input-otros-grav custom-input" id="otros_gravamientos" min="0"
+            placeholder="0.00" step="0.01" type="text" value="{{ old('otros_gravamientos') }}">
     </div>
 </div>
 {{-- Total --}}
@@ -182,10 +171,10 @@
     </div>
     <div class="col-4  mx-auto p-2  d-flex align-items-end flex-column">
         <input name="total" id="total" placeholder="0.00" step="0.01" type="text"
-            class="form-control total">
-
+            class="form-control total custom-input">
     </div>
 </div>
+
 
 <hr>
 <div class="row">
@@ -193,36 +182,31 @@
     <div class="col mx-auto p-2">
         <label>Anexos: </label>
         <input type="text" placeholder="Ingresa el nombre de los anexos que se identifique a la solicitud"
-            class="form-control" name="anexos" value="{{ old('anexos') }}">
+            class="form-control custom-input" name="anexos" value="{{ old('anexos') }}">
     </div>
 </div>
 <div class="row">
     {{-- Anticipos --}}
     <div class="col-2 mx-auto p-2">
         <label>Anticipo: </label>
-        <select name="aticipos" class="form-control" id="aticipos">
-            <option value="1">Si
-            </option>
-            <option value="0">No
-            </option>
+        <select name="anticipos" class="form-control custom-select" id="anticipos">
+            <option value="1">Si</option>
+            <option value="0">No</option>
         </select>
-
     </div>
     {{-- Autorizacion de presupuesto --}}
     <div class="col mx-auto p-2">
         <label>Autorizacion de presupuesto: </label>
-
         <input type="text" placeholder="Ingresa el numero de oficio por el que se le autorizo el presupuesto"
-            class="form-control" name="autorizacion_presupuesto" value="{{ old('autorizacion_presupuesto') }}">
+            class="form-control custom-input" name="autorizacion_presupuesto"
+            value="{{ old('autorizacion_presupuesto') }}">
     </div>
     {{-- Existencia en almacen --}}
     <div class="col-2 mx-auto p-2">
         <label>Existencia en almacen: </label>
-        <select name="existencia_almacen" class="form-control">
-            <option value="1">Si
-            </option>
-            <option value="0">No
-            </option>
+        <select name="existencia_almacen" class="form-control custom-select">
+            <option value="1">Si</option>
+            <option value="0">No</option>
         </select>
     </div>
 </div>
@@ -231,32 +215,31 @@
     {{-- Observaciones --}}
     <div class="col mx-auto p-2">
         <label>Observaciones: </label>
-        <textarea class="form-control" name="observaciones" placeholder="Observaciones de la solicitud....."
-            value="{{ old('observaciones') }}" rows="3"></textarea>
+        <textarea class="form-control custom-input" name="observaciones"
+            placeholder="Observaciones de la solicitud....." value="{{ old('observaciones') }}"
+            rows="3"></textarea>
     </div>
 </div>
 <div class="row">
     {{-- Registro Sanitario --}}
     <div class="col mx-auto p-2">
         <label>Registro Sanitario: </label>
-        <select class="form-control" name="registro_sanitario">
-            <option value="Si">Si
-            </option>
-            <option value="nO">No
-            </option>
+        <select class="form-control custom-select" name="registro_sanitario">
+            <option value="Si">Si</option>
+            <option value="No">No</option>
         </select>
     </div>
     {{-- Normas --}}
     <div class="col-4 mx-auto p-2">
         <label>Normas/Nivel de inspeccion: </label>
-        <input type="text" class="form-control" name="normas"
+        <input type="text" class="form-control custom-input" name="normas"
             placeholder="Ingrese las normas que sean necesarias"
             value="{{ isset($requisicion) ? $requisicion->normas : old('normas') }}">
     </div>
     {{-- Capacitacion --}}
     <div class="col mx-auto p-2">
         <label>Capacitacion: </label>
-        <select name="capacitacion" class="form-control">
+        <select name="capacitacion" class="form-control custom-select">
             <option value="{{ 1 }}">Si</option>
             <option value="{{ 0 }}">No</option>
         </select>
@@ -264,7 +247,7 @@
     {{-- Pais --}}
     <div class="col mx-auto p-2">
         <label>Pais de Origen: </label>
-        <select class="form-control" name="pais_id_pais">
+        <select class="form-control custom-select" name="pais_id_pais">
             @foreach ($paises as $pais)
                 <option value="{{ $pais->id_pais }}">
                     {{ $pais['nombre_pais'] }}</option>
@@ -274,7 +257,7 @@
     {{-- Metodos de prueba --}}
     <div class="col mx-auto p-2">
         <label>Metodos de prueba: </label>
-        <select class="form-control" name="metodos_id_metodos">
+        <select class="form-control custom-select" name="metodos_id_metodos">
             @foreach ($metodos as $metodo)
                 <option value="{{ $metodo->id_metodos }}">
                     {{ $metodo['nombre_metodos'] }}</option>
@@ -282,6 +265,7 @@
         </select>
     </div>
 </div>
+
 
 <hr>
 <div class="row">
@@ -291,7 +275,7 @@
             {{-- Garantia --}}
             <div class="col-4">
                 <label>Tipo de garantia: </label>
-                <select class="form-control" name="garantia_id_garantia">
+                <select class="form-control custom-select" name="garantia_id_garantia">
                     @foreach ($garantias as $garantia)
                         <option value="{{ $garantia->id_garantia }}">
                             {{ $garantia->nombre_garantia }}</option>
@@ -301,17 +285,12 @@
             {{-- Porcentaje --}}
             <div class="col-3">
                 <label>Porcentaje: </label>
-                <select name="porcentaje" class="form-control">
+                <select name="porcentaje" class="form-control custom-select">
                     <option value="{{ '100%' }}">100%</option>
-
                     <option value="{{ '75%' }}">75%</option>
-
                     <option value="{{ '50%' }}">50%</option>
-
                     <option value="{{ '25%' }}">25%</option>
-
                     <option value="{{ '10% ' }}">10%</option>
-
                     <option value="{{ '0% ' }}">0%</option>
                 </select>
             </div>
@@ -322,7 +301,7 @@
                 {{-- Condiciones --}}
                 <div class="col-5">
                     <label>Condiciones de entrega: </label>
-                    <select class="form-control" name="condicion_id_condicion">
+                    <select class="form-control custom-select" name="condicion_id_condicion">
                         @foreach ($condiciones as $condicion)
                             <option value="{{ $condicion->id_condicion }}">
                                 {{ $condicion->nombre_condicion }}</option>
@@ -337,21 +316,21 @@
         <div class="row">
             <div class="col">
                 <label>Plurianualidad: </label>
-                <select class="form-control" name="pluralidad">
+                <select class="form-control custom-select" name="pluralidad">
                     <option name="pluralidad" value="{{ 1 }}">Si</option>
                     <option name="pluralidad" value="{{ 0 }}">No</option>
                 </select>
             </div>
             <div class="col">
                 <label>Meses: </label>
-                <input type="text" class="form-control" name="meses" value="{{ old('meses') }}">
+                <input type="text" class="form-control custom-input" name="meses" value="{{ old('meses') }}">
             </div>
         </div>
         {{-- Garantia --}}
         <div class="row">
             <div class="col">
                 <label>Penas convencionales: </label>
-                <select name="penas_convencionales" class="form-control" id="penas_convencionales">
+                <select name="penas_convencionales" class="form-control custom-select" id="penas_convencionales">
                     <option value="{{ 1 }}">Si</option>
                     <option value="{{ 0 }}">No</option>
                 </select>
@@ -361,7 +340,7 @@
         <div class="row">
             <div class="col">
                 <label>Tiempo de fabricacion: </label>
-                <input type="text" class="form-control" name="tiempo_fabricacion"
+                <input type="text" class="form-control custom-input" name="tiempo_fabricacion"
                     value="{{ old('tiempo_fabricacion') }}">
             </div>
         </div>
@@ -374,18 +353,31 @@
     <div class="col">
         <label>Solicita: </label>
         <input type="text" name="solicita" value="{{ Auth::user()->empleado->num_empleado }}"
-            class="form-control" hidden>
+            class="form-control custom-input" hidden>
         <input type="text"
             value="{{ Auth::user()->empleado->nombre }}{{ Auth::user()->empleado->apellido_paterno }}{{ Auth::user()->empleado->apellido_materno }}"
-            class="form-control" readonly>
+            class="form-control custom-span" readonly>
     </div>
     {{-- Autoriza --}}
     <div class="col">
         <label>Autoriza: </label>
-        <input type="text" name="autoriza" class="form-control">
-        <input type="text" name="estado" class="form-control" value="1" hidden>
+        <input type="text" name="autoriza" class="form-control custom-input">
+        <input type="text" name="estado" class="form-control custom-input" value="1" hidden>
     </div>
 </div>
+<br>
+<hr>
+<div class="row">
+    <div class="mb-3">
+        <label> Subir archivos relacionados</label>
+        <input type="file" class="form-control custom-input" aria-label="file example" name="archivos[]" required>
+        <div class="invalid-feedback">Example invalid form file feedback</div>
+    </div>
+</div>
+
+
+
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>

@@ -48,16 +48,16 @@
                                     <form class="py-5">
                                         @auth
                                             <div class="d-grid gap-2 col-6 mx-auto">
-                                                <a href="{{ url('/home') }}" class="btn btn-outline-dark fw-bold"
+                                                <a href="{{ url('/home') }}" class="btn btn-outline-dark fw-bold BotonRojo"
                                                     role="button" aria-disabled="true">Inicio</a>
                                                 <br>
                                             </div>
                                         @else
                                             <div class="d-grid gap-4 col-6 mx-auto">
-                                                <a href="{{ route('login') }}" class="btn btn-outline-dark fw-bold "
+                                                <a href="{{ route('login') }}" class="btn btn-outline-dark fw-bold BotonRojo"
                                                     role="button" aria-disabled="true">Iniciar
                                                     Sesion</a>
-                                                <a href="{{ route('Registro') }}" class="btn btn-outline-dark fw-bold "
+                                                <a href="{{ route('Registro') }}" class="btn btn-outline-dark fw-bold BotonRojo"
                                                     tabindex="-1" role="button" aria-disabled="true">Registrarse</a>
                                             </div>
                                         @endauth

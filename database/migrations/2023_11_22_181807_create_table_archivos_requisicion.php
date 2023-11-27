@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('archivosrequisicion', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('requisicion_id')
+            ->references('id_requisicion')
+            ->on('requisiciones');
+            $table->string('name');
+            $table->string('image_path');
             $table->timestamps();
         });
     }
