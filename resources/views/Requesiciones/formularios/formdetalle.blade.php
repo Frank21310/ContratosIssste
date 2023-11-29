@@ -5,13 +5,13 @@
     <div class="col">
         <label>Nombre de la dependencia o entidad:</label>
         <span type="text" name="dependencia_id_dependencia"
-            class="form-control custom-span">{{ isset($requisicion) ? $requisicion->dependencia_id_dependencia : old('dependencia_id_dependencia') }}</span>
+            class="form-control custom-span">{{ isset($requisicion) ? $requisicion->dependenciarequesicion->nombre : old('dependencia_id_dependencia') }}</span>
     </div>
     {{-- Area Requeriente  --}}
     <div class="col">
         <label>Area requirente:</label>
         <span type="text" name="area_id_area"
-            class="form-control custom-span">{{ isset($requisicion) ? $requisicion->area_id_area : old('area_id_area') }}</span>
+            class="form-control custom-span">{{ isset($requisicion) ? $requisicion->arearequesicion->nombre_area : old('area_id_area') }}</span>
     </div>
 </div>
 
@@ -63,9 +63,9 @@
             <tr>
                 <td class="custom-td">{{ $detalle->num_partida }}</td>
                 <td class="custom-td">{{ $detalle->cucop }}</td>
-                <td class="custom-td">{{ $detalle->descripcion }}</td>
+                <td class="custom-td">{{ $detalle->insumo->descripcion_insumo }}</td>
                 <td class="custom-td">{{ $detalle->cantidad }}</td>
-                <td class="custom-td">{{ $detalle->unidad_medida }}</td>
+                <td class="custom-td">{{ $detalle->UnidadMedida->descripcion_unidad }}</td>
                 <td class="custom-td">{{ $detalle->precio }}</td>
                 <td class="custom-td">{{ $detalle->importe }}</td>
             </tr>
@@ -124,7 +124,7 @@
     <div class="col mx-auto p-2">
         <label>Anexos: </label>
         <span type="text" name="anexos"
-            class="form-control custom-span">{{ isset($requisicion) ? $requisicion->anexos : old('anexos') }}</span>
+            class="form-control custom-span">{{ isset($requisicion) ? $requisicion->anexos: old('anexos') }}</span>
     </div>
 </div>
 <div class="row">
@@ -132,7 +132,7 @@
     <div class="col mx-auto p-2">
         <label>Anticipo: </label>
         <span type="text" name="aticipos"
-            class="form-control custom-span">{{ isset($requisicion) ? $requisicion->aticipos : old('aticipos') }}</span>
+            class="form-control custom-span">{{ isset($requisicion) ? $requisicion->aticipos ? 'Si' : 'No'  : old('aticipos') }}</span>
     </div>
     {{-- Autorizacion de presupuesto --}}
     <div class="col mx-auto p-2">
@@ -144,7 +144,7 @@
     <div class="col mx-auto p-2">
         <label>Existencia en almacen: </label>
         <span type="text" name="existencia_almacen"
-            class="form-control custom-span">{{ isset($requisicion) ? $requisicion->existencia_almacen : old('existencia_almacen') }}</span>
+            class="form-control custom-span">{{ isset($requisicion) ? $requisicion->existencia_almacen? 'Si' : 'No'   : old('existencia_almacen') }}</span>
     </div>
 </div>
 
@@ -173,20 +173,20 @@
     <div class="col mx-auto p-2">
         <label>Capacitacion: </label>
         <span type="text" name="capacitacion"
-            class="form-control custom-span">{{ isset($requisicion) ? $requisicion->capacitacion : old('capacitacion') }}</span>
+            class="form-control custom-span">{{ isset($requisicion) ? $requisicion->capacitacion? 'Si' : 'No'   : old('capacitacion') }}</span>
 
     </div>
     {{-- Pais --}}
     <div class="col mx-auto p-2">
         <label>Pais de Origen: </label>
         <span type="text" name="pais_id_pais"
-            class="form-control custom-span">{{ isset($requisicion) ? $requisicion->pais_id_pais : old('pais_id_pais') }}</span>
+            class="form-control custom-span">{{ isset($requisicion) ? $requisicion->pais->nombre_pais : old('pais_id_pais') }}</span>
     </div>
     {{-- Metodos de prueba --}}
     <div class="col mx-auto p-2">
         <label>Metodos de prueba: </label>
         <span type="text" name="metodos_id_metodos"
-            class="form-control custom-span">{{ isset($requisicion) ? $requisicion->metodos_id_metodos : old('metodos_id_metodos') }}</span>
+            class="form-control custom-span">{{ isset($requisicion) ? $requisicion->metodosrequesicion->nombre_metodos  : old('metodos_id_metodos') }}</span>
 
     </div>
 </div>
@@ -196,13 +196,13 @@
     <div class="col-6">
         <div class="row">
             {{-- Garantia --}}
-            <div class="col-4">
+            <div class="col-5">
                 <label>Tipo de garantia: </label>
                 <span type="text" name="garantia_id_garantia"
-                    class="form-control custom-span">{{ isset($requisicion) ? $requisicion->garantia_id_garantia : old('garantia_id_garantia') }}</span>
+                    class="form-control custom-span">{{ isset($requisicion) ? $requisicion->garantiarequesicion->nombre_garantia : old('garantia_id_garantia') }}</span>
             </div>
             {{-- Porcentaje --}}
-            <div class="col-3">
+            <div class="col-2">
                 <label>Porcentaje: </label>
                 <span type="text" name="porcentaje"
                     class="form-control custom-span">{{ isset($requisicion) ? $requisicion->porcentaje : old('porcentaje') }}</span>
@@ -216,7 +216,7 @@
                 <div class="col-5">
                     <label>Condiciones de entrega: </label>
                     <span type="text" name="condicion_id_condicion"
-                        class="form-control custom-span">{{ isset($requisicion) ? $requisicion->condicion_id_condicion : old('condicion_id_condicion') }}</span>
+                        class="form-control custom-span">{{ isset($requisicion) ? $requisicion->condicionrequesicion->nombre_condicion : old('condicion_id_condicion') }}</span>
                 </div>
             </div>
         </div>
@@ -227,7 +227,7 @@
             <div class="col">
                 <label>Plurianualidad: </label>
                 <span type="text" name="pluralidad"
-                    class="form-control custom-span">{{ isset($requisicion) ? $requisicion->pluralidad : old('pluralidad') }}</span>
+                    class="form-control custom-span">{{ isset($requisicion) ? $requisicion->pluralidad? 'Si' : 'No'   : old('pluralidad') }}</span>
             </div>
             <div class="col">
                 <label>Meses: </label>
@@ -241,7 +241,7 @@
             <div class="col">
                 <label>Penas convencionales: </label>
                 <span type="text" name="penas_convencionales"
-                    class="form-control custom-span">{{ isset($requisicion) ? $requisicion->penas_convencionales : old('penas_convencionales') }}</span>
+                    class="form-control custom-span">{{ isset($requisicion) ? $requisicion->penas_convencionales? 'Si' : 'No'   : old('penas_convencionales') }}</span>
             </div>
         </div>
         {{-- Fabricacion --}}

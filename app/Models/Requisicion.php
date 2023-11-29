@@ -45,6 +45,10 @@ class Requisicion extends Model
     {
         return $this->hasMany(DetalleRequesicion::class, 'requisicion_id');
     }
+    public function pais(): HasOne
+    {
+        return $this->hasOne(Pais::class, 'id_pais','pais_id_pais' );
+    }
 
     public function dependenciarequesicion(): HasOne
     {

@@ -39,6 +39,6 @@ class DetalleRequesicion extends Model
     }
     public function UnidadMedida()
     {
-        return $this->belongsTo(Cucops::class, 'unidad_medida');
+        return $this->belongsTo(Unidad_medida::class, 'unidad_medida');
     }
 }
