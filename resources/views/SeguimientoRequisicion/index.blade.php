@@ -60,49 +60,47 @@
                 </div>
             </div>
             <br>
-        <div class="table-responsive">
-            <div class="table table-striped">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>N° Requisicion</th>
-                            <th>Dependencia</th>
-                            <th>Fecha de elaboracion</th>
-                            <th>Solicita</th>
-                            <th>Autoriza</th>
-                            <th>Estatus</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($requisiciones as $requisicion)
+            <div class="table-responsive">
+                <div class="table table-striped">
+                    <table class="table custom-table">
+                        <thead class="custom-thead">
                             <tr>
-                                <td>{{ $requisicion->id_requisicion }}</td>
-                                <td>{{ $requisicion->dependencia_id_dependencia }}</td>
-                                <td>{{ $requisicion->fecha_elaboracion }}</td>
-                                <td>{{ $requisicion->solicita }}</td>
-                                <td>{{ $requisicion->autoriza }}</td>
-                                <td>{{ $requisicion->estado }}</td>
-                                <td>
-                                    <div class="btn-group" role="group">
-                                        <a href="{{ route('SeguimientoRequisicion.edit', $requisicion->id_requisicion) }}"
-                                            class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>
-                                    </div>
-                                </td>
+                                <th class="custom-th">N° Requisicion</th>
+                                <th class="custom-th">Dependencia</th>
+                                <th class="custom-th">Fecha de elaboracion</th>
+                                <th class="custom-th">Solicita</th>
+                                <th class="custom-th">Autoriza</th>
+                                <th class="custom-th">Estatus</th>
+                                <th class="custom-th">Acciones</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($requisiciones as $requisicion)
+                                <tr>
+                                    <td class="custom-td">{{ $requisicion->id_requisicion }}</td>
+                                    <td class="custom-td">{{ $requisicion->dependenciarequesicion->nombre }}</td>
+                                    <td class="custom-td">{{ $requisicion->fecha_elaboracion }}</td>
+                                    <td class="custom-td">{{ $requisicion->solicita }}</td>
+                                    <td class="custom-td">{{ $requisicion->autoriza }}</td>
+                                    <td class="custom-td">{{ $requisicion->estadorequisicion->nombre_estado }}</td>
+                                    <td class="custom-td">
+                                        <div class="btn-group" role="group">
+                                            <a href="{{ route('SeguimientoRequisicion.edit', $requisicion->id_requisicion) }}"
+                                                class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer">
+                @if ($requisiciones->total() > 10)
+                    {{ $requisiciones->links() }}
+                @endif
             </div>
         </div>
-        <div class="card-footer">
-            @if ($requisiciones->total() > 10)
-                {{ $requisiciones->links() }}
-            @endif
-        </div>
-    </div>
-
-
     </div>
 
     <Script type="text/javascript">
